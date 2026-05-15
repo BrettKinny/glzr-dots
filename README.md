@@ -38,6 +38,8 @@ Extras specific to Windows: window rules that ignore PowerToys overlays, browser
 | Python 3 + `websockets` | Autotile script | `winget install Python.Python.3.12` then `pip install websockets` |
 | Windows Terminal | Default terminal binding | `winget install Microsoft.WindowsTerminal` |
 
+**Strongly recommended:** [PowerToys](https://learn.microsoft.com/en-us/windows/powertoys/) — install [Command Palette](https://learn.microsoft.com/en-us/windows/powertoys/command-palette/overview) as your app/file launcher (the Omarchy `walker`/`wofi` equivalent). `winget install Microsoft.PowerToys`
+
 Optional (only needed if you use the matching launcher binding): Zen Browser, VS Code, Obsidian, Microsoft Teams, New Outlook.
 
 ## Install
@@ -135,7 +137,7 @@ Same letters as Omarchy, mapped to Windows-native apps.
 
 - **Mod key is `Alt`, not `Super`.** Windows hard-binds many `Super` (Win key) chords to OS-level actions (search, snap layouts, etc.) — using `Super` as the WM mod is a constant fight. `Alt` is the cleanest substitute.
 - **Exit is `Alt + Ctrl + Q`**, not `Super + Shift + E` — that letter is reserved here for the Outlook launcher to match Omarchy's email binding.
-- **No app-rofi / launcher menu.** Use Windows Search (`Win`) or PowerToys Run.
+- **No app-rofi / launcher menu.** Recommended to pair with [PowerToys Command Palette](https://learn.microsoft.com/en-us/windows/powertoys/command-palette/overview) as your launcher — it fills the same role as `walker` / `wofi` / `rofi` on Omarchy.
 
 ## Customization
 
