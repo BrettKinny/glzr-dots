@@ -50,7 +50,7 @@ Clone directly into the config location:
 # If ~/.glzr already exists (fresh install), move it aside first
 Move-Item $env:USERPROFILE\.glzr $env:USERPROFILE\.glzr.bak -ErrorAction SilentlyContinue
 
-git clone https://github.com/<you>/dotfiles-glzr.git $env:USERPROFILE\.glzr
+git clone https://github.com/BrettKinny/glzr-dotfiles.git $env:USERPROFILE\.glzr
 pip install websockets
 ```
 
