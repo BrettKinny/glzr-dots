@@ -1,0 +1,347 @@
+general:
+  # Commands to run when the WM has started.
+  startup_commands:
+    - 'shell-exec zebar'
+    - 'shell-exec pythonw C:\Users\brett.kinny\.glzr\glazewm\autotile.py'
+
+  # Commands to run just before the WM is shutdown.
+  shutdown_commands: ['shell-exec taskkill /IM zebar.exe /F']
+
+  config_reload_commands: []
+
+  # Omarchy doesn't use focus-follows-cursor by default, but enabling here
+  # to mimic Hyprland-style hover-to-focus behavior.
+  focus_follows_cursor: true
+
+  toggle_workspace_on_refocus: false
+
+  cursor_jump:
+    enabled: true
+    trigger: 'monitor_focus'
+
+  hide_method: 'cloak'
+  show_all_in_taskbar: false
+
+gaps:
+  scale_with_dpi: true
+
+  # Omarchy defaults: gapsin:5, gapsout:10
+  inner_gap: '5px'
+
+  outer_gap:
+    top: '50px'   # Leave room for Zebar bar at the top
+    right: '10px'
+    bottom: '10px'
+    left: '10px'
+
+window_effects:
+  focused_window:
+    border:
+      enabled: true
+      color: '#8dbcff'
+
+    hide_title_bar:
+      enabled: false
+
+    corner_style:
+      enabled: false
+      style: 'square'
+
+    transparency:
+      enabled: false
+      opacity: '95%'
+
+  other_windows:
+    border:
+      enabled: true
+      color: '#a1a1a1'
+    hide_title_bar:
+      enabled: false
+    corner_style:
+      enabled: false
+      style: 'square'
+    transparency:
+      enabled: false
+      opacity: '0%'
+
+window_behavior:
+  # Omarchy tiles by default.
+  initial_state: 'tiling'
+
+  state_defaults:
+    floating:
+      centered: true
+      shown_on_top: false
+
+    fullscreen:
+      maximized: false
+      shown_on_top: false
+
+workspaces:
+  - name: '1'
+  - name: '2'
+  - name: '3'
+  - name: '4'
+  - name: '5'
+  - name: '6'
+  - name: '7'
+  - name: '8'
+  - name: '9'
+  - name: '10'
+
+window_rules:
+  - commands: ['ignore']
+    match:
+      # Ignores any Zebar windows.
+      - window_process: { equals: 'zebar' }
+
+      # Ignores picture-in-picture windows for browsers.
+      - window_title: { regex: '[Pp]icture.in.[Pp]icture' }
+        window_class: { regex: 'Chrome_WidgetWin_1|MozillaDialogClass' }
+
+      # Ignore rules for various 3rd-party apps.
+      - window_process: { equals: 'PowerToys' }
+        window_class: { regex: 'HwndWrapper\[PowerToys\.PowerAccent.*?\]' }
+      - window_process: { equals: 'PowerToys' }
+        window_title: { regex: '.*? - Peek' }
+      - window_process: { equals: 'Lively' }
+        window_class: { regex: 'HwndWrapper' }
+      - window_process: { equals: 'EXCEL' }
+        window_class: { not_regex: 'XLMAIN' }
+      - window_process: { equals: 'WINWORD' }
+        window_class: { not_regex: 'OpusApp' }
+      - window_process: { equals: 'POWERPNT' }
+        window_class: { not_regex: 'PPTFrameClass' }
+
+      # Ignore Outlook Reminders
+      # Matches both Classic Outlook (outlook) and New Outlook (olk)
+      - window_process: { regex: '(?i)outlook|olk' }
+        window_title: { regex: '(?i).*reminder.*' }
+
+binding_modes:
+  # Resize mode (Omarchy uses Super+=/- for resize, but this provides
+  # an alternative vim-style resize mode).
+  - name: 'resize'
+    keybindings:
+      - commands: ['resize --width -2%']
+        bindings: ['h', 'left']
+      - commands: ['resize --width +2%']
+        bindings: ['l', 'right']
+      - commands: ['resize --height +2%']
+        bindings: ['k', 'up']
+      - commands: ['resize --height -2%']
+        bindings: ['j', 'down']
+      - commands: ['wm-disable-binding-mode --name resize']
+        bindings: ['escape', 'enter']
+
+keybindings:
+  # ===================================================================
+  # WINDOW MANAGEMENT (Omarchy: Super → Alt)
+  # ===================================================================
+
+  # Close window — Omarchy: Super + W
+  - commands: ['close']
+    bindings: ['alt+w']
+
+  # Toggle tiling direction (split) — Omarchy: Super + J
+  # NOTE: If alt+j doesn't work, try alt+v instead, or check if another
+  # app is intercepting this shortcut. The command itself is valid.
+  - commands: ['toggle-tiling-direction']
+    bindings: ['alt+j']
+
+  # Toggle floating/tiling — Omarchy: Super + T
+  - commands: ['toggle-tiling']
+    bindings: ['alt+t']
+
+  # Toggle floating (centered) — Omarchy: Super + Shift + V
+  - commands: ['toggle-floating --centered']
+    bindings: ['alt+shift+v']
+
+  # Toggle fullscreen — Omarchy: Super + F
+  - commands: ['toggle-fullscreen']
+    bindings: ['alt+f']
+
+  # Minimize — no direct Omarchy equivalent, but useful
+  - commands: ['toggle-minimized']
+    bindings: ['alt+m']
+
+  # ===================================================================
+  # FOCUS NAVIGATION (Omarchy: Super + Arrows)
+  # ===================================================================
+
+  - commands: ['focus --direction left']
+    bindings: ['alt+left']
+  - commands: ['focus --direction right']
+    bindings: ['alt+right']
+  - commands: ['focus --direction up']
+    bindings: ['alt+up']
+  - commands: ['focus --direction down']
+    bindings: ['alt+down']
+
+  # ===================================================================
+  # SWAP/MOVE WINDOW (Omarchy: Super + Shift + Arrows)
+  # ===================================================================
+
+  - commands: ['move --direction left']
+    bindings: ['alt+shift+left']
+  - commands: ['move --direction right']
+    bindings: ['alt+shift+right']
+  - commands: ['move --direction up']
+    bindings: ['alt+shift+up']
+  - commands: ['move --direction down']
+    bindings: ['alt+shift+down']
+
+  # ===================================================================
+  # RESIZE (Omarchy: Super + =/- and Super + Shift + =/-)
+  # ===================================================================
+
+  # Grow/shrink width — Omarchy: Super + Equal / Super + Minus
+  - commands: ['resize --width +2%']
+    bindings: ['alt+oem_plus']
+  - commands: ['resize --width -2%']
+    bindings: ['alt+oem_minus']
+
+  # Grow/shrink height — Omarchy: Super + Shift + Equal / Super + Shift + Minus
+  - commands: ['resize --height +2%']
+    bindings: ['alt+shift+oem_plus']
+  - commands: ['resize --height -2%']
+    bindings: ['alt+shift+oem_minus']
+
+  # Alternative: enter resize binding mode
+  - commands: ['wm-enable-binding-mode --name resize']
+    bindings: ['alt+r']
+
+  # ===================================================================
+  # WORKSPACE NAVIGATION (Omarchy: Super + 1-9/0)
+  # ===================================================================
+
+  - commands: ['focus --workspace 1']
+    bindings: ['alt+1']
+  - commands: ['focus --workspace 2']
+    bindings: ['alt+2']
+  - commands: ['focus --workspace 3']
+    bindings: ['alt+3']
+  - commands: ['focus --workspace 4']
+    bindings: ['alt+4']
+  - commands: ['focus --workspace 5']
+    bindings: ['alt+5']
+  - commands: ['focus --workspace 6']
+    bindings: ['alt+6']
+  - commands: ['focus --workspace 7']
+    bindings: ['alt+7']
+  - commands: ['focus --workspace 8']
+    bindings: ['alt+8']
+  - commands: ['focus --workspace 9']
+    bindings: ['alt+9']
+  - commands: ['focus --workspace 10']
+    bindings: ['alt+0']
+
+  # Next/prev workspace — Omarchy: Super + Tab / Super + Shift + Tab
+  - commands: ['focus --next-active-workspace']
+    bindings: ['alt+tab']
+  - commands: ['focus --prev-active-workspace']
+    bindings: ['alt+shift+tab']
+
+  # Former/recent workspace — Omarchy: Super + Ctrl + Tab
+  - commands: ['focus --recent-workspace']
+    bindings: ['alt+ctrl+tab']
+
+  # ===================================================================
+  # MOVE WINDOW TO WORKSPACE (Omarchy: Super + Shift + 1-9/0)
+  # Omarchy follows the window to the new workspace, so we do the same.
+  # ===================================================================
+
+  - commands: ['move --workspace 1', 'focus --workspace 1']
+    bindings: ['alt+shift+1']
+  - commands: ['move --workspace 2', 'focus --workspace 2']
+    bindings: ['alt+shift+2']
+  - commands: ['move --workspace 3', 'focus --workspace 3']
+    bindings: ['alt+shift+3']
+  - commands: ['move --workspace 4', 'focus --workspace 4']
+    bindings: ['alt+shift+4']
+  - commands: ['move --workspace 5', 'focus --workspace 5']
+    bindings: ['alt+shift+5']
+  - commands: ['move --workspace 6', 'focus --workspace 6']
+    bindings: ['alt+shift+6']
+  - commands: ['move --workspace 7', 'focus --workspace 7']
+    bindings: ['alt+shift+7']
+  - commands: ['move --workspace 8', 'focus --workspace 8']
+    bindings: ['alt+shift+8']
+  - commands: ['move --workspace 9', 'focus --workspace 9']
+    bindings: ['alt+shift+9']
+  - commands: ['move --workspace 10', 'focus --workspace 10']
+    bindings: ['alt+shift+0']
+
+  # ===================================================================
+  # MOVE WORKSPACE TO MONITOR (Omarchy: Super + Shift + Alt + Arrows)
+  # ===================================================================
+
+  - commands: ['move-workspace --direction left']
+    bindings: ['alt+shift+ctrl+left']
+  - commands: ['move-workspace --direction right']
+    bindings: ['alt+shift+ctrl+right']
+  - commands: ['move-workspace --direction up']
+    bindings: ['alt+shift+ctrl+up']
+  - commands: ['move-workspace --direction down']
+    bindings: ['alt+shift+ctrl+down']
+
+  # ===================================================================
+  # APP LAUNCHING (Omarchy: Super + Shift + Letter)
+  # ===================================================================
+
+  # Terminal — Omarchy: Super + Return
+  - commands: ['shell-exec wt -f']
+    bindings: ['alt+enter']
+
+  # Browser (Zen) — Omarchy: Super + Shift + B
+  - commands: ['shell-exec zen']
+    bindings: ['alt+shift+b']
+
+  # Email (Outlook) — Omarchy: Super + Shift + E
+  - commands: ['shell-exec olk.exe']
+    bindings: ['alt+shift+e']
+
+  # Calendar (Outlook) — Omarchy: Super + Shift + C
+  # Opens Outlook to calendar view
+  - commands: ['shell-exec msedge --app=https://outlook.office365.com/calendar']
+    bindings: ['alt+shift+c']
+
+  # Messaging (Teams) — Omarchy: Super + Shift + G
+  - commands: ['shell-exec ms-teams']
+    bindings: ['alt+shift+g']
+
+  # AI (Gemini) — Omarchy: Super + Shift + A
+  - commands: ['shell-exec msedge --app=https://gemini.google.com/app']
+    bindings: ['alt+shift+a']
+
+  # File Manager (Explorer) — Omarchy: Super + Shift + F
+  - commands: ['shell-exec explorer']
+    bindings: ['alt+shift+f']
+
+  # Obsidian — Omarchy: Super + Shift + O
+  - commands: ['shell-exec Obsidian']
+    bindings: ['alt+shift+o']
+
+  # Editor (VS Code) — Omarchy: Super + Shift + N
+  - commands: ['shell-exec code']
+    bindings: ['alt+shift+n']
+
+  # ===================================================================
+  # WM CONTROLS
+  # ===================================================================
+
+  # Pause WM
+  - commands: ['wm-toggle-pause']
+    bindings: ['alt+shift+p']
+
+  # Reload config
+  - commands: ['wm-reload-config']
+    bindings: ['alt+shift+r']
+
+  # Exit WM — moved to alt+ctrl+q to free alt+shift+e for Outlook
+  - commands: ['wm-exit']
+    bindings: ['alt+ctrl+q']
+
+  # Redraw all windows
+  - commands: ['wm-redraw']
+    bindings: ['alt+ctrl+w']
