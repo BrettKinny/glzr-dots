@@ -1,6 +1,6 @@
-# .glzr
+# .glzr — Omarchy on Windows
 
-My personal [GlazeWM](https://github.com/glzr-io/glazewm) + [Zebar](https://github.com/glzr-io/zebar) dotfiles for Windows. A tiling window manager setup inspired by [Omarchy](https://omarchy.org/) / Hyprland, adapted for Windows ergonomics.
+**A faithful port of the [Omarchy](https://omarchy.org/) tiling-WM experience to Windows**, built on [GlazeWM](https://github.com/glzr-io/glazewm) + [Zebar](https://github.com/glzr-io/zebar). If you've used Omarchy (or Hyprland), your muscle memory works here — same keybinding layout, same workflow, same dwindle autotiling, just with `Alt` standing in for `Super` (Windows reserves it).
 
 > Lives at `%USERPROFILE%\.glzr` — the default config path for both tools — so the repo *is* the config. No symlinks, no bootstrap script.
 
@@ -10,14 +10,24 @@ My personal [GlazeWM](https://github.com/glzr-io/glazewm) + [Zebar](https://gith
 ![desktop](docs/desktop.png)
 -->
 
-## Features
+## What this gives you
 
-- **Omarchy-style keybindings** — `Alt` is the mod key (Windows reserves `Super`), with the same muscle-memory layout as Omarchy/Hyprland.
-- **Autotiling** — `autotile.py` subscribes to GlazeWM's WebSocket and switches split direction based on the focused window's aspect ratio (dwindle layout).
-- **Zebar top bar** — runs the [`overline-zebar`](https://github.com/mushfikurr/overline-zebar) widget pack at startup; outer gap reserves `50px` at the top for it.
-- **Focus-follows-cursor** with cursor jump on monitor focus change.
-- **App launcher bindings** for terminal, browser, editor, Outlook, Teams, Obsidian, etc.
-- **Sensible window rules** that ignore PowerToys overlays, PiP windows, Office sub-windows, Outlook reminders, and Lively wallpaper.
+The goal is **Omarchy parity** — every binding below is the Omarchy default with `Super` swapped for `Alt`. If a workflow exists in Omarchy, it should work the same way here.
+
+| Omarchy / Hyprland | This config | Notes |
+|---|---|---|
+| `Super` as mod key | `Alt` | Windows owns `Super` (Win key); using it as a mod conflicts with too many OS shortcuts. |
+| `Super + 1..0` workspaces | `Alt + 1..0` | 10 workspaces, same layout. |
+| `Super + Shift + N` to send window to workspace *and follow* | `Alt + Shift + N` | Same "follow" behavior — not vanilla GlazeWM default. |
+| `Super + Arrows` focus, `Super + Shift + Arrows` move | `Alt + Arrows` / `Alt + Shift + Arrows` | Identical. |
+| `Super + =/-` resize | `Alt + =/-` | Plus a vim-style `Alt + R` resize mode (`hjkl`). |
+| `Super + Shift + B/E/F/...` app launchers | `Alt + Shift + B/E/F/...` | Same letters, mapped to Windows-native apps (Zen, Outlook, Explorer, VS Code, Obsidian, Teams, Gemini). |
+| Hyprland dwindle layout | `autotile.py` | WebSocket client that flips split direction based on the focused window's longest axis. |
+| Waybar top bar | Zebar with [`overline-zebar`](https://github.com/mushfikurr/overline-zebar) | Started automatically by GlazeWM; outer top gap reserves `50px` for it. |
+| Focus-follows-cursor | ✅ | Plus cursor-jump on monitor focus change. |
+| Tiling by default | ✅ | `initial_state: tiling`. |
+
+Extras specific to Windows: window rules that ignore PowerToys overlays, browser picture-in-picture, Office sub-windows, Outlook reminders, and Lively wallpaper.
 
 ## Prerequisites
 
@@ -58,57 +68,59 @@ Then launch GlazeWM — it will start Zebar and the autotile script automaticall
 
 ## Keybindings
 
-Mod key: <kbd>Alt</kbd>
+**Mod key:** <kbd>Alt</kbd> (stands in for Omarchy's <kbd>Super</kbd>). Everything else matches Omarchy 1:1 — read these tables as "Omarchy with `Super` → `Alt`".
 
 ### Window management
 
-| Binding | Action |
-|---|---|
-| <kbd>Alt</kbd>+<kbd>W</kbd> | Close window |
-| <kbd>Alt</kbd>+<kbd>F</kbd> | Toggle fullscreen |
-| <kbd>Alt</kbd>+<kbd>T</kbd> | Toggle tiling/floating |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> | Toggle floating (centered) |
-| <kbd>Alt</kbd>+<kbd>M</kbd> | Minimize |
-| <kbd>Alt</kbd>+<kbd>J</kbd> | Toggle tiling direction |
+| Binding | Action | Omarchy equivalent |
+|---|---|---|
+| <kbd>Alt</kbd>+<kbd>W</kbd> | Close window | `Super + W` |
+| <kbd>Alt</kbd>+<kbd>F</kbd> | Toggle fullscreen | `Super + F` |
+| <kbd>Alt</kbd>+<kbd>T</kbd> | Toggle tiling/floating | `Super + T` |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> | Toggle floating (centered) | `Super + Shift + V` |
+| <kbd>Alt</kbd>+<kbd>J</kbd> | Toggle tiling direction | `Super + J` |
+| <kbd>Alt</kbd>+<kbd>M</kbd> | Minimize | *(no Omarchy equivalent)* |
 
 ### Focus & move
 
-| Binding | Action |
-|---|---|
-| <kbd>Alt</kbd>+<kbd>←</kbd>/<kbd>→</kbd>/<kbd>↑</kbd>/<kbd>↓</kbd> | Focus window |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Arrows</kbd> | Move/swap window |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>Arrows</kbd> | Move workspace to monitor |
+| Binding | Action | Omarchy equivalent |
+|---|---|---|
+| <kbd>Alt</kbd>+<kbd>←</kbd>/<kbd>→</kbd>/<kbd>↑</kbd>/<kbd>↓</kbd> | Focus window | `Super + Arrows` |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Arrows</kbd> | Move/swap window | `Super + Shift + Arrows` |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>Arrows</kbd> | Move workspace to monitor | `Super + Shift + Alt + Arrows` |
 
 ### Resize
 
-| Binding | Action |
-|---|---|
-| <kbd>Alt</kbd>+<kbd>=</kbd>/<kbd>-</kbd> | Grow/shrink width 2% |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>=</kbd>/<kbd>-</kbd> | Grow/shrink height 2% |
-| <kbd>Alt</kbd>+<kbd>R</kbd> | Enter vim-style resize mode (`hjkl`, `Esc` to exit) |
+| Binding | Action | Omarchy equivalent |
+|---|---|---|
+| <kbd>Alt</kbd>+<kbd>=</kbd>/<kbd>-</kbd> | Grow/shrink width 2% | `Super + =/-` |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>=</kbd>/<kbd>-</kbd> | Grow/shrink height 2% | `Super + Shift + =/-` |
+| <kbd>Alt</kbd>+<kbd>R</kbd> | Vim-style resize mode (`hjkl`, `Esc` to exit) | *(extra)* |
 
 ### Workspaces
 
-| Binding | Action |
-|---|---|
-| <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>0</kbd> | Focus workspace 1–10 |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd>…<kbd>0</kbd> | Move window to workspace *and follow* |
-| <kbd>Alt</kbd>+<kbd>Tab</kbd> / <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd> | Next / previous workspace |
-| <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>Tab</kbd> | Recent workspace |
+| Binding | Action | Omarchy equivalent |
+|---|---|---|
+| <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>0</kbd> | Focus workspace 1–10 | `Super + 1..0` |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd>…<kbd>0</kbd> | Move window to workspace *and follow* | `Super + Shift + 1..0` |
+| <kbd>Alt</kbd>+<kbd>Tab</kbd> / <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd> | Next / previous workspace | `Super + Tab` / `Super + Shift + Tab` |
+| <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>Tab</kbd> | Recent workspace | `Super + Ctrl + Tab` |
 
 ### Launchers
 
-| Binding | App |
-|---|---|
-| <kbd>Alt</kbd>+<kbd>Enter</kbd> | Windows Terminal |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> | Zen browser |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> | VS Code |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> | File Explorer |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> | Obsidian |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> | Outlook (mail) |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> | Outlook calendar (Edge PWA) |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> | Microsoft Teams |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> | Gemini (Edge PWA) |
+Same letters as Omarchy, mapped to Windows-native apps.
+
+| Binding | App | Omarchy equivalent |
+|---|---|---|
+| <kbd>Alt</kbd>+<kbd>Enter</kbd> | Windows Terminal | `Super + Return` (terminal) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> | Zen browser | `Super + Shift + B` (browser) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> | VS Code | `Super + Shift + N` (editor) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> | File Explorer | `Super + Shift + F` (file manager) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> | Obsidian | `Super + Shift + O` (Obsidian) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> | Outlook (mail) | `Super + Shift + E` (email) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> | Outlook calendar (Edge PWA) | `Super + Shift + C` (calendar) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> | Microsoft Teams | `Super + Shift + G` (messaging) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> | Gemini (Edge PWA) | `Super + Shift + A` (AI) |
 
 ### WM control
 
@@ -118,6 +130,12 @@ Mod key: <kbd>Alt</kbd>
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> | Pause WM |
 | <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>W</kbd> | Redraw all windows |
 | <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>Q</kbd> | Exit WM |
+
+### Known deviations from Omarchy
+
+- **Mod key is `Alt`, not `Super`.** Windows hard-binds many `Super` (Win key) chords to OS-level actions (search, snap layouts, etc.) — using `Super` as the WM mod is a constant fight. `Alt` is the cleanest substitute.
+- **Exit is `Alt + Ctrl + Q`**, not `Super + Shift + E` — that letter is reserved here for the Outlook launcher to match Omarchy's email binding.
+- **No app-rofi / launcher menu.** Use Windows Search (`Win`) or PowerToys Run.
 
 ## Customization
 
