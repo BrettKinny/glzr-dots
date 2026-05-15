@@ -56,6 +56,12 @@ git clone https://github.com/BrettKinny/glzr-dotfiles.git $env:USERPROFILE\.glzr
 pip install websockets
 ```
 
+**Install the Zebar widget pack.** This repo only ships the *pointer* to `mushfikurr.overline-zebar` (in `zebar/.marketplace/`); the widget code itself lives in `%APPDATA%\zebar\downloads\` and isn't versioned here. On a fresh machine:
+
+1. Launch Zebar.
+2. Open the Marketplace UI and install **overline-zebar** by `mushfikurr` (and any other packs from `zebar/.marketplace/` you want).
+3. Restart Zebar — it'll pick up `settings.json` and launch the configured widget.
+
 Then launch GlazeWM — it will start Zebar and the autotile script automatically via `startup_commands`.
 
 ## Structure
