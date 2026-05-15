@@ -2,27 +2,27 @@
 
 <sub>\* Omarchy is Linux-only; this recreates the experience on Windows with [GlazeWM](https://github.com/glzr-io/glazewm) + [Zebar](https://github.com/glzr-io/zebar).</sub>
 
-**A faithful port of the [Omarchy](https://omarchy.org/) tiling-WM experience to Windows.** If you've used Omarchy (or Hyprland), your muscle memory works here — same keybinding layout, same workflow, same dwindle autotiling, just with `Alt` standing in for `Super` (Windows reserves it).
+**A faithful port of the [Omarchy](https://omarchy.org/) tiling-WM experience to Windows.** If you've used Omarchy (or Hyprland), your muscle memory works here: same keybinding layout, same workflow, same dwindle autotiling, just with `Alt` standing in for `Super` (Windows reserves it).
 
-> Lives at `%USERPROFILE%\.glzr` — the default config path for both tools — so the repo *is* the config. No symlinks, no bootstrap script.
+> Lives at `%USERPROFILE%\.glzr` (the default config path for both tools), so the repo *is* the config. No symlinks, no bootstrap script.
 
-> 💡 **Cross-machine muscle memory:** if you dual-boot or jump between Omarchy and Windows, flip Omarchy's "Hyprland mod key" setting to <kbd>Alt</kbd> (Omarchy ships a built-in toggle to swap <kbd>Super</kbd> ↔ <kbd>Alt</kbd> as the mod). Then *every* binding in this README works identically on both systems — no mental remapping when switching machines.
+> 💡 **Cross-machine muscle memory:** if you dual-boot or jump between Omarchy and Windows, flip Omarchy's "Hyprland mod key" setting to <kbd>Alt</kbd> (Omarchy ships a built-in toggle to swap <kbd>Super</kbd> ↔ <kbd>Alt</kbd> as the mod). Then *every* binding in this README works identically on both systems. No mental remapping when switching machines.
 
-## Screenshots
+## Screenshot
 
-<!-- Drop a screenshot in docs/ and uncomment:
-![desktop](docs/desktop.png)
--->
+![Desktop showing Zebar top bar, PowerToys Command Palette launcher, and Workspace 1 indicator](https://github.com/user-attachments/assets/b1208277-29e8-4691-b3b7-03f548c96fb6)
+
+*Top: Zebar bar (overline-zebar pack) with workspace switcher, system stats, tray, and clock. Center: PowerToys Command Palette acting as the launcher.*
 
 ## What this gives you
 
-The goal is **Omarchy parity** — every binding below is the Omarchy default with `Super` swapped for `Alt`. If a workflow exists in Omarchy, it should work the same way here.
+The goal is **Omarchy parity**: every binding below is the Omarchy default with `Super` swapped for `Alt`. If a workflow exists in Omarchy, it should work the same way here.
 
 | Omarchy / Hyprland | This config | Notes |
 |---|---|---|
 | `Super` as mod key | `Alt` | Windows owns `Super` (Win key); using it as a mod conflicts with too many OS shortcuts. |
 | `Super + 1..0` workspaces | `Alt + 1..0` | 10 workspaces, same layout. |
-| `Super + Shift + N` to send window to workspace *and follow* | `Alt + Shift + N` | Same "follow" behavior — not vanilla GlazeWM default. |
+| `Super + Shift + N` to send window to workspace *and follow* | `Alt + Shift + N` | Same "follow" behavior (not vanilla GlazeWM default). |
 | `Super + Arrows` focus, `Super + Shift + Arrows` move | `Alt + Arrows` / `Alt + Shift + Arrows` | Identical. |
 | `Super + =/-` resize | `Alt + =/-` | Plus a vim-style `Alt + R` resize mode (`hjkl`). |
 | `Super + Shift + B/E/F/...` app launchers | `Alt + Shift + B/E/F/...` | Same letters, mapped to Windows-native apps (Zen, Outlook, Explorer, VS Code, Obsidian, Teams, Gemini). |
@@ -42,7 +42,7 @@ Extras specific to Windows: window rules that ignore PowerToys overlays, browser
 | Python 3 + `websockets` | Autotile script | `winget install Python.Python.3.12` then `pip install websockets` |
 | Windows Terminal | Default terminal binding | `winget install Microsoft.WindowsTerminal` |
 
-**Strongly recommended:** [PowerToys](https://learn.microsoft.com/en-us/windows/powertoys/) — install [Command Palette](https://learn.microsoft.com/en-us/windows/powertoys/command-palette/overview) as your app/file launcher (the Omarchy `walker`/`wofi` equivalent). `winget install Microsoft.PowerToys`
+**Strongly recommended:** [PowerToys](https://learn.microsoft.com/en-us/windows/powertoys/). Install [Command Palette](https://learn.microsoft.com/en-us/windows/powertoys/command-palette/overview) as your app/file launcher (the Omarchy `walker`/`wofi` equivalent). `winget install Microsoft.PowerToys`
 
 Optional (only needed if you use the matching launcher binding): Zen Browser, VS Code, Obsidian, Microsoft Teams, New Outlook.
 
@@ -62,9 +62,9 @@ pip install websockets
 
 1. Launch Zebar.
 2. Open the Marketplace UI and install **overline-zebar** by `mushfikurr` (and any other packs from `zebar/.marketplace/` you want).
-3. Restart Zebar — it'll pick up `settings.json` and launch the configured widget.
+3. Restart Zebar. It'll pick up `settings.json` and launch the configured widget.
 
-Then launch GlazeWM — it will start Zebar and the autotile script automatically via `startup_commands`.
+Then launch GlazeWM. It will start Zebar and the autotile script automatically via `startup_commands`.
 
 ## Structure
 
@@ -80,7 +80,7 @@ Then launch GlazeWM — it will start Zebar and the autotile script automaticall
 
 ## Keybindings
 
-**Mod key:** <kbd>Alt</kbd> (stands in for Omarchy's <kbd>Super</kbd>). Everything else matches Omarchy 1:1 — read these tables as "Omarchy with `Super` → `Alt`".
+**Mod key:** <kbd>Alt</kbd> (stands in for Omarchy's <kbd>Super</kbd>). Everything else matches Omarchy 1:1; read these tables as "Omarchy with `Super` → `Alt`".
 
 ### Window management
 
@@ -145,9 +145,9 @@ Same letters as Omarchy, mapped to Windows-native apps.
 
 ### Known deviations from Omarchy
 
-- **Mod key is `Alt`, not `Super`.** Windows hard-binds many `Super` (Win key) chords to OS-level actions (search, snap layouts, etc.) — using `Super` as the WM mod is a constant fight. `Alt` is the cleanest substitute.
-- **Exit is `Alt + Ctrl + Q`**, not `Super + Shift + E` — that letter is reserved here for the Outlook launcher to match Omarchy's email binding.
-- **No app-rofi / launcher menu.** Recommended to pair with [PowerToys Command Palette](https://learn.microsoft.com/en-us/windows/powertoys/command-palette/overview) as your launcher — it fills the same role as `walker` / `wofi` / `rofi` on Omarchy.
+- **Mod key is `Alt`, not `Super`.** Windows hard-binds many `Super` (Win key) chords to OS-level actions (search, snap layouts, etc.), so using `Super` as the WM mod is a constant fight. `Alt` is the cleanest substitute.
+- **Exit is `Alt + Ctrl + Q`**, not `Super + Shift + E`. That letter is reserved here for the Outlook launcher to match Omarchy's email binding.
+- **No app-rofi / launcher menu.** Recommended to pair with [PowerToys Command Palette](https://learn.microsoft.com/en-us/windows/powertoys/command-palette/overview) as your launcher; it fills the same role as `walker` / `wofi` / `rofi` on Omarchy.
 
 ## Customization
 
@@ -158,10 +158,10 @@ Same letters as Omarchy, mapped to Windows-native apps.
 
 ## Credits
 
-- [Omarchy](https://omarchy.org/) — keybinding philosophy and defaults
-- [`mushfikurr/overline-zebar`](https://github.com/mushfikurr/overline-zebar) — the Zebar pack this config launches
-- [glzr-io](https://github.com/glzr-io) — for GlazeWM and Zebar themselves
+- [Omarchy](https://omarchy.org/) for keybinding philosophy and defaults
+- [`mushfikurr/overline-zebar`](https://github.com/mushfikurr/overline-zebar), the Zebar pack this config launches
+- [glzr-io](https://github.com/glzr-io) for GlazeWM and Zebar themselves
 
 ## License
 
-MIT — do whatever you want with it.
+MIT. Do whatever you want with it.
