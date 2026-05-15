@@ -16,6 +16,8 @@
 
 ![Desktop screenshot](https://github.com/user-attachments/assets/39d227c9-81ea-4316-b2f6-89268770e6d0)
 
+*lazygit on the left, fastfetch on the right, both running in minimal Terminal windows with Oh My Posh.*
+
 ## What this gives you
 
 The goal is **Omarchy parity**: every binding below is the Omarchy default with `Super` swapped for `Alt`. If a workflow exists in Omarchy, it should work the same way here.
