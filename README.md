@@ -14,6 +14,8 @@
 
 *Top: Zebar bar (overline-zebar pack) with workspace switcher, system stats, tray, and clock. Center: PowerToys Command Palette acting as the launcher.*
 
+![Desktop screenshot](https://github.com/user-attachments/assets/39d227c9-81ea-4316-b2f6-89268770e6d0)
+
 ## What this gives you
 
 The goal is **Omarchy parity**: every binding below is the Omarchy default with `Super` swapped for `Alt`. If a workflow exists in Omarchy, it should work the same way here.
