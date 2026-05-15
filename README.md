@@ -4,6 +4,8 @@
 
 > Lives at `%USERPROFILE%\.glzr` — the default config path for both tools — so the repo *is* the config. No symlinks, no bootstrap script.
 
+> 💡 **Cross-machine muscle memory:** if you dual-boot or jump between Omarchy and Windows, flip Omarchy's "Hyprland mod key" setting to <kbd>Alt</kbd> (Omarchy ships a built-in toggle to swap <kbd>Super</kbd> ↔ <kbd>Alt</kbd> as the mod). Then *every* binding in this README works identically on both systems — no mental remapping when switching machines.
+
 ## Screenshots
 
 <!-- Drop a screenshot in docs/ and uncomment:
