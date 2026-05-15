@@ -1,8 +1,8 @@
 # glzr-dotfiles (Omarchy\* on Windows)
 
-**A faithful port of the [Omarchy](https://omarchy.org/) tiling-WM experience to Windows**, built on [GlazeWM](https://github.com/glzr-io/glazewm) + [Zebar](https://github.com/glzr-io/zebar). If you've used Omarchy (or Hyprland), your muscle memory works here — same keybinding layout, same workflow, same dwindle autotiling, just with `Alt` standing in for `Super` (Windows reserves it).
+<sub>\* Omarchy is Linux-only; this recreates the experience on Windows with [GlazeWM](https://github.com/glzr-io/glazewm) + [Zebar](https://github.com/glzr-io/zebar).</sub>
 
-<sub>\* Omarchy-*style*, not actual Omarchy — it's a Linux/Hyprland distro and can't run on Windows. This config recreates the look and feel using Windows-native tools.</sub>
+**A faithful port of the [Omarchy](https://omarchy.org/) tiling-WM experience to Windows.** If you've used Omarchy (or Hyprland), your muscle memory works here — same keybinding layout, same workflow, same dwindle autotiling, just with `Alt` standing in for `Super` (Windows reserves it).
 
 > Lives at `%USERPROFILE%\.glzr` — the default config path for both tools — so the repo *is* the config. No symlinks, no bootstrap script.
 
