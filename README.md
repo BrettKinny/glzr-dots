@@ -1,6 +1,6 @@
 # glzr-dotfiles (Omarchy\* on Windows)
 
-<sub>\* Omarchy is Linux-only; this recreates the experience on Windows with [GlazeWM](https://github.com/glzr-io/glazewm) + [Zebar](https://github.com/glzr-io/zebar).</sub>
+<sub>\* Omarchy is ofcouse Linux; this recreates the experience on Windows with [GlazeWM](https://github.com/glzr-io/glazewm) + [Zebar](https://github.com/glzr-io/zebar).</sub>
 
 **A faithful port of the [Omarchy](https://omarchy.org/) tiling-WM experience to Windows.** If you've used Omarchy (or Hyprland), your muscle memory works here: same keybinding layout, same workflow, same dwindle autotiling, just with `Alt` standing in for `Super` (Windows reserves it).
 
