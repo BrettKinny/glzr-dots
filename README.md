@@ -31,6 +31,7 @@ The goal is **Omarchy parity**: every binding below is the Omarchy default with 
 | `Super + =/-` resize | `Alt + =/-` | Plus a vim-style `Alt + R` resize mode (`hjkl`). |
 | `Super + Shift + B/E/F/...` app launchers | `Alt + Shift + B/E/F/...` | Same letters, mapped to Windows-native apps (Zen, Outlook, Explorer, VS Code, Obsidian, Teams, Gemini). |
 | Hyprland dwindle layout | `autotile.py` | WebSocket client that flips split direction based on the focused window's longest axis. |
+| Lone window centered on ultrawides | `autotile.py` | On a monitor wider than ~2:1, a single window in a workspace floats centered at half the monitor width instead of stretching edge-to-edge; opening a second window drops it back to tiling. No-op on 16:9 displays. |
 | Waybar top bar | Zebar with [`overline-zebar`](https://github.com/mushfikurr/overline-zebar) | Started automatically by GlazeWM; outer top gap reserves `50px` for it. |
 | Focus-follows-cursor | ✅ | Plus cursor-jump on monitor focus change. |
 | Tiling by default | ✅ | `initial_state: tiling`. |
@@ -159,6 +160,7 @@ Same letters as Omarchy, mapped to Windows-native apps.
 - **Top bar height**: adjust `gaps.outer_gap.top` in `config.yaml` to match your Zebar height.
 - **Swap the Zebar pack**: edit `zebar/settings.json` → `startupConfigs[].pack` to any pack listed in `zebar/.marketplace/`.
 - **Border color**: `window_effects.focused_window.border.color` (currently `#8dbcff`).
+- **Ultrawide centering**: tune the constants at the top of `glazewm/autotile.py` — `WIDTH_FRACTION` (centered width, default `0.5`), `ULTRAWIDE_MIN_RATIO` (default `2.0`), or set `ENABLE_CENTER_SINGLE = False` to turn it off.
 
 ## Credits
 
