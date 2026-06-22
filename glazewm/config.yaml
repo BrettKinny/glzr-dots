@@ -118,6 +118,11 @@ window_rules:
       - window_process: { regex: '(?i)outlook|olk' }
         window_title: { regex: '(?i).*reminder.*' }
 
+  # Zen browser transparency
+  - commands: ['set-transparency --opacity 95%']
+    match:
+      - window_process: { regex: 'zen' }
+
 binding_modes:
   # Resize mode (Omarchy uses Super+=/- for resize, but this provides
   # an alternative vim-style resize mode).
