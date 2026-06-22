@@ -78,9 +78,48 @@ Then launch GlazeWM. It will start Zebar and the autotile script automatically v
 ├── glazewm/
 │   ├── config.yaml      # keybindings, workspaces, gaps, window rules
 │   └── autotile.py      # dwindle-layout autotiler (WebSocket client)
-└── zebar/
-    ├── settings.json    # startup widget (overline-zebar / main / default)
-    └── .marketplace/    # references to installed marketplace packs
+├── zebar/
+│   ├── settings.json    # startup widget (overline-zebar / main / default)
+│   └── .marketplace/    # references to installed marketplace packs
+└── powershell/
+    └── profile.ps1      # shell profile (zoxide, fzf, eza, bat, PSReadLine)
+```
+
+## Shell (PowerShell)
+
+Brings the modern-Linux terminal niceties to PowerShell 7+. `powershell/profile.ps1` is the real profile; everything in it is **guarded with `Get-Command`**, so it loads cleanly on a fresh machine and each feature lights up only once its tool is installed.
+
+| Tool | Gives you | Install |
+|------|-----------|---------|
+| [zoxide](https://github.com/ajeetdsouza/zoxide) | `z <dir>` frecency jump, `zi` interactive picker | `winget install ajeetdsouza.zoxide` |
+| [fzf](https://github.com/junegunn/fzf) + [PSFzf](https://github.com/kelleyma49/PSFzf) | <kbd>Ctrl</kbd>+<kbd>T</kbd> fuzzy file finder, <kbd>Ctrl</kbd>+<kbd>R</kbd> history | `winget install junegunn.fzf` + `Install-Module PSFzf` |
+| [fd](https://github.com/sharkdp/fd) | fast file walk behind fzf (skips `.git`, respects `.gitignore`) | `winget install sharkdp.fd` |
+| [bat](https://github.com/sharkdp/bat) | `cat` with syntax highlighting; powers the <kbd>Ctrl</kbd>+<kbd>T</kbd> preview | `winget install sharkdp.bat` |
+| [eza](https://github.com/eza-community/eza) | `ls`/`ll`/`la`/`lt` with git status, icons, tree | `winget install eza-community.eza` |
+| [delta](https://github.com/dandavison/delta) | syntax-highlighted git diffs (configured in `~/.gitconfig`) | `winget install dandavison.delta` |
+| [gsudo](https://github.com/gerardog/gsudo) | `sudo` for Windows (aliased only if no native `sudo`) | `winget install gerardog.gsudo` |
+| [oh-my-posh](https://ohmyposh.dev/) | prompt | `winget install JanDeDobbeleer.OhMyPosh` |
+
+Plus `which` and `touch` helpers for muscle memory.
+
+**Wiring:** unlike GlazeWM/Zebar, PowerShell's profile path isn't `~/.glzr`, so it can't live in the repo directly. Instead the real `$PROFILE` is a one-line shim that sources this one:
+
+```powershell
+# Point your $PROFILE at the repo copy (run once):
+$shim = '$glzrProfile = "$HOME\.glzr\powershell\profile.ps1"' + "`n" + 'if (Test-Path $glzrProfile) { . $glzrProfile }'
+New-Item -ItemType File -Path $PROFILE -Force | Out-Null
+Set-Content -Path $PROFILE -Value $shim
+. $PROFILE
+```
+
+**delta** also needs a few lines in `~/.gitconfig` (not tracked here):
+
+```powershell
+git config --global core.pager delta
+git config --global interactive.diffFilter "delta --color-only"
+git config --global delta.navigate true
+git config --global delta.line-numbers true
+git config --global merge.conflictStyle zdiff3
 ```
 
 ## Keybindings
