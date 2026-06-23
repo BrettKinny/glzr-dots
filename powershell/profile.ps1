@@ -82,6 +82,12 @@ function touch {
 }
 #endregion
 
+#region lazygit  ->  `lg` terminal UI for git
+if (Get-Command lazygit -ErrorAction SilentlyContinue) {
+    Set-Alias lg lazygit
+}
+#endregion
+
 #region Aliases
 Set-Alias -Name c -Value claude
 
