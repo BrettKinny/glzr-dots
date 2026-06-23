@@ -3,6 +3,8 @@ general:
   startup_commands:
     - 'shell-exec zebar'
     - 'shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\autotile.py"'
+    # Omarchy-style universal clipboard: Alt+C/V/X -> Ctrl+Insert/Shift+Insert/Ctrl+X
+    - 'shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\clipboard.py"'
 
   # Commands to run just before the WM is shutdown.
   shutdown_commands: ['shell-exec taskkill /IM zebar.exe /F']

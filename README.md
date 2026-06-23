@@ -35,6 +35,7 @@ The goal is **Omarchy parity**: every binding below is the Omarchy default with 
 | Waybar top bar | Zebar with [`overline-zebar`](https://github.com/mushfikurr/overline-zebar) | Started automatically by GlazeWM; outer top gap reserves `50px` for it. |
 | Focus-follows-cursor | ✅ | Plus cursor-jump on monitor focus change. |
 | Tiling by default | ✅ | `initial_state: tiling`. |
+| `Super + C/V/X` universal clipboard | `Alt + C/V/X` via `clipboard.py` | Sends `Ctrl+Insert` / `Shift+Insert` / `Ctrl+X` — works in terminals *and* GUI. `Alt + Ctrl + V` opens the `Win+V` history. |
 
 Extras specific to Windows: window rules that ignore PowerToys overlays, browser picture-in-picture, Office sub-windows, Outlook reminders, and Lively wallpaper.
 
@@ -77,12 +78,15 @@ Then launch GlazeWM. It will start Zebar and the autotile script automatically v
 .glzr/
 ├── glazewm/
 │   ├── config.yaml      # keybindings, workspaces, gaps, window rules
-│   └── autotile.py      # dwindle-layout autotiler (WebSocket client)
+│   ├── autotile.py      # dwindle-layout autotiler (WebSocket client)
+│   └── clipboard.py     # Omarchy-style universal clipboard (Alt+C/V/X) — ctypes keyboard hook
 ├── zebar/
 │   ├── settings.json    # startup widget (overline-zebar / main / default)
 │   └── .marketplace/    # references to installed marketplace packs
-└── powershell/
-    └── profile.ps1      # shell profile (zoxide, fzf, eza, bat, PSReadLine)
+├── powershell/
+│   └── profile.ps1      # shell profile (zoxide, fzf, eza, bat, PSReadLine)
+└── omarchy/
+    └── bindings.conf    # Omarchy-side clipboard override (copy into ~/.config/hypr/bindings.conf)
 ```
 
 ## Shell (PowerShell)
@@ -177,6 +181,33 @@ Same letters as Omarchy, mapped to Windows-native apps.
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> | Outlook calendar (Edge PWA) | `Super + Shift + C` (calendar) |
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> | Microsoft Teams | `Super + Shift + G` (messaging) |
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> | Gemini (Edge PWA) | `Super + Shift + A` (AI) |
+
+### Clipboard
+
+Omarchy's trick: `Super + C` doesn't send `Ctrl+C` (which is SIGINT in a terminal) — it sends `Ctrl+Insert`, the legacy CUA combo that copies in *both* terminals and GUI apps. This config does the same with `Alt` as the trigger, via a small stdlib `ctypes` keyboard hook (`glazewm/clipboard.py`, started at login by `startup_commands`). Native `Ctrl+C` / `Ctrl+V` keep working as a fallback.
+
+| Binding | Action | Sends | Omarchy equivalent |
+|---|---|---|---|
+| <kbd>Alt</kbd>+<kbd>C</kbd> | Copy | `Ctrl+Insert` | `Super + C` |
+| <kbd>Alt</kbd>+<kbd>V</kbd> | Paste | `Shift+Insert` | `Super + V` |
+| <kbd>Alt</kbd>+<kbd>X</kbd> | Cut (GUI only) | `Ctrl+X` | `Super + X` |
+| <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>V</kbd> | Clipboard history | `Win+V` | `Super + Ctrl + V` (walker) |
+
+> `Win+V` needs Clipboard History enabled once (Settings → Clipboard, or press it and accept the prompt). If the hook ever isn't running, native `Ctrl+C`/`Ctrl+V` still work.
+
+**Omarchy side (for true cross-machine parity):** Omarchy's `clipboard.conf` hardcodes `Super` and is *not* covered by its Super↔Alt mod toggle, so flipping the mod key leaves copy/paste on `Super`. To put it on `Alt` to match this config, add to `~/.config/hypr/bindings.conf` (sourced last, highest priority):
+
+```conf
+unbind = SUPER, C
+unbind = SUPER, V
+unbind = SUPER, X
+unbind = SUPER CTRL, V
+
+bindd = ALT, C, Universal copy, sendshortcut, CTRL, Insert, activewindow
+bindd = ALT, V, Universal paste, sendshortcut, SHIFT, Insert, activewindow
+bindd = ALT, X, Universal cut, sendshortcut, CTRL, X, activewindow
+bindd = ALT CTRL, V, Clipboard manager, exec, omarchy-launch-walker -m clipboard
+```
 
 ### WM control
 
