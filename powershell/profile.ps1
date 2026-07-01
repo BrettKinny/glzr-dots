@@ -88,6 +88,12 @@ if (Get-Command lazygit -ErrorAction SilentlyContinue) {
 }
 #endregion
 
+#region btop  ->  `btop` resource monitor (winget ships the exe as `btop4win`)
+if (Get-Command btop4win -ErrorAction SilentlyContinue) {
+    Set-Alias btop btop4win
+}
+#endregion
+
 #region Aliases
 Set-Alias -Name c -Value claude
 
