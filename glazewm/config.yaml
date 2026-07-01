@@ -1,13 +1,19 @@
 general:
   # Commands to run when the WM has started.
   startup_commands:
-    - 'shell-exec zebar'
+    # --- Top bar: pick ONE (see README "Choose your bar") ---
+    # Default is the Command Palette Dock, which needs NO startup line here
+    # (enable it in Command Palette settings; it reserves space via the AppBar API).
+    # For the Zebar bar instead: uncomment the next line AND set
+    # gaps.outer_gap.top to 50px below.
+    # - 'shell-exec zebar'
     - 'shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\autotile.py"'
     # Omarchy-style universal clipboard: Alt+C/V/X -> Ctrl+Insert/Shift+Insert/Ctrl+X
     - 'shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\clipboard.py"'
 
   # Commands to run just before the WM is shutdown.
-  shutdown_commands: ['shell-exec taskkill /IM zebar.exe /F']
+  # Using the Zebar bar? Set this to: ['shell-exec taskkill /IM zebar.exe /F']
+  shutdown_commands: []
 
   config_reload_commands: []
 
