@@ -31,7 +31,7 @@ gaps:
   inner_gap: '5px'
 
   outer_gap:
-    top: '50px'   # Leave room for Zebar bar at the top
+    top: '2px'   # Leave 50px if using Zebar bar
     right: '10px'
     bottom: '10px'
     left: '10px'
