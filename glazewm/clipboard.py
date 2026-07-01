@@ -52,6 +52,28 @@ CTRL_VKS = (0xA2, 0xA3)
 # Keys that need the extended-key flag when injected.
 EXTENDED = {0x2D, 0x5B, 0x5C, 0xA5, 0xA3}  # Insert, L/R Win, R Alt, R Ctrl
 
+# Alt+V stays a universal *text* paste (Shift+Insert) in terminals AND GUI apps
+# - that's the Omarchy behaviour. It only diverts to the app when there's an
+# IMAGE or a copied FILE on the clipboard AND a terminal is focused: CLIs like
+# Claude Code bind Alt+V to "paste image from clipboard" on Windows (Windows
+# Terminal eats Ctrl+V for text paste), so in that one case we pass the real
+# Alt+V through instead of turning it into a text paste. Alt+C / Alt+X /
+# Alt+Ctrl+V are untouched. Add your terminal's exe (lower-case) if not listed.
+TERMINAL_EXES = {
+    'windowsterminal.exe', 'wt.exe',
+    'wezterm-gui.exe', 'wezterm.exe',
+    'alacritty.exe', 'conemu64.exe', 'conemu.exe',
+    'powershell.exe', 'pwsh.exe', 'cmd.exe', 'conhost.exe',
+    'code.exe',
+}
+PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+
+# Clipboard formats that mean "image-paste-able": a screenshot bitmap or a file
+# copied in Explorer (image files are the reliable Claude Code path). Text-only
+# clipboard contents are NOT here, so a normal copy still pastes via Shift+Insert.
+CF_BITMAP, CF_DIB, CF_HDROP, CF_DIBV5 = 2, 8, 15, 17
+IMAGE_CF = (CF_BITMAP, CF_DIB, CF_DIBV5, CF_HDROP)
+
 ULONG_PTR = wintypes.WPARAM
 LRESULT   = ctypes.c_ssize_t
 HANDLE    = ctypes.c_void_p
@@ -110,6 +132,20 @@ user32.TranslateMessage.argtypes = [ctypes.c_void_p]
 user32.DispatchMessageW.argtypes = [ctypes.c_void_p]
 kernel32.GetModuleHandleW.restype  = HANDLE
 kernel32.GetModuleHandleW.argtypes = [wintypes.LPCWSTR]
+user32.GetForegroundWindow.restype  = HANDLE
+user32.GetForegroundWindow.argtypes = []
+user32.GetWindowThreadProcessId.restype  = wintypes.DWORD
+user32.GetWindowThreadProcessId.argtypes = [HANDLE,
+                                            ctypes.POINTER(wintypes.DWORD)]
+kernel32.OpenProcess.restype  = HANDLE
+kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+kernel32.QueryFullProcessImageNameW.restype  = wintypes.BOOL
+kernel32.QueryFullProcessImageNameW.argtypes = [HANDLE, wintypes.DWORD,
+                                                wintypes.LPWSTR,
+                                                ctypes.POINTER(wintypes.DWORD)]
+kernel32.CloseHandle.argtypes = [HANDLE]
+user32.IsClipboardFormatAvailable.restype  = wintypes.BOOL
+user32.IsClipboardFormatAvailable.argtypes = [wintypes.UINT]
 
 
 # --- input injection -------------------------------------------------------
@@ -128,6 +164,36 @@ def _send(events):
 
 def _down(vk):
     return user32.GetAsyncKeyState(vk) & 0x8000
+
+
+def _fg_exe():
+    """Lower-case basename of the foreground window's process, or '' on failure.
+    Only called on the Alt+V chord (not every keystroke), so the process lookup
+    stays well inside the low-level-hook time budget."""
+    hwnd = user32.GetForegroundWindow()
+    if not hwnd:
+        return ''
+    pid = wintypes.DWORD()
+    user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+    if not pid.value:
+        return ''
+    h = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid.value)
+    if not h:
+        return ''
+    try:
+        buf  = ctypes.create_unicode_buffer(260)
+        size = wintypes.DWORD(260)
+        if kernel32.QueryFullProcessImageNameW(h, 0, buf, ctypes.byref(size)):
+            return buf.value.rsplit('\\', 1)[-1].lower()
+        return ''
+    finally:
+        kernel32.CloseHandle(h)
+
+
+def _clip_has_image():
+    """True if the clipboard holds a bitmap or a copied file (image-paste-able).
+    IsClipboardFormatAvailable needs no OpenClipboard, so it's cheap + safe."""
+    return any(user32.IsClipboardFormatAvailable(cf) for cf in IMAGE_CF)
 
 
 def remap(*combo):
@@ -157,8 +223,14 @@ def _proc(nCode, wParam, lParam):
                 if vk == VK_V:
                     if _down(CTRL_VKS[0]) or _down(CTRL_VKS[1]):
                         remap(VK_LWIN, VK_V)            # clipboard history
-                    else:
-                        remap(VK_SHIFT, VK_INSERT)      # paste
+                        return 1
+                    if _clip_has_image() and _fg_exe() in TERMINAL_EXES:
+                        # Image/file on the clipboard + a terminal focused: let
+                        # the real Alt+V through so the CLI (Claude Code) pastes
+                        # it. Text pastes fall through to Shift+Insert below.
+                        return user32.CallNextHookEx(None, nCode, wParam,
+                                                     lParam)
+                    remap(VK_SHIFT, VK_INSERT)          # universal text paste
                     return 1
     return user32.CallNextHookEx(None, nCode, wParam, lParam)
 
