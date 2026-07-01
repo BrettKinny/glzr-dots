@@ -131,6 +131,15 @@ window_rules:
     match:
       - window_process: { regex: 'zen' }
 
+  # Float the Windows shell file-operation dialog (copy / move / delete
+  # progress + "replace or skip" prompts). GlazeWM's default handling of it
+  # is inconsistent (sometimes tiled, sometimes floated oversized), so pin it
+  # to a centred, sensibly-sized floating window. Matched by class so it works
+  # regardless of which app started the copy (explorer, pwsh, etc.).
+  - commands: ['set-floating --centered --width 600px --height 450px']
+    match:
+      - window_class: { equals: 'OperationStatusWindow' }
+
 binding_modes:
   # Resize mode (Omarchy uses Super+=/- for resize, but this provides
   # an alternative vim-style resize mode).
