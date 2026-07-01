@@ -89,8 +89,17 @@ if (Get-Command lazygit -ErrorAction SilentlyContinue) {
 #endregion
 
 #region btop  ->  `btop` resource monitor (winget ships the exe as `btop4win`)
+# Work laptop re-maps 8 GPO network drives (L,R,S,T,U,V,W,Y). Off-network they go
+# Disconnected and hang btop's startup disk scan -> blank screen. Drop the dead
+# mappings first (connected drives are left untouched), then launch. Get-SmbMapping
+# reads the redirector table and returns fast; it does not hang on the dead drives.
 if (Get-Command btop4win -ErrorAction SilentlyContinue) {
-    Set-Alias btop btop4win
+    function btop {
+        Get-SmbMapping -ErrorAction SilentlyContinue |
+            Where-Object Status -ne 'OK' |
+            Remove-SmbMapping -Force -ErrorAction SilentlyContinue
+        btop4win @args
+    }
 }
 #endregion
 
