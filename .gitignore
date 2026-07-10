@@ -1,2 +1,6 @@
 # Runtime logs
 **/errors.log
+**/clipboard.log
+
+# Python bytecode
+__pycache__/
