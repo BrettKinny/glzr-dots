@@ -1,8 +1,15 @@
 general:
   # Commands to run when the WM has started.
   startup_commands:
+    # --- Top bar: pick ONE (see README "Choose your bar") ---
+    # Default is the Command Palette Dock, which needs NO startup line here
+    # (enable it in Command Palette settings; it reserves space via the AppBar API).
+    # For the Zebar bar instead: uncomment the next line AND set
+    # gaps.outer_gap.top to 50px below.
     - 'shell-exec zebar'
     - 'shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\autotile.py"'
+    # Omarchy-style universal clipboard: Alt+C/V/X -> Ctrl+Insert/Shift+Insert/Ctrl+X
+    - 'shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\clipboard.py"'
 
   # Commands to run just before the WM is shutdown.
   shutdown_commands: ['shell-exec taskkill /IM zebar.exe /F']
@@ -29,7 +36,7 @@ gaps:
   inner_gap: '5px'
 
   outer_gap:
-    top: '50px'   # Leave room for Zebar bar at the top
+    top: '50px'  # 50px for Zebar bar (set to 2px if using Command Palette Dock instead)
     right: '10px'
     bottom: '10px'
     left: '10px'
@@ -117,6 +124,20 @@ window_rules:
       # Matches both Classic Outlook (outlook) and New Outlook (olk)
       - window_process: { regex: '(?i)outlook|olk' }
         window_title: { regex: '(?i).*reminder.*' }
+
+  # Zen browser transparency
+  - commands: ['set-transparency --opacity 95%']
+    match:
+      - window_process: { regex: 'zen' }
+
+  # Float the Windows shell file-operation dialog (copy / move / delete
+  # progress + "replace or skip" prompts). GlazeWM's default handling of it
+  # is inconsistent (sometimes tiled, sometimes floated oversized), so pin it
+  # to a centred, sensibly-sized floating window. Matched by class so it works
+  # regardless of which app started the copy (explorer, pwsh, etc.).
+  - commands: ['set-floating --centered --width 600px --height 450px']
+    match:
+      - window_class: { equals: 'OperationStatusWindow' }
 
 binding_modes:
   # Resize mode (Omarchy uses Super+=/- for resize, but this provides
