@@ -126,7 +126,7 @@ window_rules:
         window_title: { regex: '(?i).*reminder.*' }
 
   # Zen browser transparency
-  - commands: ['set-transparency --opacity 95%']
+  - commands: ['set-transparency --opacity 100%']
     match:
       - window_process: { regex: 'zen' }
 
