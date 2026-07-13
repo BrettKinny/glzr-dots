@@ -12,11 +12,20 @@ import websockets
 #      instead of being stretched edge-to-edge (mimics how Omarchy/Hyprland
 #      feel on ultrawides). As soon as a second window appears, the centered
 #      window is handed back to tiling so the two tile normally.
+#   3. Re-tile self-moving windows - Zen (Firefox-based) restores its saved
+#      geometry from xulstore.json shortly *after* a new window opens, moving
+#      it out of the slot GlazeWM tiled it into. GlazeWM doesn't re-assert, so
+#      after one of these windows is managed we redraw a couple of times to
+#      snap it back.
 # ---------------------------------------------------------------------------
 
 URI = "ws://localhost:6123"
 
 ENABLE_DWINDLE = True
+
+# Processes that re-apply their own saved geometry after opening.
+RETILE_PROCESSES = {"zen"}
+RETILE_DELAYS = (0.5, 1.5)  # seconds after window_managed to force a redraw
 
 ENABLE_CENTER_SINGLE = True
 WIDTH_FRACTION = 0.5        # centered window width, as a fraction of monitor width
@@ -119,8 +128,20 @@ async def reconcile(cmd_ws, centered_ids):
             await send_recv(cmd_ws, f"command set-tiling-direction {direction}")
 
 
+async def retile_later(cmd_ws, cmd_lock, centered_ids):
+    """Redraw after short delays so a window that re-applied its own saved
+    geometry (e.g. Zen) gets snapped back into its tile slot."""
+    for delay in RETILE_DELAYS:
+        await asyncio.sleep(delay)
+        async with cmd_lock:
+            await send_recv(cmd_ws, "command wm-redraw")
+    async with cmd_lock:
+        await reconcile(cmd_ws, centered_ids)
+
+
 async def run():
     centered_ids = set()
+    cmd_lock = asyncio.Lock()
     async with websockets.connect(URI) as event_ws, \
                websockets.connect(URI) as cmd_ws:
         for event in ("window_managed", "window_unmanaged", "focus_changed",
@@ -128,11 +149,20 @@ async def run():
             await send_recv(event_ws, f"sub -e {event}")
 
         # Apply once on startup so the current layout is corrected immediately.
-        await reconcile(cmd_ws, centered_ids)
+        async with cmd_lock:
+            await reconcile(cmd_ws, centered_ids)
 
         while True:
             message = json.loads(await event_ws.recv())
-            if message.get("messageType") == "event_subscription":
+            if message.get("messageType") != "event_subscription":
+                continue
+            data = message.get("data", {})
+            window = data.get("managedWindow") or {}
+            if (data.get("eventType") == "window_managed"
+                    and window.get("processName") in RETILE_PROCESSES):
+                asyncio.create_task(
+                    retile_later(cmd_ws, cmd_lock, centered_ids))
+            async with cmd_lock:
                 await reconcile(cmd_ws, centered_ids)
 
 
