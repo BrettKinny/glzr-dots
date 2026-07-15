@@ -19,7 +19,9 @@ import websockets
 #      snap it back.
 # ---------------------------------------------------------------------------
 
-URI = "ws://localhost:6123"
+# 127.0.0.1, not localhost: localhost tries IPv6 ::1 first and stalls ~2s
+# before falling back to IPv4, which GlazeWM actually listens on.
+URI = "ws://127.0.0.1:6123"
 
 ENABLE_DWINDLE = True
 

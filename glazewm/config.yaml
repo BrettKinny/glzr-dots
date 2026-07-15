@@ -36,7 +36,10 @@ gaps:
   inner_gap: '5px'
 
   outer_gap:
-    top: '50px'  # 50px for Zebar bar (set to 2px if using Command Palette Dock instead)
+    # overline-zebar docks and reserves its own screen space (windows already
+    # start below the bar), so only a small cosmetic gap is needed here.
+    # A large value would stack on top of the reserved space.
+    top: '2px'
     right: '10px'
     bottom: '10px'
     left: '10px'
@@ -311,7 +314,11 @@ keybindings:
   # ===================================================================
 
   # Terminal — Omarchy: Super + Return
-  - commands: ['shell-exec wt -f']
+  # Opens in the cwd of the focused/most-recent terminal on this workspace
+  # (home on a fresh workspace), like Omarchy's omarchy-cmd-terminal-cwd.
+  # See glazewm/new-terminal.py + the prompt hook in powershell/profile.ps1.
+  # pythonw: no console window (a hidden one would grab a tile slot).
+  - commands: ['shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\new-terminal.py"']
     bindings: ['alt+enter']
 
   # Browser (Zen) — Omarchy: Super + Shift + B
