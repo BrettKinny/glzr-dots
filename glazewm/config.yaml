@@ -351,6 +351,10 @@ keybindings:
   - commands: ['shell-exec explorer']
     bindings: ['alt+shift+f']
 
+  # File Manager (yazi TUI) — Ctrl + Shift + F
+  - commands: ['shell-exec wt yazi']
+    bindings: ['ctrl+shift+f']
+
   # Obsidian — Omarchy: Super + Shift + O
   - commands: ['shell-exec Obsidian']
     bindings: ['alt+shift+o']
