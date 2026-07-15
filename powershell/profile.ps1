@@ -96,3 +96,52 @@ $editExe = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Microsoft.
     Select-Object -First 1 -ExpandProperty FullName
 if ($editExe) { Set-Alias edit $editExe }
 #endregion
+
+#region Terminal cwd tracking  ->  Alt+Enter opens new terminals in this pane's folder
+# Records "WT window handle -> $PWD" on every prompt so glazewm/new-terminal.ps1
+# can launch the next terminal in the same folder (omarchy-style). All WT windows
+# share one WindowsTerminal.exe process, so the window handle — captured via
+# GetForegroundWindow at prompt time — is the only reliable key to this pane.
+# Must stay below the oh-my-posh/zoxide regions: it wraps whatever prompt
+# function they installed.
+if ($env:WT_SESSION) {
+    $script:__cwdTrackDir = Join-Path $env:LOCALAPPDATA 'glazewm\term-cwd'
+    New-Item -ItemType Directory -Force -Path $script:__cwdTrackDir | Out-Null
+
+    if (-not ('GlzrDots.Win32' -as [type])) {
+        Add-Type -Namespace GlzrDots -Name Win32 -MemberDefinition @'
+[DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+[DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint pid);
+'@
+    }
+
+    # Cache pid -> is-it-WindowsTerminal so the common case is one Win32 call.
+    $script:__wtPidCache = @{}
+    $script:__cwdTrackPrevPrompt = $function:prompt
+
+    function prompt {
+        $prevSuccess = $global:?
+        $prevExitCode = $global:LASTEXITCODE
+        try {
+            $hwnd = [GlzrDots.Win32]::GetForegroundWindow()
+            $wpid = 0u
+            [GlzrDots.Win32]::GetWindowThreadProcessId($hwnd, [ref]$wpid) | Out-Null
+            if ($wpid) {
+                if (-not $script:__wtPidCache.ContainsKey($wpid)) {
+                    $script:__wtPidCache[$wpid] =
+                        (Get-Process -Id $wpid -ErrorAction SilentlyContinue).ProcessName -eq 'WindowsTerminal'
+                }
+                if ($script:__wtPidCache[$wpid]) {
+                    [IO.File]::WriteAllText(
+                        (Join-Path $script:__cwdTrackDir "$([int64]$hwnd).txt"), $PWD.Path)
+                }
+            }
+        } catch { }
+        # Restore $LASTEXITCODE and $? so prompt segments (e.g. oh-my-posh's
+        # error indicator) still see the user's last command, not our hook.
+        $global:LASTEXITCODE = $prevExitCode
+        if (-not $prevSuccess) { Write-Error '' -ErrorAction SilentlyContinue }
+        & $script:__cwdTrackPrevPrompt
+    }
+}
+#endregion
