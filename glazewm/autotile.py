@@ -100,8 +100,15 @@ async def reconcile(cmd_ws, centered_ids):
             ours = [w for w in windows
                     if w["id"] in centered_ids and state_of(w) == "floating"]
 
-            if tiling and ours:
-                # A tiling window joined our centered one -> give it back.
+            # Windows we manage for centering = tiling ones + the ones we
+            # floated. Genuinely user-floated windows are ignored here.
+            managed = len(tiling) + len(ours)
+
+            if ours and managed >= 2:
+                # More than one managed window in this workspace -> everything
+                # tiles. Hand our centered windows back so they don't overlay
+                # each other (two lone-centered windows meeting on the same
+                # workspace) or sit on top of a tiled window.
                 for w in ours:
                     await send_recv(cmd_ws, f"command --id {w['id']} set-tiling")
                     centered_ids.discard(w["id"])
