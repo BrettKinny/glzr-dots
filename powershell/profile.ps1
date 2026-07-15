@@ -82,29 +82,12 @@ function touch {
 }
 #endregion
 
-#region lazygit  ->  `lg` terminal UI for git
-if (Get-Command lazygit -ErrorAction SilentlyContinue) {
-    Set-Alias lg lazygit
-}
-#endregion
-
-#region btop  ->  `btop` resource monitor (winget ships the exe as `btop4win`)
-# Work laptop re-maps 8 GPO network drives (L,R,S,T,U,V,W,Y). Off-network they go
-# Disconnected and hang btop's startup disk scan -> blank screen. Drop the dead
-# mappings first (connected drives are left untouched), then launch. Get-SmbMapping
-# reads the redirector table and returns fast; it does not hang on the dead drives.
-if (Get-Command btop4win -ErrorAction SilentlyContinue) {
-    function btop {
-        Get-SmbMapping -ErrorAction SilentlyContinue |
-            Where-Object Status -ne 'OK' |
-            Remove-SmbMapping -Force -ErrorAction SilentlyContinue
-        btop4win @args
-    }
-}
-#endregion
-
 #region Aliases
 Set-Alias -Name c -Value claude
+Set-Alias -Name f -Value fresh
+Set-Alias -Name lg -Value lazygit
+Set-Alias -Name lj -Value lazyjira
+Set-Alias -Name e -Value edit
 
 # Microsoft Edit v2.0 (winget) instead of the older System32 edit.exe.
 # Resolve the newest installed build at load time so the alias survives upgrades.
