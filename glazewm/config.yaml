@@ -6,13 +6,13 @@ general:
     # (enable it in Command Palette settings; it reserves space via the AppBar API).
     # For the Zebar bar instead: uncomment the next line AND set
     # gaps.outer_gap.top to 50px below.
-    - 'shell-exec zebar'
+    # - 'shell-exec zebar'   # Zebar uninstalled; using the Dock instead
     - 'shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\autotile.py"'
     # Omarchy-style universal clipboard: Alt+C/V/X -> Ctrl+Insert/Shift+Insert/Ctrl+X
     - 'shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\clipboard.py"'
 
   # Commands to run just before the WM is shutdown.
-  shutdown_commands: ['shell-exec taskkill /IM zebar.exe /F']
+  shutdown_commands: []
 
   config_reload_commands: []
 
