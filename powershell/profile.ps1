@@ -145,3 +145,23 @@ if ($env:WT_SESSION) {
     }
 }
 #endregion
+
+#region local LLM (llama.cpp - Qwen3.6-35B-A3B on Arc 140V)
+function llm {
+    # Start the local LLM server (http://localhost:8080). See C:\llama.cpp\start-llm.ps1
+    if (Get-Process llama-server -ErrorAction SilentlyContinue) {
+        Write-Host 'llama-server already running -> http://localhost:8080' -ForegroundColor Yellow
+        return
+    }
+    Start-Process powershell -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','C:\llama.cpp\start-llm.ps1' `
+        -RedirectStandardOutput 'C:\llama.cpp\server.log' -RedirectStandardError 'C:\llama.cpp\server.err.log' -WindowStyle Hidden
+    Write-Host 'Starting llama-server... (loads in ~30s)  ->  http://localhost:8080' -ForegroundColor Cyan
+    for ($i=0; $i -lt 40; $i++) {
+        try { if ((Invoke-RestMethod http://localhost:8080/health -TimeoutSec 3).status -eq 'ok') { Write-Host 'Ready.' -ForegroundColor Green; return } } catch {}
+        Start-Sleep 2
+    }
+    Write-Host 'Not ready yet - check: llm-log' -ForegroundColor Red
+}
+function llm-stop { Get-Process llama-server -ErrorAction SilentlyContinue | Stop-Process -Force; Write-Host 'llama-server stopped.' }
+function llm-log  { Get-Content 'C:\llama.cpp\server.err.log' -Tail 20 }
+#endregion
