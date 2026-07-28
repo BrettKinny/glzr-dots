@@ -26,18 +26,25 @@ if (-not $env:EDITOR -and (Get-Command edit.exe -ErrorAction SilentlyContinue)) 
 }
 #endregion
 
-#region PSReadLine  ->  inline + list predictions from history, menu-style tab
-# MUST come before the starship region too: starship's init captures
-# `$script:DoesUseLists = (Get-PSReadLineOption).PredictionViewStyle -eq 'ListView'`
-# once, at init time. Configure ListView after it and starship thinks lists are
-# off, so its transient-prompt handler skips the padding that scrolls the
-# prediction rows away — leaving dead "[History]" lines under every command.
+#region PSReadLine  ->  inline predictions from history, menu-style tab
+# InlineView, not ListView, and that's deliberate — think twice before switching
+# back. ListView's prediction rows are drawn below the input line, and anything
+# that moves the cursor out from under PSReadLine orphans them on screen:
+#   - Microsoft Edit (now $EDITOR, see the region above) runs in the alternate
+#     screen buffer and doesn't restore the cursor row on exit, so the next
+#     prompt is drawn near the top of the buffer while the list rows are still
+#     keyed to the old, lower row. Dead "[History]" lines, one per `edit`.
+#   - starship's transient prompt only pads the rows away if it saw ListView at
+#     init time (it captures `$script:DoesUseLists` once), which made this
+#     region's position relative to the starship region load-bearing.
+# InlineView renders the suggestion on the input line itself, so there are no
+# rows to orphan and neither trap applies.
 if (Get-Module PSReadLine) {
     Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
     # Prediction needs a VT-capable, non-redirected console; swallow the error
     # when the profile is sourced in a plain/redirected host (e.g. from a script).
     try {
-        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -ErrorAction Stop
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle InlineView -ErrorAction Stop
     } catch { }
 }
 #endregion
