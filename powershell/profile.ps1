@@ -3,9 +3,39 @@
 # Everything tool-dependent is guarded so this loads cleanly on a fresh machine
 # before the optional tools are installed.
 
+#region Console encoding  ->  UTF-8 in, UTF-8 out
+# MUST come before the starship region. `starship init powershell` emits a stub
+# that runs `starship init powershell --print-full-init | Out-String`, and that
+# inner capture is decoded with [Console]::OutputEncoding — which an interactive
+# console leaves on the OEM codepage (437/850). The full init text contains a
+# literal ❯ for the transient prompt, so on an OEM codepage it gets baked into
+# the session as "Γ¥»" (U+276F's UTF-8 bytes E2 9D AF read as CP437) and stays
+# broken for the life of the shell. The main prompt escapes this because
+# starship's per-prompt calls pin StandardOutputEncoding to UTF8 themselves.
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+#endregion
+
+#region PSReadLine  ->  inline + list predictions from history, menu-style tab
+# MUST come before the starship region too: starship's init captures
+# `$script:DoesUseLists = (Get-PSReadLineOption).PredictionViewStyle -eq 'ListView'`
+# once, at init time. Configure ListView after it and starship thinks lists are
+# off, so its transient-prompt handler skips the padding that scrolls the
+# prediction rows away — leaving dead "[History]" lines under every command.
+if (Get-Module PSReadLine) {
+    Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+    # Prediction needs a VT-capable, non-redirected console; swallow the error
+    # when the profile is sourced in a plain/redirected host (e.g. from a script).
+    try {
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -ErrorAction Stop
+    } catch { }
+}
+#endregion
+
 #region Prompt  ->  starship (config in ./starship.toml, ANSI-themed)
 # Must stay above the "Terminal cwd tracking" region, which wraps whatever
-# prompt function this installs.
+# prompt function this installs, and below the two regions above — see their
+# notes for why the order is load-bearing.
 if (Get-Command starship -ErrorAction SilentlyContinue) {
     $env:STARSHIP_CONFIG = Join-Path $PSScriptRoot 'starship.toml'
     Invoke-Expression (& starship init powershell)
@@ -47,17 +77,6 @@ if (Get-Command fzf -ErrorAction SilentlyContinue) {
         Import-Module PSFzf
         Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
     }
-}
-#endregion
-
-#region PSReadLine  ->  inline + list predictions from history, menu-style tab
-if (Get-Module PSReadLine) {
-    Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
-    # Prediction needs a VT-capable, non-redirected console; swallow the error
-    # when the profile is sourced in a plain/redirected host (e.g. from a script).
-    try {
-        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -ErrorAction Stop
-    } catch { }
 }
 #endregion
 
