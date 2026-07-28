@@ -1,0 +1,4 @@
+# elio's runtime scratch dir (created empty at startup for pending deletions).
+# %APPDATA%\elio is a junction to this directory, so elio's state lands here too --
+# track config only.
+cleanup/

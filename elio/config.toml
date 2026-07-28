@@ -1,0 +1,36 @@
+# Open text and config files in Microsoft Edit rather than handing them to the Windows
+# shell association (which would spawn a separate GUI/terminal window). terminal = true
+# runs it inline in elio's own terminal, so it behaves like an editor call in yazi/lf.
+# Extensions are bare here -- no leading dot, matching elio's own [extensions.*] tables.
+[[open.rules]]
+ext = [
+  "txt", "md", "markdown", "log",
+  "ini", "cfg", "conf", "env", "properties",
+  "json", "jsonc", "yaml", "yml", "toml",
+  "xml",
+  "ps1", "psm1", "psd1",
+  "sql", "diff", "patch",
+]
+command = "edit {path}"
+terminal = true
+
+[places]
+# Skip the A:-Z: drive-letter probe in the sidebar. Seven persistent mappings
+# point at decommissioned file servers, which no longer resolve; probing them blocks
+# the UI thread for seconds whenever the SMB dead-share cache has expired.
+show_devices = false
+
+# This list replaces the built-in default set rather than adding to it.
+entries = [
+  "home",
+  "documents",
+  { title = "OneDrive", path = "~/OneDrive" },
+  "downloads",
+  { title = "Repos", path = "~/Repos" },
+  { title = "Projects", path = "~/Projects" },
+  { title = "Work Notes", path = "~/Work Notes" },
+  # No-op on Windows: trash_dir() only resolves the freedesktop path
+  # (%APPDATA%\Trash\files) or macOS ~/.Trash, neither of which exists here, so
+  # this entry is silently dropped. Kept so it appears if Recycle Bin support lands.
+  "trash",
+]
