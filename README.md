@@ -102,7 +102,7 @@ Then launch GlazeWM. It starts the autotile and clipboard scripts automatically 
 │   ├── settings.json    # startup widget (overline-zebar / main / default) — alternative bar
 │   └── .marketplace/    # references to installed marketplace packs
 ├── powershell/
-│   ├── profile.ps1      # shell profile (zoxide, fzf, eza, bat, PSReadLine)
+│   ├── profile.ps1      # shell profile (zoxide, fzf, eza, bat, PSReadLine, `ask`)
 │   └── set-edit-associations.ps1  # open text/config files in Microsoft Edit (TUI)
 ├── elio/
 │   ├── config.toml      # TUI file manager: sidebar places + open rules
@@ -127,6 +127,8 @@ Brings the modern-Linux terminal niceties to PowerShell 7+. `powershell/profile.
 | [starship](https://starship.rs/) | prompt; config in `powershell/starship.toml`, styled with ANSI colour names so it follows the terminal theme | `winget install Starship.Starship` |
 | [elio](https://crates.io/crates/elio) | TUI file manager; config in `elio/` — see [elio](#elio-tui-file-manager) | `cargo install elio` |
 | [Microsoft Edit](https://github.com/microsoft/edit) | `edit` TUI editor — the `$EDITOR` and file-association target | `winget install Microsoft.Edit` |
+| [Claude Code](https://claude.com/claude-code) | `ask` one-shot question answerer — see [ask](#ask--one-shot-claude-in-the-terminal) | `winget install Anthropic.ClaudeCode` |
+| [glow](https://github.com/charmbracelet/glow) | renders `ask`'s markdown in the terminal (optional) | `winget install charmbracelet.glow` |
 
 Plus `which` and `touch` helpers for muscle memory.
 
@@ -149,6 +151,43 @@ git config --global delta.navigate true
 git config --global delta.line-numbers true
 git config --global merge.conflictStyle zdiff3
 ```
+
+### `ask` — one-shot Claude in the terminal
+
+For the "what's the flag for…" questions that don't deserve a browser tab. `ask` wraps the [Claude Code](https://claude.com/claude-code) CLI in a single-shot function, so it reuses whatever auth `claude` already has — no API key to manage.
+
+```powershell
+ask "what's the command to find which process is using port 8080?"   # chat mode
+ask -f "which module provides the ctrl+r binding here?"              # reads the cwd
+git diff | ask "explain what changed"                                # piped context
+```
+
+| Flag | Effect |
+|---|---|
+| *(none)* | **Chat mode.** No tools, general knowledge only, ~5s. Streams token by token as plain text. |
+| `-f` | **File mode.** Answers from the files in the current folder and cites `path:line`, ~10-14s. Prints a dim `· Read` line per tool call. |
+| `-m <model>` | Override the model (default `haiku`, chosen for latency). |
+| `-r` | Force glow rendering in chat mode. |
+| `-Raw` | Force plain streaming in file mode. |
+
+`-f` is **read-only and scoped to `$PWD`** — `Read`, `Glob` and `Grep` are allowed; `Edit`, `Write`, `Bash` and web access are explicitly denied, so it can't modify anything or stop to ask permission. `cd` to the project first; it won't reach into a parent directory.
+
+Each call is an independent one-shot with no memory of the last, and no session is written to disk. For an actual conversation, use `claude` (aliased to `c`).
+
+<details>
+<summary><b>Design notes</b> (why it's fast, and why only <code>-f</code> renders markdown)</summary>
+
+**Latency.** `--effort low` is the single biggest win — it suppresses the extended thinking block, which otherwise burns several seconds reasoning about a one-line question. `--no-session-persistence`, `--strict-mcp-config` and `--disable-slash-commands` skip startup work a one-shot question never uses. Output is parsed out of `--output-format stream-json`, so tokens appear as they arrive instead of landing in one dump at the end.
+
+**Rendering is per-mode because glow can't stream** — it needs the whole document, so piping through it means nothing appears until the answer is complete. That trade is only worth making where markdown actually shows up:
+
+- *Chat mode* passes `--tools ""`, which makes Claude Code's default system prompt (all the tool-use scaffolding) dead weight, so it's replaced outright via `--system-prompt`. A terse plain-text instruction is then reliably obeyed, leaving nothing to render — it streams raw.
+- *File mode* needs that default prompt for the tools to work, so the terse instruction can only be `--append`ed to it. Fences and bold keep coming regardless of wording, so it buffers and renders.
+
+**The BOM.** The console-encoding region at the top of `profile.ps1` sets `$OutputEncoding` to UTF-8 *with* a BOM, and PowerShell writes those bytes into any native command's stdin. glow reads them as document text and prints a stray `U+FEFF` before the first word, so the glow pipe swaps in a BOM-less encoder and restores it after. Worth knowing before piping strings into other native tools from this profile.
+
+**Positional binding.** `$Question` is declared `Position = 0` with `ValueFromRemainingArguments` so `ask what is a hard link` works unquoted. Without the explicit position, `-Model` (declared earlier) silently swallows the first word as the model name. Quotes are still needed for anything containing `?`, `|`, `$` or `'`.
+</details>
 
 ### Text files open in the terminal
 
