@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CLI / TUI Cheat Sheet</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #666;
+    --line: #d0d0d0;
+    --accent: #2f855a;
+    --key-bg: #f2f4f7;
+    --key-border: #c4ccd6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); background: #fff; }
+  body { padding: 12mm 10mm; }
+
+  header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 2.5px solid var(--accent);
+    padding-bottom: 4px; margin-bottom: 8px;
+  }
+  header h1 { font-size: 18pt; letter-spacing: -0.3px; }
+  header .sub { font-size: 8pt; color: var(--muted); }
+
+  .grid { columns: 2; column-gap: 8mm; }
+  section { break-inside: avoid; margin-bottom: 7px; }
+  section h2 {
+    font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.6px;
+    color: var(--accent); border-bottom: 1px solid var(--line);
+    padding-bottom: 2px; margin-bottom: 3px;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  td { font-size: 8.2pt; padding: 1.6px 0; vertical-align: top; }
+  td.keys { width: 42%; white-space: nowrap; }
+  td.desc { color: #333; }
+
+  code, kbd { font-family: "Cascadia Mono", Consolas, monospace; }
+  kbd {
+    display: inline-block; font-size: 7.4pt; line-height: 1;
+    padding: 2px 4px; background: var(--key-bg);
+    border: 1px solid var(--key-border); border-bottom-width: 2px;
+    border-radius: 3px; margin-right: 1px;
+  }
+  code { font-size: 7.8pt; color: #1a3a5a; font-weight: 600; }
+  .plus, .arg { color: var(--muted); font-size: 7pt; margin: 0 1px; }
+  .arg { font-style: italic; }
+
+  footer {
+    margin-top: 6px; padding-top: 4px; border-top: 1px solid var(--line);
+    font-size: 7pt; color: var(--muted); text-align: center;
+  }
+  @page { size: A4 portrait; margin: 0; }
+  @media print { body { padding: 10mm; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>CLI / TUI / Terminal Cheat Sheet</h1>
+  <div class="sub">PowerShell &middot; Windows Terminal</div>
+</header>
+
+<div class="grid">
+
+  <section>
+    <h2>Shell Keys (PSReadLine + fzf)</h2>
+    <table>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>T</kbd></td><td class="desc">Fuzzy file finder</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>R</kbd></td><td class="desc">Fuzzy history search</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>C</kbd></td><td class="desc">Fuzzy cd into dir</td></tr>
+      <tr><td class="keys"><kbd>Tab</kbd></td><td class="desc">Menu-style completion</td></tr>
+      <tr><td class="keys"><kbd>&rarr;</kbd></td><td class="desc">Accept history prediction</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>C</kbd></td><td class="desc">Cancel current line</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Navigate &amp; Jump</h2>
+    <table>
+      <tr><td class="keys"><code>z</code> <span class="arg">dir</span></td><td class="desc">Jump to dir (frecency, zoxide)</td></tr>
+      <tr><td class="keys"><code>zi</code></td><td class="desc">Interactive dir picker</td></tr>
+      <tr><td class="keys"><code>z -</code></td><td class="desc">Back to previous dir</td></tr>
+      <tr><td class="keys"><code>which</code> <span class="arg">cmd</span></td><td class="desc">Resolve command path</td></tr>
+      <tr><td class="keys"><code>touch</code> <span class="arg">file</span></td><td class="desc">Create / bump timestamp</td></tr>
+      <tr><td class="keys"><code>sudo</code> <span class="arg">cmd</span></td><td class="desc">Elevate (gsudo)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>List &amp; View (eza / bat)</h2>
+    <table>
+      <tr><td class="keys"><code>ls</code></td><td class="desc">eza w/ icons</td></tr>
+      <tr><td class="keys"><code>ll</code></td><td class="desc">Long list + git status</td></tr>
+      <tr><td class="keys"><code>la</code></td><td class="desc">Long list incl. hidden</td></tr>
+      <tr><td class="keys"><code>lt</code></td><td class="desc">Tree (2 levels)</td></tr>
+      <tr><td class="keys"><code>cat</code> <span class="arg">file</span></td><td class="desc">bat (syntax highlight)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>App Aliases</h2>
+    <table>
+      <tr><td class="keys"><code>c</code></td><td class="desc">claude</td></tr>
+      <tr><td class="keys"><code>f</code></td><td class="desc">fresh</td></tr>
+      <tr><td class="keys"><code>lg</code></td><td class="desc">lazygit</td></tr>
+      <tr><td class="keys"><code>lj</code></td><td class="desc">lazyjira</td></tr>
+      <tr><td class="keys"><code>e</code> <span class="plus">/</span> <code>edit</code></td><td class="desc">Microsoft Edit</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Windows Terminal</h2>
+    <table>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>T</kbd></td><td class="desc">New tab</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Tab</kbd></td><td class="desc">Next tab</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>D</kbd></td><td class="desc">Split pane (duplicate)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>&larr;&rarr;&uarr;&darr;</kbd></td><td class="desc">Move between panes</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>W</kbd></td><td class="desc">Close pane / tab</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>P</kbd></td><td class="desc">Command palette</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>yazi (file manager)</h2>
+    <table>
+      <tr><td class="keys"><kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td><td class="desc">Nav: up-dir / down / up / enter</td></tr>
+      <tr><td class="keys"><kbd>Space</kbd></td><td class="desc">Toggle select</td></tr>
+      <tr><td class="keys"><kbd>y</kbd> <kbd>x</kbd> <kbd>p</kbd></td><td class="desc">Yank / cut / paste</td></tr>
+      <tr><td class="keys"><kbd>d</kbd> <kbd>D</kbd></td><td class="desc">Trash / delete</td></tr>
+      <tr><td class="keys"><kbd>a</kbd> <kbd>r</kbd></td><td class="desc">Create / rename</td></tr>
+      <tr><td class="keys"><kbd>/</kbd> <kbd>Enter</kbd></td><td class="desc">Search / open</td></tr>
+      <tr><td class="keys"><kbd>q</kbd></td><td class="desc">Quit</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>lazygit</h2>
+    <table>
+      <tr><td class="keys"><kbd>1</kbd>&hellip;<kbd>5</kbd></td><td class="desc">Switch panels</td></tr>
+      <tr><td class="keys"><kbd>Space</kbd></td><td class="desc">Stage / unstage file</td></tr>
+      <tr><td class="keys"><kbd>a</kbd></td><td class="desc">Stage all</td></tr>
+      <tr><td class="keys"><kbd>c</kbd></td><td class="desc">Commit</td></tr>
+      <tr><td class="keys"><kbd>P</kbd> <kbd>p</kbd></td><td class="desc">Push / pull</td></tr>
+      <tr><td class="keys"><kbd>b</kbd></td><td class="desc">Branches / checkout</td></tr>
+      <tr><td class="keys"><kbd>z</kbd> <kbd>Ctrl</kbd><span class="plus">+</span><kbd>z</kbd></td><td class="desc">Undo / redo</td></tr>
+      <tr><td class="keys"><kbd>?</kbd> <kbd>q</kbd></td><td class="desc">Help / quit</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<footer>
+  Aliases: ~/.glzr/powershell/profile.ps1 &middot; yazi/lazygit rows are app defaults &middot; Print with Ctrl+P (A4, margins: None)
+</footer>
+</body>
+</html>

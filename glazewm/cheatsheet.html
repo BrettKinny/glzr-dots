@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GlazeWM Cheat Sheet</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #666;
+    --line: #d0d0d0;
+    --accent: #2b6cb0;
+    --key-bg: #f2f4f7;
+    --key-border: #c4ccd6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--ink);
+    background: #fff;
+  }
+  body { padding: 12mm 10mm; }
+
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2.5px solid var(--accent);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  header h1 { font-size: 18pt; letter-spacing: -0.3px; }
+  header .sub { font-size: 8pt; color: var(--muted); }
+
+  .grid {
+    columns: 2;
+    column-gap: 8mm;
+  }
+  section {
+    break-inside: avoid;
+    margin-bottom: 7px;
+  }
+  section h2 {
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--accent);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    margin-bottom: 3px;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  td {
+    font-size: 8.2pt;
+    padding: 1.6px 0;
+    vertical-align: top;
+  }
+  td.keys { width: 46%; white-space: nowrap; }
+  td.desc { color: #333; }
+
+  kbd {
+    display: inline-block;
+    font-family: "Cascadia Mono", Consolas, monospace;
+    font-size: 7.4pt;
+    line-height: 1;
+    padding: 2px 4px;
+    background: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    margin-right: 1px;
+  }
+  .plus { color: var(--muted); font-size: 7pt; margin: 0 1px; }
+
+  footer {
+    margin-top: 6px;
+    padding-top: 4px;
+    border-top: 1px solid var(--line);
+    font-size: 7pt;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    body { padding: 10mm; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>GlazeWM Keyboard Shortcuts</h1>
+  <div class="sub">Omarchy-style &middot; modifier = <b>Alt</b></div>
+</header>
+
+<div class="grid">
+
+  <section>
+    <h2>Window</h2>
+    <table>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>W</kbd></td><td class="desc">Close window</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>F</kbd></td><td class="desc">Toggle fullscreen</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>T</kbd></td><td class="desc">Toggle tiling / floating</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>V</kbd></td><td class="desc">Toggle floating (centered)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>J</kbd></td><td class="desc">Toggle split direction</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>M</kbd></td><td class="desc">Minimize</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Focus</h2>
+    <table>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>&larr;</kbd><kbd>&rarr;</kbd><kbd>&uarr;</kbd><kbd>&darr;</kbd></td><td class="desc">Focus window by direction</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Move &amp; Resize</h2>
+    <table>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>&larr;&rarr;&uarr;&darr;</kbd></td><td class="desc">Move / swap window</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>=</kbd> <span class="plus">/</span> <kbd>-</kbd></td><td class="desc">Grow / shrink width</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>=</kbd><span class="plus">/</span><kbd>-</kbd></td><td class="desc">Grow / shrink height</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>R</kbd></td><td class="desc">Resize mode (then h/j/k/l)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Resize Mode</h2>
+    <table>
+      <tr><td class="keys"><kbd>H</kbd> <kbd>L</kbd></td><td class="desc">Width &minus; / +</td></tr>
+      <tr><td class="keys"><kbd>K</kbd> <kbd>J</kbd></td><td class="desc">Height + / &minus;</td></tr>
+      <tr><td class="keys"><kbd>Esc</kbd> <kbd>Enter</kbd></td><td class="desc">Exit resize mode</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Workspaces</h2>
+    <table>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>1</kbd>&hellip;<kbd>0</kbd></td><td class="desc">Go to workspace 1&ndash;10</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>1</kbd>&hellip;<kbd>0</kbd></td><td class="desc">Move window &rarr; workspace</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Tab</kbd></td><td class="desc">Next workspace</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Tab</kbd></td><td class="desc">Previous workspace</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Tab</kbd></td><td class="desc">Recent workspace</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span><kbd>&larr;&rarr;&uarr;&darr;</kbd></td><td class="desc">Move workspace to monitor</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Launch Apps</h2>
+    <table>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></td><td class="desc">Terminal (in last cwd)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>B</kbd></td><td class="desc">Browser (Zen)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>N</kbd></td><td class="desc">Editor (VS Code)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>E</kbd></td><td class="desc">Email (Outlook)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>C</kbd></td><td class="desc">Calendar</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>G</kbd></td><td class="desc">Teams</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>A</kbd></td><td class="desc">AI (Gemini)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>O</kbd></td><td class="desc">Obsidian</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></td><td class="desc">File manager (Explorer)</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></td><td class="desc">File manager (yazi)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>WM Controls</h2>
+    <table>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>R</kbd></td><td class="desc">Reload config</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>P</kbd></td><td class="desc">Pause / resume WM</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span><kbd>W</kbd></td><td class="desc">Redraw all windows</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Q</kbd></td><td class="desc">Exit WM</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Clipboard (any app)</h2>
+    <table>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>C</kbd></td><td class="desc">Copy</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>V</kbd></td><td class="desc">Paste</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>X</kbd></td><td class="desc">Cut</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<footer>
+  GlazeWM &middot; ~/.glzr/glazewm/config.yaml &middot; Print with Ctrl+P (A4 portrait, margins: None)
+</footer>
+</body>
+</html>
