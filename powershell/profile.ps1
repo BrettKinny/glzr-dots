@@ -16,6 +16,16 @@
 $OutputEncoding = [System.Text.Encoding]::UTF8
 #endregion
 
+#region $EDITOR  ->  Microsoft Edit (the `edit` TUI)
+# Covers anything that shells out to an editor: git, lazygit, and elio's fallback
+# when no [[open.rules]] entry matches. A persistent User-scope env var is set too
+# (so GUI-launched apps see it); this line is what makes a fresh clone work before
+# that's been done. Don't clobber an explicit override from the parent process.
+if (-not $env:EDITOR -and (Get-Command edit.exe -ErrorAction SilentlyContinue)) {
+    $env:EDITOR = 'edit'
+}
+#endregion
+
 #region PSReadLine  ->  inline + list predictions from history, menu-style tab
 # MUST come before the starship region too: starship's init captures
 # `$script:DoesUseLists = (Get-PSReadLineOption).PredictionViewStyle -eq 'ListView'`
