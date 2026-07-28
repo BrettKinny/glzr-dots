@@ -203,6 +203,14 @@ cmd /c mklink /J "$env:APPDATA\elio" "$env:USERPROFILE\.glzr\elio"
 
 > Don't be tempted by `XDG_CONFIG_HOME=~/.glzr` as a no-symlink alternative — elio honours it on Windows, but so do other tools, and it would redirect everything already living in `~/.config` (git, scoop, micro…) to a directory that has none of their configs.
 
+**The OneDrive place entry** points at a plain `~/OneDrive`, because a real OneDrive folder is named after the tenant (`OneDrive - <Company Name>`) and hardcoding that would put an employer in a public repo. elio only expands `~`, not environment variables, so there's no portable way to express it in the config — junction the generic name at the real folder instead:
+
+```powershell
+# Run once, if you use the OneDrive sidebar entry:
+$tenant = (Get-ChildItem $env:USERPROFILE -Directory | Where-Object Name -like 'OneDrive - *').FullName
+cmd /c mklink /J "$env:USERPROFILE\OneDrive" "$tenant"
+```
+
 ## Keybindings
 
 **Mod key:** <kbd>Alt</kbd> (stands in for Omarchy's <kbd>Super</kbd>). Everything else matches Omarchy 1:1; read these tables as "Omarchy with `Super` → `Alt`".
