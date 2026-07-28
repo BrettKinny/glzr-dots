@@ -9,6 +9,12 @@
 if (Get-Command starship -ErrorAction SilentlyContinue) {
     $env:STARSHIP_CONFIG = Join-Path $PSScriptRoot 'starship.toml'
     Invoke-Expression (& starship init powershell)
+    # Transient prompt: once a command is submitted, redraw the prompt that ran
+    # it as a bare glyph. Scrollback becomes a clean column of commands instead
+    # of a repeated path/git wall. Needs a VT-capable host, so don't let a
+    # redirected/plain host (e.g. sourcing this from a script) take the profile
+    # down with it.
+    try { Enable-TransientPrompt } catch { }
 }
 # Previous prompt, kept for a one-line revert (winget: JanDeDobbeleer.OhMyPosh):
 # if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
