@@ -73,8 +73,12 @@ if (Get-Command fzf -ErrorAction SilentlyContinue) {
         $env:FZF_CTRL_T_OPTS = '--preview "bat --color=always --style=numbers --line-range :300 {}"'
     }
 
-    if (Get-Module -ListAvailable PSFzf) {
-        Import-Module PSFzf
+    # Don't guard with `Get-Module -ListAvailable PSFzf` — that walks every
+    # PSModulePath entry (one of which is on OneDrive) to answer a question
+    # Import-Module can answer for free: ~90ms of the profile's load time for
+    # nothing. Just try the import and move on if it isn't installed.
+    Import-Module PSFzf -ErrorAction SilentlyContinue
+    if (Get-Module PSFzf) {
         Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
     }
 }
