@@ -242,16 +242,26 @@ if ($env:WT_SESSION) {
 # `ask "how do I ..."`        chat mode: no tools, general knowledge, fastest
 # `ask -f "what does X do"`   file mode: read-only Read/Glob/Grep over the cwd
 # `git diff | ask "explain"`  anything piped in is appended as context
+# `-r` / `-Raw`               force glow rendering on / off (see below)
 #
 # Wraps the `claude` CLI rather than the raw API so it reuses the existing
 # subscription auth. The speed flags matter: --effort low kills the extended
 # thinking block (the single biggest latency win), and the mcp/slash/session
 # flags skip startup work that a one-shot question never uses. Output is parsed
 # out of stream-json so tokens appear as they arrive instead of in one dump.
+#
+# Rendering is per-mode because glow can't stream — it needs the whole document,
+# so piping through it means waiting for the full answer before anything appears.
+# Chat mode replaces the system prompt outright and reliably answers in plain
+# text, so it streams raw. File mode can only *append* to Claude Code's default
+# system prompt, which keeps emitting fences and bold no matter how the terse
+# instruction is worded, so it buffers and renders. Both are overridable.
 function ask {
     [CmdletBinding()]
     param(
         [Alias('f')][switch]$Files,
+        [Alias('r')][switch]$Render,
+        [switch]$Raw,
         [Alias('m')][Parameter(DontShow)][string]$Model = 'haiku',
         [Parameter(ValueFromPipeline, DontShow)][string]$InputObject,
         # Position 0 + remaining args, so `ask what is a hard link` works unquoted
@@ -301,6 +311,10 @@ function ask {
             $cmd += @('--tools', '', '--system-prompt', $terse)
         }
 
+        $glow = (Get-Command glow -ErrorAction SilentlyContinue).Source
+        $useGlow = $glow -and -not $Raw -and ($Render -or $Files)
+        $buf = if ($useGlow) { [System.Text.StringBuilder]::new() } else { $null }
+
         $started = $false
         Write-Host -NoNewline '...' -ForegroundColor DarkGray
         & claude @cmd 2>$null | ForEach-Object {
@@ -310,6 +324,7 @@ function ask {
                 'stream_event' {
                     $b = $ev.event
                     if ($b.type -eq 'content_block_delta' -and $b.delta.type -eq 'text_delta') {
+                        if ($useGlow) { [void]$buf.Append($b.delta.text); return }
                         if (-not $started) { Write-Host -NoNewline "`r   `r"; $started = $true }
                         Write-Host -NoNewline $b.delta.text
                     }
@@ -326,7 +341,22 @@ function ask {
                 }
             }
         }
-        Write-Host ''
+
+        if ($useGlow -and $buf.Length) {
+            # -w keeps glow's wrap inside the window (it defaults to 80 and its own
+            # style adds a 2-col margin); - reads the document from stdin.
+            $w = [Math]::Max(40, $Host.UI.RawUI.WindowSize.Width - 2)
+            # The console-encoding region sets $OutputEncoding to UTF8 *with* a BOM,
+            # which PowerShell writes into any native command's stdin. glow treats
+            # those three bytes as document text and prints a stray U+FEFF before the
+            # first word. Swap in a BOM-less encoder just for this pipe.
+            $prevOut = $OutputEncoding
+            $OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+            try { $buf.ToString() | & $glow -s auto -w $w - }
+            finally { $OutputEncoding = $prevOut }
+        } else {
+            Write-Host ''
+        }
     }
 }
 #endregion
