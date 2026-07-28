@@ -347,20 +347,16 @@ keybindings:
   - commands: ['shell-exec msedge --app=https://gemini.google.com/app']
     bindings: ['alt+shift+a']
 
-  # File Manager (Explorer) — Omarchy: Super + Shift + F
-  - commands: ['shell-exec explorer']
+  # File Manager (elio) — Omarchy: Super + Shift + F
+  - commands: ['shell-exec wt --focus elio']
     bindings: ['alt+shift+f']
-
-  # File Manager (yazi TUI) — Ctrl + Shift + F
-  - commands: ['shell-exec wt yazi']
-    bindings: ['ctrl+shift+f']
 
   # Obsidian — Omarchy: Super + Shift + O
   - commands: ['shell-exec Obsidian']
     bindings: ['alt+shift+o']
 
-  # Editor (VS Code) — Omarchy: Super + Shift + N
-  - commands: ['shell-exec code']
+  # Editor (fresh) — Omarchy: Super + Shift + N
+  - commands: ['shell-exec wt fresh']
     bindings: ['alt+shift+n']
 
   # ===================================================================
