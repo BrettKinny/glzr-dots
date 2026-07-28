@@ -1,0 +1,35 @@
+# Starship prompt config for glzr-dots.
+# Loaded via $env:STARSHIP_CONFIG in ../powershell/profile.ps1.
+#
+# Deliberately near-stock: starship's built-in defaults already style every
+# module with *named* ANSI colours ("cyan bold", "bold purple", "red bold",
+# "bold green") rather than hex, so the prompt inherits whatever palette the
+# terminal is running. Keep it that way — use ANSI names, not "#rrggbb", or the
+# prompt stops tracking the Windows Terminal / Zebar theme.
+#
+# Named colours available: black red green yellow blue purple cyan white
+# plus a bright- prefix for each (e.g. "bright-black" for a dim/comment tone).
+#
+# Inspect any module's effective settings with:  starship print-config <module>
+# Profile a slow prompt with:                    starship timings
+
+# Note: right_format (right-aligned prompt) is NOT supported in PowerShell —
+# only elvish, fish, zsh, xonsh, cmd, nushell and bash. The old oh-my-posh
+# right-hand "in pwsh at HH:MM:SS" block has no equivalent here; cmd_duration
+# on the main line covers the useful half of it.
+
+# --- Common tweaks, left commented until wanted -----------------------------
+
+# Show the wall-clock time the prompt was drawn (off by default).
+# [time]
+# disabled = false
+
+# Prompt cost on this machine, measured (warm, 10 reps, avg):
+#   non-git directory ......  41 ms   (~34 ms of that is just spawning the exe)
+#   inside a git repo ...... 269 ms
+# All of the difference is starship's git work. Disabling git_status claws back
+# ~68 ms; the remaining ~160 ms is repo-root discovery, which any git segment
+# triggers, so it can't be tuned away without dropping git from the prompt.
+# (For reference, oh-my-posh managed the same repo in ~130 ms.)
+# [git_status]
+# disabled = true

@@ -3,10 +3,17 @@
 # Everything tool-dependent is guarded so this loads cleanly on a fresh machine
 # before the optional tools are installed.
 
-#region Prompt
-if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
-    oh-my-posh init pwsh | Invoke-Expression
+#region Prompt  ->  starship (config in ./starship.toml, ANSI-themed)
+# Must stay above the "Terminal cwd tracking" region, which wraps whatever
+# prompt function this installs.
+if (Get-Command starship -ErrorAction SilentlyContinue) {
+    $env:STARSHIP_CONFIG = Join-Path $PSScriptRoot 'starship.toml'
+    Invoke-Expression (& starship init powershell)
 }
+# Previous prompt, kept for a one-line revert (winget: JanDeDobbeleer.OhMyPosh):
+# if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
+#     oh-my-posh init pwsh | Invoke-Expression
+# }
 #endregion
 
 #region zoxide  ->  `z <dir>` to jump, `zi` for interactive picker
@@ -102,7 +109,7 @@ if ($editExe) { Set-Alias edit $editExe }
 # can launch the next terminal in the same folder (omarchy-style). All WT windows
 # share one WindowsTerminal.exe process, so the window handle — captured via
 # GetForegroundWindow at prompt time — is the only reliable key to this pane.
-# Must stay below the oh-my-posh/zoxide regions: it wraps whatever prompt
+# Must stay below the starship/zoxide regions: it wraps whatever prompt
 # function they installed.
 if ($env:WT_SESSION) {
     $script:__cwdTrackDir = Join-Path $env:LOCALAPPDATA 'glazewm\term-cwd'
@@ -137,8 +144,8 @@ if ($env:WT_SESSION) {
                 }
             }
         } catch { }
-        # Restore $LASTEXITCODE and $? so prompt segments (e.g. oh-my-posh's
-        # error indicator) still see the user's last command, not our hook.
+        # Restore $LASTEXITCODE and $? so prompt segments (e.g. starship's
+        # character/status modules) still see the user's last command, not our hook.
         $global:LASTEXITCODE = $prevExitCode
         if (-not $prevSuccess) { Write-Error '' -ErrorAction SilentlyContinue }
         & $script:__cwdTrackPrevPrompt

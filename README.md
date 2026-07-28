@@ -120,7 +120,7 @@ Brings the modern-Linux terminal niceties to PowerShell 7+. `powershell/profile.
 | [eza](https://github.com/eza-community/eza) | `ls`/`ll`/`la`/`lt` with git status, icons, tree | `winget install eza-community.eza` |
 | [delta](https://github.com/dandavison/delta) | syntax-highlighted git diffs (configured in `~/.gitconfig`) | `winget install dandavison.delta` |
 | [gsudo](https://github.com/gerardog/gsudo) | `sudo` for Windows (aliased only if no native `sudo`) | `winget install gerardog.gsudo` |
-| [oh-my-posh](https://ohmyposh.dev/) | prompt | `winget install JanDeDobbeleer.OhMyPosh` |
+| [starship](https://starship.rs/) | prompt; config in `powershell/starship.toml`, styled with ANSI colour names so it follows the terminal theme | `winget install Starship.Starship` |
 
 Plus `which` and `touch` helpers for muscle memory.
 
