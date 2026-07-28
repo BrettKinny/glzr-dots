@@ -19,10 +19,29 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 #region $EDITOR  ->  Microsoft Edit (the `edit` TUI)
 # Covers anything that shells out to an editor: git, lazygit, and elio's fallback
 # when no [[open.rules]] entry matches. A persistent User-scope env var is set too
-# (so GUI-launched apps see it); this line is what makes a fresh clone work before
-# that's been done. Don't clobber an explicit override from the parent process.
-if (-not $env:EDITOR -and (Get-Command edit.exe -ErrorAction SilentlyContinue)) {
-    $env:EDITOR = 'edit'
+# (so GUI-launched apps see it); this region is what makes a fresh clone work
+# before that's been done.
+#
+# The value must be the FULL winget path, never the bare name `edit`: Windows 11
+# ships its own edit.exe in System32, so anything resolving `edit` on PATH gets
+# v1.2.1 instead of the v2.0.0 we installed. Aliases don't help — lazygit and git
+# spawn the editor themselves and never see PowerShell's alias table.
+#
+# Resolved at load time (the winget package dir is version-stamped) so this
+# survives upgrades; $editExe is reused by the `edit` alias further down.
+$editExe = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Microsoft.Edit_*" -Recurse -Filter edit.exe -ErrorAction SilentlyContinue |
+    Sort-Object { [version]$_.VersionInfo.FileVersion } -Descending |
+    Select-Object -First 1 -ExpandProperty FullName
+
+# Don't clobber an explicit override from the parent process — but do correct a
+# stale value we set ourselves on an earlier upgrade.
+$editorTarget = if ($editExe) { $editExe } elseif (Get-Command edit.exe -ErrorAction SilentlyContinue) { 'edit' }
+if ($editorTarget -and (-not $env:EDITOR -or $env:EDITOR -eq 'edit' -or $env:EDITOR -like '*\Microsoft.Edit_*')) {
+    $env:EDITOR = $editorTarget
+    # Keep the User-scope copy in step for GUI-launched apps (writes only on drift).
+    if ([Environment]::GetEnvironmentVariable('EDITOR', 'User') -ne $editorTarget) {
+        [Environment]::SetEnvironmentVariable('EDITOR', $editorTarget, 'User')
+    }
 }
 #endregion
 
@@ -143,10 +162,7 @@ Set-Alias -Name lj -Value lazyjira
 Set-Alias -Name e -Value edit
 
 # Microsoft Edit v2.0 (winget) instead of the older System32 edit.exe.
-# Resolve the newest installed build at load time so the alias survives upgrades.
-$editExe = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Microsoft.Edit_*" -Recurse -Filter edit.exe -ErrorAction SilentlyContinue |
-    Sort-Object { [version]$_.VersionInfo.FileVersion } -Descending |
-    Select-Object -First 1 -ExpandProperty FullName
+# $editExe is resolved in the $EDITOR region at the top of this file.
 if ($editExe) { Set-Alias edit $editExe }
 #endregion
 
