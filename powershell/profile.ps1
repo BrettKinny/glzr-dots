@@ -144,11 +144,34 @@ if ($env:WT_SESSION) {
     $script:__cwdTrackDir = Join-Path $env:LOCALAPPDATA 'glazewm\term-cwd'
     New-Item -ItemType Directory -Force -Path $script:__cwdTrackDir | Out-Null
 
+    # Compiling these two P/Invokes with Add-Type costs ~445ms on every single
+    # shell start — it invokes the C# compiler. Measured (12 interleaved reps,
+    # median, net of an empty-pwsh baseline): compile 444ms vs loading a
+    # pre-built assembly 145ms. So compile once into a cached DLL next to the
+    # term-cwd data and just load it thereafter. This was the largest single
+    # cost in the profile.
     if (-not ('GlzrDots.Win32' -as [type])) {
-        Add-Type -Namespace GlzrDots -Name Win32 -MemberDefinition @'
+        $__win32Src = @'
 [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
 [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint pid);
 '@
+        $__win32Asm = Join-Path $env:LOCALAPPDATA 'glazewm\GlzrDots.Win32.dll'
+        if (-not (Test-Path $__win32Asm)) {
+            # First run on this machine (or after deleting the cache): pay the
+            # compile once and write the assembly out for every later shell.
+            Add-Type -Namespace GlzrDots -Name Win32 -MemberDefinition $__win32Src -OutputAssembly $__win32Asm
+        }
+        try {
+            Add-Type -Path $__win32Asm -ErrorAction Stop
+        } catch {
+            # Cache truncated, or built for the wrong runtime. Bin it so the
+            # next shell regenerates a good one, then compile in-memory for this
+            # session so Alt+Enter never silently breaks. Without the delete, a
+            # bad cache would cost every future shell a failed load *plus* the
+            # full compile, which is worse than having no cache at all.
+            Remove-Item $__win32Asm -Force -ErrorAction SilentlyContinue
+            Add-Type -Namespace GlzrDots -Name Win32 -MemberDefinition $__win32Src
+        }
     }
 
     # Cache pid -> is-it-WindowsTerminal so the common case is one Win32 call.
