@@ -215,6 +215,99 @@ if ($env:WT_SESSION) {
 }
 #endregion
 
+#region ask  ->  one-shot Claude (haiku) straight into the terminal
+# `ask "how do I ..."`        chat mode: no tools, general knowledge, fastest
+# `ask -f "what does X do"`   file mode: read-only Read/Glob/Grep over the cwd
+# `git diff | ask "explain"`  anything piped in is appended as context
+#
+# Wraps the `claude` CLI rather than the raw API so it reuses the existing
+# subscription auth. The speed flags matter: --effort low kills the extended
+# thinking block (the single biggest latency win), and the mcp/slash/session
+# flags skip startup work that a one-shot question never uses. Output is parsed
+# out of stream-json so tokens appear as they arrive instead of in one dump.
+function ask {
+    [CmdletBinding()]
+    param(
+        [Alias('f')][switch]$Files,
+        [Alias('m')][Parameter(DontShow)][string]$Model = 'haiku',
+        [Parameter(ValueFromPipeline, DontShow)][string]$InputObject,
+        # Position 0 + remaining args, so `ask what is a hard link` works unquoted
+        # and the pipeline/model params never swallow the question.
+        [Parameter(Position = 0, ValueFromRemainingArguments)][string[]]$Question
+    )
+    begin { $piped = [System.Collections.Generic.List[string]]::new() }
+    process { if ($PSBoundParameters.ContainsKey('InputObject')) { $piped.Add($InputObject) } }
+    end {
+        $q = ($Question -join ' ').Trim()
+        if (-not $q) {
+            Write-Host 'usage: ask [-f] [-m <model>] "your question"' -ForegroundColor Yellow
+            Write-Host '       -f  search the files in the current folder for the answer' -ForegroundColor DarkGray
+            return
+        }
+        if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
+            Write-Host 'claude CLI not found on PATH.' -ForegroundColor Red; return
+        }
+        if ($piped.Count) { $q = "$q`n`n--- piped input ---`n" + ($piped -join "`n") }
+
+        $terse = 'You are answering at a shell prompt. Be terse: no preamble, no restating the ' +
+                 'question, no sign-off. Plain text only - never use markdown code fences, headers, ' +
+                 'or bold. Put any command on its own line, followed by at most one short line of ' +
+                 'explanation. The user is on Windows 11 with PowerShell 7 unless they say otherwise.'
+
+        $cmd = @(
+            '-p', $q
+            '--model', $Model
+            '--effort', 'low'
+            '--no-session-persistence'
+            '--strict-mcp-config'
+            '--disable-slash-commands'
+            '--output-format', 'stream-json'
+            '--include-partial-messages'
+            '--verbose'
+        )
+        if ($Files) {
+            $cmd += @(
+                '--allowed-tools', 'Read', 'Glob', 'Grep'
+                '--disallowed-tools', 'Edit', 'Write', 'Bash', 'WebFetch', 'WebSearch'
+                '--append-system-prompt', ($terse + ' Answer from the files in this directory and ' +
+                    'cite path:line. If the files do not answer it, say so rather than guessing.')
+            )
+        } else {
+            # --tools "" disables every tool, so the default system prompt (all the
+            # tool-use scaffolding) is dead weight; replace it outright with --system-prompt.
+            $cmd += @('--tools', '', '--system-prompt', $terse)
+        }
+
+        $started = $false
+        Write-Host -NoNewline '...' -ForegroundColor DarkGray
+        & claude @cmd 2>$null | ForEach-Object {
+            if ($_.Length -eq 0 -or $_[0] -ne '{') { return }
+            try { $ev = $_ | ConvertFrom-Json } catch { return }
+            switch ($ev.type) {
+                'stream_event' {
+                    $b = $ev.event
+                    if ($b.type -eq 'content_block_delta' -and $b.delta.type -eq 'text_delta') {
+                        if (-not $started) { Write-Host -NoNewline "`r   `r"; $started = $true }
+                        Write-Host -NoNewline $b.delta.text
+                    }
+                    elseif ($b.type -eq 'content_block_start' -and $b.content_block.type -eq 'tool_use') {
+                        Write-Host -NoNewline "`r   `r"; $started = $true
+                        # Only the tool name is known at block start - the arguments arrive
+                        # later as input_json_delta fragments, not worth reassembling.
+                        Write-Host ("  · {0}" -f $b.content_block.name) -ForegroundColor DarkGray
+                    }
+                }
+                'result' {
+                    if (-not $started) { Write-Host -NoNewline "`r   `r" }
+                    if ($ev.is_error) { Write-Host $ev.result -ForegroundColor Red }
+                }
+            }
+        }
+        Write-Host ''
+    }
+}
+#endregion
+
 #region local LLM (llama.cpp - Qwen3.6-35B-A3B on Arc 140V)
 function llm {
     # Start the local LLM server (http://localhost:8080). See C:\llama.cpp\start-llm.ps1
