@@ -89,7 +89,7 @@
 <body>
 <header>
   <h1>GlazeWM Keyboard Shortcuts</h1>
-  <div class="sub">Omarchy-style &middot; modifier = <b>Alt</b></div>
+  <div class="sub">Omarchy-style &middot; windows = <b>Alt</b> &middot; splits inside Fresh = <b>Ctrl+Alt</b></div>
 </header>
 
 <div class="grid">
@@ -149,14 +149,13 @@
     <table>
       <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></td><td class="desc">Terminal (in last cwd)</td></tr>
       <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>B</kbd></td><td class="desc">Browser (Zen)</td></tr>
-      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>N</kbd></td><td class="desc">Editor (VS Code)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>N</kbd></td><td class="desc">Editor (fresh)</td></tr>
       <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>E</kbd></td><td class="desc">Email (Outlook)</td></tr>
       <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>C</kbd></td><td class="desc">Calendar</td></tr>
       <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>G</kbd></td><td class="desc">Teams</td></tr>
       <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>A</kbd></td><td class="desc">AI (Gemini)</td></tr>
       <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>O</kbd></td><td class="desc">Obsidian</td></tr>
-      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></td><td class="desc">File manager (Explorer)</td></tr>
-      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></td><td class="desc">File manager (yazi)</td></tr>
+      <tr><td class="keys"><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></td><td class="desc">File manager (elio)</td></tr>
     </table>
   </section>
 
@@ -179,10 +178,36 @@
     </table>
   </section>
 
+  <section>
+    <h2>Fresh &mdash; Splits <span style="text-transform:none;font-weight:400">(Alt &rarr; Ctrl+Alt)</span></h2>
+    <table>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>&larr;</kbd><span class="plus">/</span><kbd>&rarr;</kbd></td><td class="desc">Prev / next split</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>J</kbd></td><td class="desc">Split vertical</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>J</kbd></td><td class="desc">Split horizontal</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>F</kbd></td><td class="desc">Maximize split</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>W</kbd></td><td class="desc">Close split</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>=</kbd><span class="plus">/</span><kbd>-</kbd></td><td class="desc">Grow / shrink split</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>Enter</kbd></td><td class="desc">Open terminal</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Fresh &mdash; Rehomed <span style="text-transform:none;font-weight:400">(WM took the Alt key)</span></h2>
+    <table>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>&uarr;</kbd><span class="plus">/</span><kbd>&darr;</kbd></td><td class="desc">Move line up / down</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>&larr;&rarr;&uarr;&darr;</kbd></td><td class="desc">Block (column) select</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>&uarr;</kbd><span class="plus">/</span><kbd>&darr;</kbd></td><td class="desc">Add cursor above / below</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>[</kbd><span class="plus">/</span><kbd>]</kbd></td><td class="desc">Position history back / fwd</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>F</kbd></td><td class="desc">Project search (live grep)</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Shift</kbd><span class="plus">+</span><kbd>R</kbd></td><td class="desc">Project query replace</td></tr>
+      <tr><td class="keys"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Alt</kbd><span class="plus">+</span><kbd>B</kbd></td><td class="desc">List bookmarks</td></tr>
+    </table>
+  </section>
+
 </div>
 
 <footer>
-  GlazeWM &middot; ~/.glzr/glazewm/config.yaml &middot; Print with Ctrl+P (A4 portrait, margins: None)
+  GlazeWM ~/.glzr/glazewm/config.yaml &middot; Fresh ~/.glzr/fresh/config.json &middot; Print with Ctrl+P (A4 portrait, margins: None)
 </footer>
 </body>
 </html>

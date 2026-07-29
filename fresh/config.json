@@ -1,0 +1,93 @@
+{
+  "theme": "nord-transparent.json",
+  "version": 2,
+  "locale": "en",
+  "active_keybinding_map": "default",
+  "keybindings": [
+    { "key": "Up", "modifiers": ["ctrl", "alt"], "action": "move_line_up" },
+    { "key": "Down", "modifiers": ["ctrl", "alt"], "action": "move_line_down" },
+
+    { "key": "Left", "modifiers": ["ctrl", "alt"], "action": "prev_split" },
+    { "key": "Right", "modifiers": ["ctrl", "alt"], "action": "next_split" },
+
+    { "key": "j", "modifiers": ["ctrl", "alt"], "action": "split_vertical" },
+    { "key": "j", "modifiers": ["ctrl", "alt", "shift"], "action": "split_horizontal" },
+    { "key": "f", "modifiers": ["ctrl", "alt"], "action": "toggle_maximize_split" },
+    { "key": "w", "modifiers": ["ctrl", "alt"], "action": "close_split" },
+    { "key": "Enter", "modifiers": ["ctrl", "alt"], "action": "open_terminal" },
+    { "key": "=", "modifiers": ["ctrl", "alt"], "action": "increase_split_size" },
+    { "key": "-", "modifiers": ["ctrl", "alt"], "action": "decrease_split_size" },
+
+    { "key": "Up", "modifiers": ["ctrl", "shift"], "action": "add_cursor_above" },
+    { "key": "Down", "modifiers": ["ctrl", "shift"], "action": "add_cursor_below" },
+
+    { "key": "Up", "modifiers": ["ctrl", "alt", "shift"], "action": "block_select_up" },
+    { "key": "Down", "modifiers": ["ctrl", "alt", "shift"], "action": "block_select_down" },
+    { "key": "Left", "modifiers": ["ctrl", "alt", "shift"], "action": "block_select_left" },
+    { "key": "Right", "modifiers": ["ctrl", "alt", "shift"], "action": "block_select_right" },
+
+    { "key": "[", "modifiers": ["ctrl", "alt"], "action": "navigate_back" },
+    { "key": "]", "modifiers": ["ctrl", "alt"], "action": "navigate_forward" },
+
+    { "key": "f", "modifiers": ["ctrl", "shift"], "action": "open_live_grep" },
+    { "key": "r", "modifiers": ["ctrl", "shift"], "action": "query_replace" },
+
+    { "key": "b", "modifiers": ["ctrl", "alt"], "action": "list_bookmarks" }
+  ],
+  "plugins": {
+    "vi_mode": {
+      "enabled": true,
+      "settings": {
+        "autoStart": false,
+        "arrowKeys": true,
+        "searchWordUnderCursor": true
+      }
+    },
+    "dashboard": {
+      "settings": {
+        "autoOpen": true
+      },
+      "enabled": true
+    },
+    "git_explorer": {
+      "settings": {
+        "colorNames": true
+      },
+      "enabled": true
+    }
+  },
+  "lsp": {
+    "csharp": {
+      "enabled": true,
+      "auto_start": true,
+      "process_limits": {
+        "max_memory_percent": 50,
+        "max_cpu_percent": 90,
+        "enabled": false
+      }
+    },
+    "markdown": {
+      "enabled": true,
+      "auto_start": true,
+      "process_limits": {
+        "max_memory_percent": 50,
+        "max_cpu_percent": 90,
+        "enabled": false
+      }
+    }
+  },
+  "file_explorer": {
+    "show_hidden": true,
+    "show_gitignored": true
+  },
+  "editor": {
+    "use_terminal_bg": true,
+    "screensaver_enabled": false,
+    "menu_bar_mnemonics": false,
+    "status_bar": {
+      "left": ["{trust}", "{remote}", "{git_statusbar:branch}", "{diagnostics}", "{cursor:compact}", "{cursor_count}", "{messages}"],
+      "right": ["{read_only}", "{line_ending}", "{encoding}", "{language}", "{lsp}", "{warnings}", "{update}", "{palette}"]
+    },
+    "show_menu_bar": false
+  }
+}
