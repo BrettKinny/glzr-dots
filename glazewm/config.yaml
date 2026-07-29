@@ -356,7 +356,10 @@ keybindings:
     bindings: ['alt+shift+o']
 
   # Editor (fresh) — Omarchy: Super + Shift + N
-  - commands: ['shell-exec wt fresh']
+  # --config is required, not optional: the keymap lives in this repo (see
+  # ../fresh/README.md), not in %APPDATA%, and `wt` execs fresh.exe directly so
+  # the `fresh` wrapper function in powershell/profile.ps1 never runs here.
+  - commands: ['shell-exec wt fresh --config "%USERPROFILE%\.glzr\fresh\config.json"']
     bindings: ['alt+shift+n']
 
   # ===================================================================

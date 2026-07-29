@@ -84,27 +84,43 @@ are no longer available in plain shell tabs.
 
 ## How this file is deployed
 
-`%APPDATA%\fresh\config.json` is a **hardlink** to `config.json` here, so edits in
-either place are the same bytes. A hardlink rather than a junction because
-`%APPDATA%\fresh\` also holds session state (`file_states/`, `sessions/`, `logs/`,
-`workspaces/`) that does not belong in git.
+This file is the only Fresh config on the machine. It is passed explicitly with
+`fresh --config`; there is deliberately **no** copy at `%APPDATA%\fresh\config.json`,
+which is where Fresh would otherwise look.
+
+Two invocation paths, and both need the flag:
+
+| Path | Carries `--config` via |
+|---|---|
+| `fresh` / `f` at a prompt | wrapper function in `../powershell/profile.ps1` |
+| `Alt+Shift+N` (GlazeWM) | inline in `../glazewm/config.yaml` — `wt` execs the binary, so no shell wrapper runs |
+
+Miss one and you get a sometimes-configured editor, which is worse than no config
+at all. Keep them in step.
+
+If the wrapper is ever bypassed, Fresh falls back to its built-in defaults —
+stock theme, mnemonics on, none of the `Ctrl+Alt` layer. That is loud and obvious
+rather than subtly wrong, which is the point.
+
+### Why not a symlink or hardlink
+
+Tried and rejected. A directory junction would drag session state (`file_states/`,
+`sessions/`, `logs/`, `workspaces/`) into git. A hardlink on the single file works
+until anything saves by write-temp-then-rename — which silently replaces the inode
+and leaves `%APPDATA%` serving a stale copy. Both Fresh's own Settings UI and
+`git checkout` under `core.autocrlf=true` (set in this repo) do exactly that.
+
+One file, passed explicitly, has no inode to break and no second copy to drift.
+
+### Verify the wiring
 
 ```powershell
-New-Item -ItemType HardLink -Path "$env:APPDATA\fresh\config.json" `
-         -Target "$env:USERPROFILE\.glzr\fresh\config.json"
+(Get-Command fresh).CommandType          # Function, not Application
+Test-Path "$env:APPDATA\fresh\config.json"   # must be False
 ```
 
-**Caveat:** if Fresh's Settings UI or Keybinding Editor saves by
-write-temp-then-rename, the hardlink breaks silently and the two files drift.
-After saving config from inside Fresh, check the link still holds:
-
-```powershell
-(Get-Item "$env:APPDATA\fresh\config.json").LinkType   # expect: HardLink
-```
-
-If it reads empty, re-run the `New-Item` above. Alternatively Fresh accepts
-`fresh --config <path>`, which avoids the link entirely at the cost of every bare
-`fresh` invocation missing it.
+The pre-existing config is kept at `%APPDATA%\fresh\config.json.bak-20260729` for
+rollback.
 
 ## Verifying
 

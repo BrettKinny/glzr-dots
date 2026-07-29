@@ -154,6 +154,30 @@ function touch {
 }
 #endregion
 
+#region fresh  ->  keymap lives in this repo, not %APPDATA%
+# The keymap is versioned at ~/.glzr/fresh/config.json and paired with the GlazeWM
+# bindings — see that dir's README for the Alt / Ctrl+Alt layering.
+#
+# Fresh defaults to %APPDATA%\fresh\config.json. We deliberately do NOT keep a copy
+# there: a second config file drifts silently, and the hardlink we tried first was
+# broken by any write-temp-then-rename save (Fresh's own Settings UI does this, as
+# does git checkout under core.autocrlf). One file, passed explicitly, can't drift.
+#
+# Resolved at load time because the winget package dir is version-stamped. Calling
+# the exe by full path, never the bare name, so this function can't recurse into
+# itself. `wt fresh` from GlazeWM's Alt+Shift+N bypasses this function entirely
+# (wt execs the binary, no shell), so that binding carries --config inline —
+# keep the two in step or you get a sometimes-configured editor.
+$freshExe = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\sinelaw.fresh-editor_*" -Recurse -Filter fresh.exe -ErrorAction SilentlyContinue |
+    Select-Object -First 1 -ExpandProperty FullName
+
+$freshConfig = "$env:USERPROFILE\.glzr\fresh\config.json"
+
+if ($freshExe -and (Test-Path $freshConfig)) {
+    function fresh { & $script:freshExe --config $script:freshConfig @args }
+}
+#endregion
+
 #region Aliases
 Set-Alias -Name c -Value claude
 Set-Alias -Name f -Value fresh
