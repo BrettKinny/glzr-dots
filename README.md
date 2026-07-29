@@ -104,6 +104,12 @@ Then launch GlazeWM. It starts the autotile and clipboard scripts automatically 
 ├── powershell/
 │   ├── profile.ps1      # shell profile (zoxide, fzf, eza, bat, PSReadLine, `ask`)
 │   └── set-edit-associations.ps1  # open text/config files in Microsoft Edit (TUI)
+├── fresh/
+│   ├── config.json      # fresh editor keymap — Ctrl+Alt mirrors the WM's Alt layer
+│   └── README.md        # the three-layer keyboard grammar + why it's passed with --config
+├── windows-terminal/
+│   ├── settings.json    # WT keybindings stripped so editor keys reach fresh
+│   └── README.md        # what's unbound and why (tracked copy, not a link)
 ├── elio/
 │   ├── config.toml      # TUI file manager: sidebar places + open rules
 │   └── theme.toml       # elio colour theme

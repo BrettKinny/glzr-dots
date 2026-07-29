@@ -1,0 +1,147 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [],
+    "alwaysShowNotificationIcon": false,
+    "alwaysShowTabs": true,
+    "copyFormatting": "none",
+    "copyOnSelect": false,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "keybindings":
+    [
+        { "id": "unbound", "keys": "ctrl+c" },
+        { "id": "unbound", "keys": "ctrl+v" },
+
+        { "id": "unbound", "keys": "alt+shift+d" },
+        { "id": "unbound", "keys": "alt+enter" },
+        { "id": "unbound", "keys": "alt+left" },
+        { "id": "unbound", "keys": "alt+right" },
+        { "id": "unbound", "keys": "alt+up" },
+        { "id": "unbound", "keys": "alt+down" },
+        { "id": "unbound", "keys": "alt+shift+left" },
+        { "id": "unbound", "keys": "alt+shift+right" },
+        { "id": "unbound", "keys": "alt+shift+up" },
+        { "id": "unbound", "keys": "alt+shift+down" },
+        { "id": "unbound", "keys": "alt+shift+-" },
+        { "id": "unbound", "keys": "alt+shift+=" },
+        { "id": "unbound", "keys": "alt+shift+plus" },
+
+        { "id": "unbound", "keys": "ctrl+shift+up" },
+        { "id": "unbound", "keys": "ctrl+shift+down" },
+        { "id": "unbound", "keys": "ctrl+shift+home" },
+        { "id": "unbound", "keys": "ctrl+shift+end" },
+        { "id": "unbound", "keys": "ctrl+shift+pgup" },
+        { "id": "unbound", "keys": "ctrl+shift+pgdn" },
+
+        { "id": "unbound", "keys": "ctrl+shift+f" },
+        { "id": "unbound", "keys": "ctrl+shift+p" },
+        { "id": "unbound", "keys": "ctrl+shift+t" },
+        { "id": "unbound", "keys": "ctrl+shift+w" },
+        { "id": "unbound", "keys": "ctrl+shift+space" },
+        { "id": "unbound", "keys": "ctrl+tab" },
+        { "id": "unbound", "keys": "ctrl+shift+tab" },
+        { "id": "unbound", "keys": "ctrl+," },
+        { "id": "unbound", "keys": "ctrl+shift+," },
+
+        { "id": "unbound", "keys": "ctrl+shift+1" },
+        { "id": "unbound", "keys": "ctrl+shift+2" },
+        { "id": "unbound", "keys": "ctrl+shift+3" },
+        { "id": "unbound", "keys": "ctrl+shift+4" },
+        { "id": "unbound", "keys": "ctrl+shift+5" },
+        { "id": "unbound", "keys": "ctrl+shift+6" },
+        { "id": "unbound", "keys": "ctrl+shift+7" },
+        { "id": "unbound", "keys": "ctrl+shift+8" },
+        { "id": "unbound", "keys": "ctrl+shift+9" },
+
+        { "id": "Terminal.CopyToClipboard", "keys": "ctrl+shift+c" },
+        { "id": "Terminal.PasteFromClipboard", "keys": "ctrl+shift+v" }
+    ],
+    "minimizeToNotificationArea": false,
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": 
+    {
+        "defaults": 
+        {
+            "colorScheme": "One Half Dark",
+            "experimental.retroTerminalEffect": false,
+            "font": 
+            {
+                "face": "FiraCode Nerd Font",
+                "features": 
+                {
+                    "cv02": 1,
+                    "cv14": 1,
+                    "cv25": 1,
+                    "cv26": 1,
+                    "cv28": 1,
+                    "cv32": 1,
+                    "ss02": 1,
+                    "ss03": 1,
+                    "ss05": 1,
+                    "ss07": 1,
+                    "ss09": 1
+                },
+                "size": 14,
+                "weight": "normal"
+            },
+            "opacity": 80,
+            "useAcrylic": true
+        },
+        "list": 
+        [
+            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "Command Prompt"
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": false,
+                "name": "Git Bash",
+                "source": "Git"
+            },
+            {
+                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
+            },
+            {
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "hidden": true,
+                "name": "Ubuntu",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{24b14a05-d9da-5202-bf9f-7c21b8da8784}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{de75369f-e590-5995-8a80-78ca56e722c3}",
+                "hidden": true,
+                "name": "Developer PowerShell for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{fd623afe-dbe5-5b86-979e-8db3778541d1}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 2017",
+                "source": "Windows.Terminal.VisualStudio"
+            }
+        ]
+    },
+    "rendering.graphicsAPI": "direct3d11",
+    "schemes": [],
+    "showTabsFullscreen": false,
+    "showTabsInTitlebar": true,
+    "themes": [],
+    "useAcrylicInTabRow": true
+}
