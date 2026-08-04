@@ -1,0 +1,47 @@
+[ui]
+agent_panel_sort = "spaces"
+
+# Shared keyboard language:
+#   Alt   = Windows OS/window-manager actions (Super on Omarchy)
+#   Ctrl  = immediate actions in the focused application
+#   Shift = move, reverse, or the higher-level variant
+# F12 keeps Herdr's prefix commands available as compatibility fallbacks.
+[keys]
+prefix = "f12"
+
+# Application navigation and discovery.
+help = ["ctrl+?", "prefix+?"]
+goto = ["ctrl+g", "prefix+g"]
+workspace_picker = "prefix+w"
+toggle_sidebar = ["ctrl+b", "prefix+b"]
+detach = ["ctrl+shift+q", "prefix+q"]
+
+# Tabs use browser/editor conventions.
+new_tab = ["ctrl+t", "prefix+c"]
+previous_tab = ["ctrl+shift+tab", "prefix+p"]
+next_tab = ["ctrl+tab", "prefix+n"]
+switch_tab = ["ctrl+1..9", "prefix+1..9"]
+rename_tab = "prefix+shift+t"
+close_tab = "prefix+shift+x"
+
+# Workspaces are the next level above tabs.
+new_workspace = ["ctrl+shift+n", "prefix+shift+n"]
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+
+# Ctrl moves focus; adding Shift moves the pane itself.
+focus_pane_left = ["ctrl+left", "prefix+h"]
+focus_pane_down = ["ctrl+down", "prefix+j"]
+focus_pane_up = ["ctrl+up", "prefix+k"]
+focus_pane_right = ["ctrl+right", "prefix+l"]
+swap_pane_left = ["ctrl+shift+left", "prefix+shift+h"]
+swap_pane_down = ["ctrl+shift+down", "prefix+shift+j"]
+swap_pane_up = ["ctrl+shift+up", "prefix+shift+k"]
+swap_pane_right = ["ctrl+shift+right", "prefix+shift+l"]
+
+# Pane lifecycle and layout.
+close_pane = ["ctrl+w", "prefix+x"]
+split_vertical = ["ctrl+backslash", "prefix+v"]
+split_horizontal = ["ctrl+shift+backslash", "prefix+minus"]
+zoom = ["ctrl+shift+z", "prefix+z"]
+resize_mode = "prefix+r"

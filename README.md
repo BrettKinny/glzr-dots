@@ -69,6 +69,22 @@ The top bar (workspace switcher + status) can be one of two things. **This repo 
 
 Optional (only needed if you use the matching launcher binding): Zen Browser, Obsidian, Microsoft Teams, New Outlook, plus [elio](#elio-tui-file-manager) (`cargo install elio`) and [fresh](https://github.com/sinelaw/fresh-editor) (`winget install sinelaw.fresh-editor`) for the file-manager and editor bindings.
 
+### Shared keyboard language
+
+These dotfiles use the same shortcut grammar as the companion Omarchy and
+Squarebox configs:
+
+| Scope | Omarchy | Windows | Meaning |
+|---|---|---|---|
+| OS / window manager | `Super` | `Alt` | Windows, workspaces, and app launchers |
+| Focused application | `Ctrl` | `Ctrl` | Immediate tabs, panes, and app commands |
+| Modifier | `Shift` | `Shift` | Move, reverse, or a higher-level variant |
+
+Herdr is the reference implementation of the application layer: `Ctrl+Arrow`
+focuses panes, `Ctrl+Shift+Arrow` moves them, and familiar browser-style `Ctrl`
+bindings manage tabs. See [`herdr/`](herdr/README.md). Its `F12` prefix remains as
+a compatibility path, not the primary interaction model.
+
 ## Install
 
 Clone directly into the config location:
@@ -107,6 +123,9 @@ Then launch GlazeWM. It starts the autotile and clipboard scripts automatically 
 ├── fresh/
 │   ├── config.json      # fresh editor keymap — Ctrl+Alt mirrors the WM's Alt layer
 │   └── README.md        # the three-layer keyboard grammar + why it's passed with --config
+├── herdr/
+│   ├── config.toml      # native Ctrl application bindings; F12 prefix fallbacks
+│   └── README.md        # binding reference + %APPDATA% junction setup
 ├── windows-terminal/
 │   ├── settings.json    # WT keybindings stripped so editor keys reach fresh
 │   └── README.md        # what's unbound and why (tracked copy, not a link)

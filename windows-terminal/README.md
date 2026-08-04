@@ -8,7 +8,7 @@ GlazeWM hasn't already claimed. Left stock, it silently eats editor keys.
 
 ## What's changed from stock
 
-39 bindings are disabled with `{ "id": "unbound", "keys": "..." }` — the mechanism
+The bindings below are disabled with `{ "id": "unbound", "keys": "..." }` — the mechanism
 Microsoft documents for exactly this case, "when using underlying terminal
 applications (such as VIM)". The unbound key falls through to the app.
 
@@ -21,6 +21,7 @@ applications (such as VIM)". The unbound key falls through to the app.
 | `Alt+arrows`, `Alt+Shift+arrows`, `Alt+Shift+-`/`=`, `Alt+Shift+D`, `Alt+Enter` | WT panes/focus/fullscreen — GlazeWM owns the whole `Alt` namespace |
 | `Ctrl+Shift+1`–`9` | WT "new tab with profile N" |
 | `Ctrl+Shift+T`/`W`/`P`/`Space`, `Ctrl+Tab`, `Ctrl+Shift+Tab`, `Ctrl+,`, `Ctrl+Shift+,` | WT tabs, palette, settings — Fresh has its own |
+| Herdr's `Ctrl` tab, pane, sidebar, go-to, split, zoom, and workspace chords | Herdr is the focused application and must receive its native shortcuts directly |
 
 Terminal clipboard stays on `Ctrl+Shift+C` / `Ctrl+Shift+V`.
 
