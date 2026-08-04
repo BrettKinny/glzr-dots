@@ -60,6 +60,10 @@ if ($editorTarget -and (-not $env:EDITOR -or $env:EDITOR -eq 'edit' -or $env:EDI
 # rows to orphan and neither trap applies.
 if (Get-Module PSReadLine) {
     Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+    # CompletionPredictor supplies the "Plugin" half of HistoryAndPlugin
+    # (tab-completion-based suggestions, not just history). Same no-ListAvailable
+    # reasoning as PSFzf below: just try the import.
+    Import-Module CompletionPredictor -ErrorAction SilentlyContinue
     # Prediction needs a VT-capable, non-redirected console; swallow the error
     # when the profile is sourced in a plain/redirected host (e.g. from a script).
     try {
