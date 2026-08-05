@@ -157,6 +157,23 @@ Brings the modern-Linux terminal niceties to PowerShell 7+. `powershell/profile.
 
 Plus `which` and `touch` helpers for muscle memory.
 
+### Aliases
+
+Single letters for the things opened dozens of times a day. Defined in the `Aliases` region of `profile.ps1`.
+
+| Alias | Runs | Notes |
+|---|---|---|
+| `c` | [Claude Code](https://claude.com/claude-code) | The interactive session. [`ask`](#ask--one-shot-claude-in-the-terminal) is the one-shot equivalent. |
+| `f` | [fresh](https://github.com/sinelaw/fresh-editor) | A wrapper *function*, not a plain alias — it passes `--config` at the repo keymap. See [`fresh/`](fresh/README.md). |
+| `h` | [Herdr](https://herdr.dev) | Terminal workspace manager. See [`herdr/`](herdr/README.md). |
+| `e` | [Microsoft Edit](https://github.com/microsoft/edit) | Resolves via the `edit` alias to the winget v2 build, not the legacy System32 `edit.exe`. |
+| `lg` | [lazygit](https://github.com/jesseduffield/lazygit) | `winget install JesseDuffield.lazygit` |
+| `lj` | lazyjira | Manual install; not on winget. |
+
+`h` is the only one that shadows a PowerShell built-in — stock `h` is `Get-History`. It's a plain alias (`Options: None`, not `ReadOnly`), so `Set-Alias` replaces it without the `Remove-Item Alias:` dance that `ls` and `cat` need. History is still there as `Get-History`, or <kbd>Ctrl</kbd>+<kbd>R</kbd> for the fuzzy picker. `c`, `f`, `e`, `lg` and `lj` are unused in stock PowerShell.
+
+Also live, from their own regions rather than the alias block: `ls`/`ll`/`la`/`lt` (eza), `cat` (bat), `z`/`zi` (zoxide), `sudo` (gsudo, only when Windows has no native `sudo`).
+
 **Wiring:** unlike GlazeWM/Zebar, PowerShell's profile path isn't `~/.glzr`, so it can't live in the repo directly. Instead the real `$PROFILE` is a one-line shim that sources this one:
 
 ```powershell

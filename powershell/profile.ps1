@@ -185,6 +185,11 @@ if ($freshExe -and (Test-Path $freshConfig)) {
 #region Aliases
 Set-Alias -Name c -Value claude
 Set-Alias -Name f -Value fresh
+
+# Shadows PowerShell's built-in h -> Get-History. Not ReadOnly, so no
+# Remove-Item Alias: dance needed (unlike ls/cat above). Ctrl+R covers history.
+Set-Alias -Name h -Value herdr
+
 Set-Alias -Name lg -Value lazygit
 Set-Alias -Name lj -Value lazyjira
 Set-Alias -Name e -Value edit
