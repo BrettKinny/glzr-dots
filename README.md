@@ -125,7 +125,7 @@ Then launch GlazeWM. It starts the autotile and clipboard scripts automatically 
 │   └── README.md        # the three-layer keyboard grammar + why it's passed with --config
 ├── herdr/
 │   ├── config.toml      # native Ctrl application bindings; F12 prefix fallbacks
-│   └── README.md        # binding reference + %APPDATA% junction setup
+│   └── README.md        # binding reference + HERDR_CONFIG_PATH setup
 ├── windows-terminal/
 │   ├── settings.json    # WT keybindings stripped so editor keys reach fresh
 │   └── README.md        # what's unbound and why (tracked copy, not a link)

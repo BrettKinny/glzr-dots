@@ -1,5 +1,19 @@
+# Machine-agnostic preferences. They live here rather than in %APPDATA% so
+# both machines pick them up from git along with the keybindings.
+onboarding = false
+
 [ui]
 agent_panel_sort = "spaces"
+
+[ui.toast]
+delivery = "herdr"
+
+[theme]
+name = "terminal"
+auto_switch = false
+
+[terminal]
+default_shell = "pwsh"
 
 # Shared keyboard language:
 #   Alt   = Windows OS/window-manager actions (Super on Omarchy)
