@@ -1,0 +1,7 @@
+os:
+  edit: 'edit {{filename}}'
+  editAtLine: 'edit {{filename}}'
+  editAtLineAndWait: 'edit {{filename}}'
+  
+gui:
+  nerdFontsVersion: "3"
