@@ -198,12 +198,16 @@ $freshExe = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\sinelaw.f
 $freshConfig = "$env:USERPROFILE\.glzr\fresh\config.json"
 
 if ($freshExe -and (Test-Path $freshConfig)) {
-    function fresh { & $script:freshExe --config $script:freshConfig @args }
+    function fresh {
+        # `fresh pr 123` -> fresh-pr; use `fresh ./pr` to open a file named pr.
+        if ($args.Count -and $args[0] -eq 'pr') { $rest = @($args | Select-Object -Skip 1); return fresh-pr @rest }
+        & $script:freshExe --config $script:freshConfig @args
+    }
 }
 #endregion
 
-#region freshpr  ->  review a Bitbucket PR in Fresh (shareable; usage in the file)
-. "$PSScriptRoot\freshpr.ps1"
+#region fresh-pr  ->  review a Bitbucket PR in Fresh (shareable; usage in the file)
+. "$PSScriptRoot\fresh-pr.ps1"
 #endregion
 
 #region Aliases

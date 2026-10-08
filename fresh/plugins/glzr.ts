@@ -103,7 +103,7 @@ editor.on("plugins_loaded", () => {
     });
 });
 
-// freshpr (~/.glzr/powershell/freshpr.ps1) sets FRESHPR_RANGE → open the PR diff straight away.
+// fresh-pr (~/.glzr/powershell/fresh-pr.ps1) sets FRESHPR_RANGE → open the PR diff straight away.
 // "review-range" is audit_mode's prompt type, so confirming it runs Review Diff: Range.
 // Delay lets the dashboard open and fill its sections (git, disk) before the review takes over;
 // dashboard has no "loaded" signal to wait on.

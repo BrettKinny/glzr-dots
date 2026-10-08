@@ -1,8 +1,9 @@
-# freshpr: review a Bitbucket Cloud PR in Fresh (https://getfresh.dev).
+# fresh-pr: review a Bitbucket Cloud PR in Fresh (https://getfresh.dev).
 #
-#   freshpr 123          worktree at <repo-parent>/<repo>-pr-123 on local branch pr/123 (= PR head),
+#   fresh pr 123         worktree at <repo-parent>/<repo>-pr-123 on local branch pr/123 (= PR head),
 #                        then open Fresh there
-#   freshpr 123 -Remove  delete that worktree and branch
+#   fresh pr 123 -Remove delete that worktree and branch
+#   (`fresh pr` needs the `fresh` wrapper in profile.ps1; `fresh-pr 123` works standalone)
 #
 # Run from anywhere inside the repo. The review range (origin/<target>...HEAD) is passed to Fresh as
 # $env:FRESHPR_RANGE and also put on the clipboard. To have Fresh open the diff by itself, add this
@@ -26,15 +27,15 @@
 #   $env:BITBUCKET_API_TOKEN  https://id.atlassian.com/manage-profile/security/api-tokens
 # Falls back to the env block of ~/.claude/settings.local.json if those aren't set.
 #
-# Load it from $PROFILE:  . path\to\freshpr.ps1
+# Load it from $PROFILE:  . path\to\fresh-pr.ps1
 
-function freshpr {
+function fresh-pr {
     param(
         [Parameter(Mandatory)][int]$Id,
         [switch]$Remove
     )
     $commonDir = git rev-parse --path-format=absolute --git-common-dir 2>$null
-    if (-not $commonDir) { Write-Host 'freshpr: not in a git repo' -ForegroundColor Red; return }
+    if (-not $commonDir) { Write-Host 'fresh pr: not in a git repo' -ForegroundColor Red; return }
     # Main checkout even when run from inside another worktree.
     $main = Split-Path $commonDir -Parent
     $repo = Split-Path $main -Leaf
@@ -45,7 +46,7 @@ function freshpr {
     if ($Remove) {
         git -C $main worktree remove $wt
         # git can unregister the worktree yet fail to delete the folder when something holds it.
-        if (Test-Path $wt) { Write-Host "freshpr: $wt still in use (Fresh open there?)" -ForegroundColor Yellow }
+        if (Test-Path $wt) { Write-Host "fresh pr: $wt still in use (Fresh open there?)" -ForegroundColor Yellow }
         $registered = git -C $main worktree list --porcelain | Select-String -SimpleMatch "worktree $($wt -replace '\\', '/')"
         if (-not $registered) { git -C $main branch --quiet -D $branch 2>$null }
         return
@@ -53,7 +54,7 @@ function freshpr {
 
     $remote = git -C $main remote get-url origin
     if ($remote -notmatch 'bitbucket\.org[:/]([^/]+)/([^/]+?)(\.git)?$') {
-        Write-Host "freshpr: origin isn't Bitbucket ($remote)" -ForegroundColor Red; return
+        Write-Host "fresh pr: origin isn't Bitbucket ($remote)" -ForegroundColor Red; return
     }
     $api = "https://api.bitbucket.org/2.0/repositories/$($Matches[1])/$($Matches[2])/pullrequests/$Id"
 
@@ -62,13 +63,13 @@ function freshpr {
         $envBlock = (Get-Content "$HOME\.claude\settings.local.json" -Raw | ConvertFrom-Json).env
         $user = $envBlock.BITBUCKET_USER; $token = $envBlock.BITBUCKET_API_TOKEN
     }
-    if (-not $token) { Write-Host 'freshpr: set BITBUCKET_USER and BITBUCKET_API_TOKEN' -ForegroundColor Red; return }
+    if (-not $token) { Write-Host 'fresh pr: set BITBUCKET_USER and BITBUCKET_API_TOKEN' -ForegroundColor Red; return }
     $auth = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("${user}:$token"))
 
     try { $pr = Invoke-RestMethod $api -Headers @{ Authorization = $auth } }
-    catch { Write-Host "freshpr: PR #$Id lookup failed: $($_.Exception.Message)" -ForegroundColor Red; return }
+    catch { Write-Host "fresh pr: PR #$Id lookup failed: $($_.Exception.Message)" -ForegroundColor Red; return }
     if ($pr.source.repository.full_name -ne $pr.destination.repository.full_name) {
-        Write-Host "freshpr: PR is from a fork ($($pr.source.repository.full_name)); not supported" -ForegroundColor Red; return
+        Write-Host "fresh pr: PR is from a fork ($($pr.source.repository.full_name)); not supported" -ForegroundColor Red; return
     }
     $src = $pr.source.branch.name
     $dst = $pr.destination.branch.name
@@ -79,7 +80,7 @@ function freshpr {
     # Own pr/<id> branch, not the source branch: git refuses a branch checked out in two
     # worktrees, and the source branch may already be checked out elsewhere. -B resets it on rerun.
     if (Test-Path $wt) {
-        if (git -C $wt status --porcelain) { Write-Host "freshpr: $wt has local changes, left as is" -ForegroundColor Yellow }
+        if (git -C $wt status --porcelain) { Write-Host "fresh pr: $wt has local changes, left as is" -ForegroundColor Yellow }
         else { git -C $wt checkout --quiet -B $branch "origin/$src" }
     } else {
         git -C $main worktree add --quiet -B $branch $wt "origin/$src"
