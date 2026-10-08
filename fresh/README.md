@@ -139,15 +139,23 @@ and leaves `%APPDATA%` serving a stale copy. Both Fresh's own Settings UI and
 
 One file, passed explicitly, has no inode to break and no second copy to drift.
 
-### Themes: junction, not a flag
+### Themes + plugins: junctions, not flags
 
-Fresh has no flag for a themes dir; it only reads `%APPDATA%\fresh\themes`. That one
-dir is a junction to `./themes` here. Unlike the rejected cases above: it's themes only
-(no session state), and a junction is a directory pointer, so write-temp-then-rename
-inside it lands in the repo copy. No admin needed. Recreate on a new machine:
+Fresh has no flag for its themes or plugins dirs; it only reads `%APPDATA%\fresh\themes`
+and `%APPDATA%\fresh\plugins`. Each is a junction to the same-named dir here. Unlike the
+rejected cases above: no session state, and a junction is a directory pointer, so
+write-temp-then-rename inside it lands in the repo copy. No admin needed.
+
+`plugins/glzr.ts` replaces `%APPDATA%\fresh\init.ts` (a single file at a fixed path can't
+be junctioned): Windows disk section for the dashboard + `freshpr` auto-review. Same API
+as init.ts; check it loaded with `init.ts: not present` + `executing plugin 'glzr'` in the log.
+
+Recreate on a new machine:
 
 ```powershell
-New-Item -ItemType Junction -Path "$env:APPDATA\fresh\themes" -Target "$HOME\.glzr\fresh\themes"
+foreach ($d in 'themes', 'plugins') {
+    New-Item -ItemType Junction -Path "$env:APPDATA\fresh\$d" -Target "$HOME\.glzr\fresh\$d"
+}
 ```
 
 Active theme: `terminal-ansi.json` — `builtin://terminal` (WT palette, transparent code
