@@ -13,7 +13,7 @@
 #   if (freshprRange) {
 #       registerHandler("freshprStartReview", async () => {
 #           try {
-#               await editor.delay(300);
+#               await editor.delay(1500);   // let the dashboard finish loading first
 #               editor.startPromptWithInitial("Review range (A..B or commit):", "review-range", freshprRange);
 #               editor.executeAction("prompt_confirm");
 #           } catch (e) { editor.setStatus(`freshpr: ${e}`); }
