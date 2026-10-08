@@ -46,17 +46,20 @@ close_tab = "prefix+shift+x"
 new_workspace = ["ctrl+shift+n", "prefix+shift+n"]
 # Worktree = workspace + branch checkout; Shift lifts Ctrl+G (go to) to create.
 new_worktree = ["ctrl+shift+g", "prefix+shift+g"]
+# No herdr default. Attaches an on-disk worktree that isn't a live workspace yet
+# (goto only reaches existing ones). prefix+shift+o avoids default prefix+o.
+open_worktree = ["ctrl+shift+o", "prefix+shift+o"]
 next_workspace = ["ctrl+tab", "prefix+tab"]
 previous_workspace = ["ctrl+shift+tab", "prefix+shift+tab"]
 rename_workspace = "prefix+shift+w"
 close_workspace = "prefix+shift+d"
 
-# Pane movement is prefix-only: Fresh owns Ctrl+arrows (word-jump) and
-# Ctrl+Shift+arrows (add-cursor, word-select) when it runs inside a pane.
-focus_pane_left = "prefix+h"
-focus_pane_down = "prefix+j"
-focus_pane_up = "prefix+k"
-focus_pane_right = "prefix+l"
+# Ctrl+arrows take pane focus back from Fresh's word-jump. Ctrl+Shift+arrows
+# stay with Fresh (add-cursor, word-select), so swaps remain prefix-only.
+focus_pane_left = ["ctrl+left", "prefix+h"]
+focus_pane_down = ["ctrl+down", "prefix+j"]
+focus_pane_up = ["ctrl+up", "prefix+k"]
+focus_pane_right = ["ctrl+right", "prefix+l"]
 swap_pane_left = "prefix+shift+h"
 swap_pane_down = "prefix+shift+j"
 swap_pane_up = "prefix+shift+k"
