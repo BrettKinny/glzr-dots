@@ -1,5 +1,6 @@
 {
   "theme": "terminal-ansi.json",
+  "orchestrator_mode": true,
   "version": 2,
   "locale": "en",
   "active_keybinding_map": "default",
@@ -32,7 +33,9 @@
     { "key": "f", "modifiers": ["ctrl", "shift"], "action": "open_live_grep" },
     { "key": "r", "modifiers": ["ctrl", "shift"], "action": "query_replace" },
 
-    { "key": "b", "modifiers": ["ctrl", "alt"], "action": "list_bookmarks" }
+    { "key": "b", "modifiers": ["ctrl", "alt"], "action": "list_bookmarks" },
+
+    { "key": "w", "modifiers": ["ctrl"], "action": "close_tab", "when": "global" }
   ],
   "plugins": {
     "csharp_support": {

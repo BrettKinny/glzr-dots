@@ -1,0 +1,26 @@
+{
+  "name": "dark-transparent",
+  "extends": "builtin://dark",
+
+  "editor": {
+    "bg": [30, 30, 30],
+    "line_number_bg": "Default",
+    "after_eof_bg": "Default"
+  },
+
+  "ui": {
+    "tab_inactive_bg": "Default",
+    "tab_separator_bg": "Default",
+    "menu_bg": "Default",
+    "menu_dropdown_bg": "Default",
+    "status_bar_bg": "Default",
+    "status_separator_bg": "Default",
+    "prompt_bg": "Default",
+    "popup_bg": "Default",
+    "popup_text_fg": [236, 239, 244],
+    "popup_border_fg": [122, 138, 165],
+    "help_bg": "Default",
+    "help_indicator_bg": "Default",
+    "terminal_bg": "Default"
+  }
+}

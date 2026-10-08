@@ -41,6 +41,13 @@ The WM gesture and its in-editor equivalent share a key, one modifier apart:
 | `Alt+←/→` position history | focus window | `Ctrl+Alt+[` / `Ctrl+Alt+]` |
 | `Alt+Enter` project search | new terminal | `Ctrl+Shift+F` (live grep), `Ctrl+Shift+R` (query replace) |
 | `Alt+0`–`9` jump to bookmark | focus workspace | dropped — `Ctrl+Alt+B` lists them, or use the palette |
+| `Alt+W` close tab | close window | `Ctrl+W` (replaces stock select-word; `Ctrl+D` covers it) |
+
+Fresh reads keys via the legacy Windows console API, which drops modifiers on some
+chords: `Ctrl+Tab` → `Tab`, `Ctrl+Shift+W` never arrives (other `Ctrl+Shift+letter`
+chords like `F`/`R` work). Check new bindings with
+`Ctrl+P` → *Debug keyboard events* before relying on them. WT `sendInput` remaps don't
+help (tried F13; it also broke herdr's `Ctrl+Tab`). Tab cycling = stock `Ctrl+PgUp/PgDn`.
 
 `Ctrl+Alt+↑/↓` was stock *add cursor above/below*; that moved to `Ctrl+Shift+↑/↓`.
 
@@ -102,6 +109,26 @@ If the wrapper is ever bypassed, Fresh falls back to its built-in defaults —
 stock theme, mnemonics on, none of the `Ctrl+Alt` layer. That is loud and obvious
 rather than subtly wrong, which is the point.
 
+### Trap: in-editor settings don't persist
+
+Fresh's UI (theme picker, Settings, toggles like orchestrator mode) always saves to the
+user layer at `%APPDATA%\fresh\config.json`, even under `--config`. Consequences:
+
+- UI changes apply live, then vanish on restart (`--config` file wins)
+- the UI silently recreates the `%APPDATA%` file the wiring says must not exist
+
+Rules:
+
+- make lasting changes here, not in the UI; restart Fresh to apply
+- if `Test-Path "$env:APPDATA\fresh\config.json"` turns True, port anything wanted into
+  this file, then delete it
+- before editing any Fresh config (human or agent), confirm which file the live process
+  reads:
+
+```powershell
+Get-CimInstance Win32_Process -Filter "Name='fresh.exe'" | % CommandLine   # expect --config ...\.glzr\fresh\config.json
+```
+
 ### Why not a symlink or hardlink
 
 Tried and rejected. A directory junction would drag session state (`file_states/`,
@@ -111,6 +138,21 @@ and leaves `%APPDATA%` serving a stale copy. Both Fresh's own Settings UI and
 `git checkout` under `core.autocrlf=true` (set in this repo) do exactly that.
 
 One file, passed explicitly, has no inode to break and no second copy to drift.
+
+### Themes: junction, not a flag
+
+Fresh has no flag for a themes dir; it only reads `%APPDATA%\fresh\themes`. That one
+dir is a junction to `./themes` here. Unlike the rejected cases above: it's themes only
+(no session state), and a junction is a directory pointer, so write-temp-then-rename
+inside it lands in the repo copy. No admin needed. Recreate on a new machine:
+
+```powershell
+New-Item -ItemType Junction -Path "$env:APPDATA\fresh\themes" -Target "$HOME\.glzr\fresh\themes"
+```
+
+Active theme: `terminal-ansi.json` — `builtin://terminal` (WT palette, transparent code
+pane) + muted Nord-ish syntax/diff colours. With `use_terminal_bg`, the file explorer
+still paints `editor.bg`; that's what makes it solid.
 
 ### Verify the wiring
 

@@ -1,0 +1,53 @@
+{
+  "name": "one-half-dark",
+  "extends": "builtin://dark",
+
+  "editor": {
+    "bg": [40, 44, 52],
+    "fg": [220, 223, 228],
+    "cursor": [220, 223, 228],
+    "inactive_cursor": [90, 99, 116],
+    "selection_bg": [62, 68, 81],
+    "current_line_bg": [44, 49, 58],
+    "line_number_fg": [90, 99, 116],
+    "line_number_bg": [40, 44, 52],
+    "after_eof_bg": [40, 44, 52],
+    "indentation_guide_fg": [62, 68, 81],
+    "whitespace_indicator_fg": [62, 68, 81],
+    "bracket_match_fg": [86, 182, 194]
+  },
+
+  "syntax": {
+    "keyword": [198, 120, 221],
+    "string": [152, 195, 121],
+    "comment": [90, 99, 116],
+    "function": [97, 175, 239],
+    "type": [229, 192, 123],
+    "variable": [220, 223, 228],
+    "variable_builtin": [224, 108, 117],
+    "constant": [209, 154, 102],
+    "operator": [86, 182, 194],
+    "punctuation_bracket": [171, 178, 191],
+    "punctuation_delimiter": [171, 178, 191]
+  },
+
+  "ui": {
+    "tab_active_bg": [40, 44, 52],
+    "tab_active_fg": [220, 223, 228],
+    "tab_inactive_bg": [33, 37, 43],
+    "tab_inactive_fg": [90, 99, 116],
+    "status_bar_bg": [33, 37, 43],
+    "status_bar_fg": [171, 178, 191],
+    "menu_bg": [33, 37, 43],
+    "menu_fg": [220, 223, 228],
+    "menu_dropdown_bg": [33, 37, 43],
+    "menu_dropdown_fg": [220, 223, 228],
+    "popup_bg": [33, 37, 43],
+    "popup_text_fg": [220, 223, 228],
+    "popup_border_fg": [90, 99, 116],
+    "prompt_bg": [33, 37, 43],
+    "prompt_fg": [220, 223, 228],
+    "terminal_bg": [40, 44, 52],
+    "terminal_fg": [220, 223, 228]
+  }
+}

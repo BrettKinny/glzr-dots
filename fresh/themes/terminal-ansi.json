@@ -1,0 +1,35 @@
+{
+  "name": "terminal-ansi",
+  "extends": "builtin://terminal",
+
+  "editor": {
+    "bg": [33, 37, 43],
+    "current_line_bg": [44, 49, 58],
+    "selection_bg": [62, 68, 81],
+    "selection_modifier": [],
+
+    "diff_add_bg": [42, 58, 48],
+    "diff_remove_bg": [66, 42, 48],
+    "diff_add_highlight_bg": [56, 82, 62],
+    "diff_remove_highlight_bg": [96, 54, 62],
+    "diff_modify_bg": [46, 52, 66],
+    "diff_add_collision_fg": [216, 222, 233],
+    "diff_remove_collision_fg": [216, 222, 233],
+    "diff_modify_collision_fg": [216, 222, 233]
+  },
+
+  "ui": {
+    "tab_inactive_bg": [33, 37, 43],
+    "tab_separator_bg": [33, 37, 43],
+    "tab_active_bg": [40, 44, 52]
+  },
+
+  "syntax": {
+    "keyword": [129, 161, 193],
+    "string": [163, 190, 140],
+    "function": [136, 192, 208],
+    "type": [208, 190, 140],
+    "variable_builtin": [180, 142, 173],
+    "constant": [180, 142, 173]
+  }
+}

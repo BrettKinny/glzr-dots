@@ -4,3 +4,9 @@
 
 # Python bytecode
 __pycache__/
+
+# herdr runtime state (what's-new popup), written next to config.toml
+herdr/release-notes.json
+
+# Throwaway theme-key probes (garish colours to find which key paints what)
+fresh/themes/probe*.json

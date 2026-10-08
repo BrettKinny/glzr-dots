@@ -1,0 +1,28 @@
+{
+  "name": "nord-transparent",
+  "extends": "builtin://nord",
+
+  "editor": {
+    "bg": [46, 52, 64],
+    "line_number_bg": "Default",
+    "after_eof_bg": "Default"
+  },
+
+  "ui": {
+    "tab_inactive_bg": "Default",
+    "tab_separator_bg": "Default",
+    "menu_bg": "Default",
+    "menu_dropdown_bg": "Default",
+    "status_bar_bg": "Default",
+    "status_bar_fg": [216, 222, 233],
+    "status_separator_bg": "Default",
+    "status_separator_fg": [76, 86, 106],
+    "prompt_bg": "Default",
+    "popup_bg": "Default",
+    "popup_text_fg": [236, 239, 244],
+    "popup_border_fg": [129, 161, 193],
+    "help_bg": "Default",
+    "help_indicator_bg": "Default",
+    "terminal_bg": "Default"
+  }
+}

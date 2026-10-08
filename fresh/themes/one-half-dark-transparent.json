@@ -1,0 +1,57 @@
+{
+  "name": "one-half-dark-transparent",
+  "extends": "builtin://dark",
+
+  "editor": {
+    "bg": [40, 44, 52],
+    "fg": [220, 223, 228],
+    "cursor": [220, 223, 228],
+    "inactive_cursor": [90, 99, 116],
+    "selection_bg": [62, 68, 81],
+    "current_line_bg": [44, 49, 58],
+    "line_number_fg": [90, 99, 116],
+    "line_number_bg": "Default",
+    "after_eof_bg": "Default",
+    "indentation_guide_fg": [62, 68, 81],
+    "whitespace_indicator_fg": [62, 68, 81],
+    "bracket_match_fg": [86, 182, 194]
+  },
+
+  "syntax": {
+    "keyword": [198, 120, 221],
+    "string": [152, 195, 121],
+    "comment": [90, 99, 116],
+    "function": [97, 175, 239],
+    "type": [229, 192, 123],
+    "variable": [220, 223, 228],
+    "variable_builtin": [224, 108, 117],
+    "constant": [209, 154, 102],
+    "operator": [86, 182, 194],
+    "punctuation_bracket": [171, 178, 191],
+    "punctuation_delimiter": [171, 178, 191]
+  },
+
+  "ui": {
+    "tab_active_bg": [62, 68, 81],
+    "tab_active_fg": [220, 223, 228],
+    "tab_inactive_bg": "Default",
+    "tab_inactive_fg": [90, 99, 116],
+    "tab_separator_bg": "Default",
+    "status_bar_bg": "Default",
+    "status_bar_fg": [171, 178, 191],
+    "status_separator_bg": "Default",
+    "menu_bg": "Default",
+    "menu_fg": [220, 223, 228],
+    "menu_dropdown_bg": "Default",
+    "menu_dropdown_fg": [220, 223, 228],
+    "popup_bg": "Default",
+    "popup_text_fg": [236, 239, 244],
+    "popup_border_fg": [97, 175, 239],
+    "prompt_bg": "Default",
+    "prompt_fg": [220, 223, 228],
+    "help_bg": "Default",
+    "help_indicator_bg": "Default",
+    "terminal_bg": "Default",
+    "terminal_fg": [220, 223, 228]
+  }
+}
