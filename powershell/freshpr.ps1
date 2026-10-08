@@ -1,10 +1,25 @@
 # freshpr: review a Bitbucket Cloud PR in Fresh (https://getfresh.dev).
 #
-#   freshpr 123          worktree at <repo-parent>/<repo>-pr-123 on the PR head, then open Fresh there
-#   freshpr 123 -Remove  delete that worktree
+#   freshpr 123          worktree at <repo-parent>/<repo>-pr-123 on local branch pr/123 (= PR head),
+#                        then open Fresh there
+#   freshpr 123 -Remove  delete that worktree and branch
 #
-# Run from anywhere inside the repo. Then in Fresh: Ctrl+P > Review Diff: Range, clear HEAD,
-# paste (the range is put on the clipboard).
+# Run from anywhere inside the repo. The review range (origin/<target>...HEAD) is passed to Fresh as
+# $env:FRESHPR_RANGE and also put on the clipboard. To have Fresh open the diff by itself, add this
+# to %APPDATA%\fresh\init.ts (without it: Ctrl+P > Review Diff: Range, clear HEAD, paste):
+#
+#   const editor = getEditor();   // skip if init.ts already has it
+#   const freshprRange = editor.getEnv("FRESHPR_RANGE");
+#   if (freshprRange) {
+#       registerHandler("freshprStartReview", async () => {
+#           try {
+#               await editor.delay(300);
+#               editor.startPromptWithInitial("Review range (A..B or commit):", "review-range", freshprRange);
+#               editor.executeAction("prompt_confirm");
+#           } catch (e) { editor.setStatus(`freshpr: ${e}`); }
+#       });
+#       editor.on("ready", "freshprStartReview");
+#   }
 #
 # Needs: PowerShell 7, git 2.31+, `fresh` on PATH (exe or function), Bitbucket credentials:
 #   $env:BITBUCKET_USER       Atlassian account email
@@ -25,7 +40,16 @@ function freshpr {
     $repo = Split-Path $main -Leaf
     $wt = Join-Path (Split-Path $main -Parent) "$repo-pr-$Id"
 
-    if ($Remove) { git -C $main worktree remove $wt; return }
+    $branch = "pr/$Id"
+
+    if ($Remove) {
+        git -C $main worktree remove $wt
+        # git can unregister the worktree yet fail to delete the folder when something holds it.
+        if (Test-Path $wt) { Write-Host "freshpr: $wt still in use (Fresh open there?)" -ForegroundColor Yellow }
+        $registered = git -C $main worktree list --porcelain | Select-String -SimpleMatch "worktree $($wt -replace '\\', '/')"
+        if (-not $registered) { git -C $main branch --quiet -D $branch 2>$null }
+        return
+    }
 
     $remote = git -C $main remote get-url origin
     if ($remote -notmatch 'bitbucket\.org[:/]([^/]+)/([^/]+?)(\.git)?$') {
@@ -52,23 +76,24 @@ function freshpr {
     git -C $main fetch --quiet origin "+refs/heads/${src}:refs/remotes/origin/$src" "+refs/heads/${dst}:refs/remotes/origin/$dst"
     if ($LASTEXITCODE) { return }
 
-    # Detached HEAD so it never clashes with the source branch being checked out elsewhere.
+    # Own pr/<id> branch, not the source branch: git refuses a branch checked out in two
+    # worktrees, and the source branch may already be checked out elsewhere. -B resets it on rerun.
     if (Test-Path $wt) {
         if (git -C $wt status --porcelain) { Write-Host "freshpr: $wt has local changes, left as is" -ForegroundColor Yellow }
-        else { git -C $wt checkout --quiet --detach "origin/$src" }
+        else { git -C $wt checkout --quiet -B $branch "origin/$src" }
     } else {
-        git -C $main worktree add --quiet --detach $wt "origin/$src"
+        git -C $main worktree add --quiet -B $branch $wt "origin/$src"
         if ($LASTEXITCODE) { return }
     }
 
-    # Three-dot = diff from merge-base, i.e. what Bitbucket shows. The Fresh range prompt
-    # can't be pre-filled from outside, so hand it over via the clipboard.
+    # Three-dot = diff from merge-base, i.e. what Bitbucket shows.
     $range = "origin/$dst...HEAD"
     Set-Clipboard $range
     Write-Host "#$Id $($pr.title)" -ForegroundColor Cyan
     Write-Host "$($pr.author.display_name)  $src -> $dst  $($pr.links.html.href)" -ForegroundColor DarkGray
-    Write-Host "Ctrl+P > Review Diff: Range, clear HEAD, paste $range" -ForegroundColor DarkGray
+    Write-Host "range: $range (on clipboard)" -ForegroundColor DarkGray
 
     Push-Location $wt
-    try { fresh } finally { Pop-Location }
+    $env:FRESHPR_RANGE = $range
+    try { fresh } finally { Remove-Item Env:FRESHPR_RANGE -ErrorAction SilentlyContinue; Pop-Location }
 }
