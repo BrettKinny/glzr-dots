@@ -29,14 +29,22 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 #
 # Resolved at load time (the winget package dir is version-stamped) so this
 # survives upgrades; $editExe is reused by the `edit` alias further down.
-$editExe = Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Microsoft.Edit_*" -Recurse -Filter edit.exe -ErrorAction SilentlyContinue |
-    Sort-Object { [version]$_.VersionInfo.FileVersion } -Descending |
-    Select-Object -First 1 -ExpandProperty FullName
+#
+# ~/.local/bin wins when present: that's the ~/dev/edit build whose DEFAULT_THEME is
+# One Half Dark. Herdr answers the OSC 4 palette query but not OSC 10/11, and Edit
+# needs all 18 replies before it adopts a terminal palette -- so panes inside Herdr
+# fall back to the built-in theme. Delete the file to revert to stock winget Edit.
+$editLocal = Join-Path $HOME '.local\bin\edit.exe'
+$editExe = if (Test-Path $editLocal) { $editLocal } else {
+    Get-ChildItem "$env:LOCALAPPDATA\Microsoft\WinGet\Packages\Microsoft.Edit_*" -Recurse -Filter edit.exe -ErrorAction SilentlyContinue |
+        Sort-Object { [version]$_.VersionInfo.FileVersion } -Descending |
+        Select-Object -First 1 -ExpandProperty FullName
+}
 
 # Don't clobber an explicit override from the parent process — but do correct a
 # stale value we set ourselves on an earlier upgrade.
 $editorTarget = if ($editExe) { $editExe } elseif (Get-Command edit.exe -ErrorAction SilentlyContinue) { 'edit' }
-if ($editorTarget -and (-not $env:EDITOR -or $env:EDITOR -eq 'edit' -or $env:EDITOR -like '*\Microsoft.Edit_*')) {
+if ($editorTarget -and (-not $env:EDITOR -or $env:EDITOR -eq 'edit' -or $env:EDITOR -like '*\Microsoft.Edit_*' -or $env:EDITOR -like '*\.local\bin\edit.exe')) {
     $env:EDITOR = $editorTarget
     # Keep the User-scope copy in step for GUI-launched apps (writes only on drift).
     if ([Environment]::GetEnvironmentVariable('EDITOR', 'User') -ne $editorTarget) {
@@ -45,19 +53,17 @@ if ($editorTarget -and (-not $env:EDITOR -or $env:EDITOR -eq 'edit' -or $env:EDI
 }
 #endregion
 
-#region PSReadLine  ->  inline predictions from history, menu-style tab
-# InlineView, not ListView, and that's deliberate — think twice before switching
-# back. ListView's prediction rows are drawn below the input line, and anything
-# that moves the cursor out from under PSReadLine orphans them on screen:
+#region PSReadLine  ->  list-view predictions from history, menu-style tab
+# ListView (F2 toggles to InlineView). Its rows are drawn below the input line, so
+# anything that moves the cursor out from under PSReadLine orphans them on screen:
 #   - Microsoft Edit (now $EDITOR, see the region above) runs in the alternate
 #     screen buffer and doesn't restore the cursor row on exit, so the next
 #     prompt is drawn near the top of the buffer while the list rows are still
 #     keyed to the old, lower row. Dead "[History]" lines, one per `edit`.
+#     Ctrl+L clears them. InlineView avoids this entirely.
 #   - starship's transient prompt only pads the rows away if it saw ListView at
-#     init time (it captures `$script:DoesUseLists` once), which made this
-#     region's position relative to the starship region load-bearing.
-# InlineView renders the suggestion on the input line itself, so there are no
-# rows to orphan and neither trap applies.
+#     init time (it captures `$script:DoesUseLists` once), so this region MUST
+#     stay above the starship region.
 if (Get-Module PSReadLine) {
     Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
     # CompletionPredictor supplies the "Plugin" half of HistoryAndPlugin
@@ -67,7 +73,7 @@ if (Get-Module PSReadLine) {
     # Prediction needs a VT-capable, non-redirected console; swallow the error
     # when the profile is sourced in a plain/redirected host (e.g. from a script).
     try {
-        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle InlineView -ErrorAction Stop
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -ErrorAction Stop
     } catch { }
 }
 #endregion
@@ -147,6 +153,20 @@ if ((Get-Command gsudo -ErrorAction SilentlyContinue) -and -not (Get-Command sud
 }
 #endregion
 
+#region glow  ->  wrap to window width
+# glow can't read the console width on Windows and falls back to 80 cols (capped
+# at 120 when it can). Pass -w ourselves unless the caller already did.
+$glowExe = (Get-Command glow -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source
+if ($glowExe) {
+    function glow {
+        $a = if ($args -match '^(-w|--width)') { $args } else { @('-w', [Math]::Max(40, $Host.UI.RawUI.WindowSize.Width - 4)) + $args }
+        # Functions don't forward pipeline input to native exes; only pipe when there is
+        # some, else glow sees a redirected stdin and skips its TUI.
+        if ($MyInvocation.ExpectingInput) { $input | & $script:glowExe @a } else { & $script:glowExe @a }
+    }
+}
+#endregion
+
 #region Small Linux-reflex helpers
 # `which <cmd>` -> resolved path, like the Unix builtin
 function which { (Get-Command @args -ErrorAction SilentlyContinue).Source }
@@ -195,8 +215,11 @@ Set-Alias -Name f -Value fresh
 Set-Alias -Name h -Value herdr
 
 Set-Alias -Name lg -Value lazygit
+# elio is the cd-on-exit function in $PROFILE (defined after this file loads); aliases resolve at call time.
+Set-Alias -Name ex -Value elio
 Set-Alias -Name lj -Value lazyjira
 Set-Alias -Name e -Value edit
+Set-Alias -Name g -Value git
 
 # Microsoft Edit v2.0 (winget) instead of the older System32 edit.exe.
 # $editExe is resolved in the $EDITOR region at the top of this file.
@@ -279,25 +302,19 @@ if ($env:WT_SESSION) {
 # `ask "how do I ..."`        chat mode: no tools, general knowledge, fastest
 # `ask -f "what does X do"`   file mode: read-only Read/Glob/Grep over the cwd
 # `git diff | ask "explain"`  anything piped in is appended as context
-# `-r` / `-Raw`               force glow rendering on / off (see below)
+# `-Raw`                      plain streaming, no glow
 #
 # Wraps the `claude` CLI rather than the raw API so it reuses the existing
 # subscription auth. The speed flags matter: --effort low kills the extended
 # thinking block (the single biggest latency win), and the mcp/slash/session
-# flags skip startup work that a one-shot question never uses. Output is parsed
-# out of stream-json so tokens appear as they arrive instead of in one dump.
+# flags skip startup work that a one-shot question never uses.
 #
-# Rendering is per-mode because glow can't stream — it needs the whole document,
-# so piping through it means waiting for the full answer before anything appears.
-# Chat mode replaces the system prompt outright and reliably answers in plain
-# text, so it streams raw. File mode can only *append* to Claude Code's default
-# system prompt, which keeps emitting fences and bold no matter how the terse
-# instruction is worded, so it buffers and renders. Both are overridable.
+# Output is buffered and piped through glow because glow can't stream: the
+# answer appears all at once, rendered. -Raw streams the markdown source instead.
 function ask {
     [CmdletBinding()]
     param(
         [Alias('f')][switch]$Files,
-        [Alias('r')][switch]$Render,
         [switch]$Raw,
         [Alias('m')][Parameter(DontShow)][string]$Model = 'haiku',
         [Parameter(ValueFromPipeline, DontShow)][string]$InputObject,
@@ -319,10 +336,12 @@ function ask {
         }
         if ($piped.Count) { $q = "$q`n`n--- piped input ---`n" + ($piped -join "`n") }
 
+        # Output is rendered as markdown by glow, so markdown is fine (and wanted for commands).
         $terse = 'You are answering at a shell prompt. Be terse: no preamble, no restating the ' +
-                 'question, no sign-off. Plain text only - never use markdown code fences, headers, ' +
-                 'or bold. Put any command on its own line, followed by at most one short line of ' +
-                 'explanation. The user is on Windows 11 with PowerShell 7 unless they say otherwise.'
+                 'question, no sign-off. Use markdown where it helps: fenced code blocks for ' +
+                 'commands and code, short lists, bold sparingly. Keep the answer to a few lines ' +
+                 'unless the question needs more. The user is on Windows 11 with PowerShell 7 ' +
+                 'unless they say otherwise.'
 
         $cmd = @(
             '-p', $q
@@ -348,8 +367,9 @@ function ask {
             $cmd += @('--tools', '', '--system-prompt', $terse)
         }
 
-        $glow = (Get-Command glow -ErrorAction SilentlyContinue).Source
-        $useGlow = $glow -and -not $Raw -and ($Render -or $Files)
+        # -CommandType Application: skip the glow wrapper function (its .Source is empty).
+        $glow = (Get-Command glow -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source
+        $useGlow = [bool]$glow -and -not $Raw
         $buf = if ($useGlow) { [System.Text.StringBuilder]::new() } else { $null }
 
         $started = $false
