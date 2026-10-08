@@ -182,6 +182,10 @@ if ($freshExe -and (Test-Path $freshConfig)) {
 }
 #endregion
 
+#region freshpr  ->  review a Bitbucket PR in Fresh (shareable; usage in the file)
+. "$PSScriptRoot\freshpr.ps1"
+#endregion
+
 #region Aliases
 Set-Alias -Name c -Value claude
 Set-Alias -Name f -Value fresh

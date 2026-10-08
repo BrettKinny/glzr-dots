@@ -1,5 +1,5 @@
 {
-  "theme": "nord-transparent.json",
+  "theme": "terminal-ansi.json",
   "version": 2,
   "locale": "en",
   "active_keybinding_map": "default",
@@ -35,6 +35,9 @@
     { "key": "b", "modifiers": ["ctrl", "alt"], "action": "list_bookmarks" }
   ],
   "plugins": {
+    "csharp_support": {
+      "enabled": false
+    },
     "vi_mode": {
       "enabled": true,
       "settings": {
@@ -86,7 +89,7 @@
     "menu_bar_mnemonics": false,
     "status_bar": {
       "left": ["{trust}", "{remote}", "{git_statusbar:branch}", "{diagnostics}", "{cursor:compact}", "{cursor_count}", "{messages}"],
-      "right": ["{read_only}", "{line_ending}", "{encoding}", "{language}", "{lsp}", "{warnings}", "{update}", "{palette}"]
+      "right": ["{read_only}", "{line_ending}", "{encoding}", "{language}", "{lsp}", "{warnings}", "{update}"]
     },
     "show_menu_bar": false
   }
