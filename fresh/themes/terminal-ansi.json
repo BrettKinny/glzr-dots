@@ -3,7 +3,7 @@
   "extends": "builtin://terminal",
 
   "editor": {
-    "bg": [33, 37, 43],
+    "bg": "Default",
     "current_line_bg": [44, 49, 58],
     "selection_bg": [62, 68, 81],
     "selection_modifier": [],

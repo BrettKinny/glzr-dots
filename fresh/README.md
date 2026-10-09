@@ -159,8 +159,8 @@ foreach ($d in 'themes', 'plugins') {
 ```
 
 Active theme: `terminal-ansi.json` — `builtin://terminal` (WT palette, transparent code
-pane) + muted Nord-ish syntax/diff colours. With `use_terminal_bg`, the file explorer
-still paints `editor.bg`; that's what makes it solid.
+pane) + muted Nord-ish syntax/diff colours. `editor.bg` is `"Default"` so explorer + markdown-preview blank lines stay
+transparent too (an RGB value paints solid bars there).
 
 ### Verify the wiring
 
