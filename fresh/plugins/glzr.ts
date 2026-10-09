@@ -120,3 +120,55 @@ if (freshprRange) {
     });
     editor.on("ready", "freshprStartReview");
 }
+
+// Obsidian-style bold/italic (palette-only until Fresh can tell Ctrl+I from Tab): wrap selection in ** / *, or unwrap if already marked
+// (inside or just outside the selection). Markdown buffers only; no-op elsewhere.
+// Star runs: 1 = italic, 2 = bold, 3 = both. Plain length checks would read ** as italic.
+function hasMarker(stars: number, m: string): boolean {
+    return m.length === 2 ? stars >= 2 : stars === 1 || stars === 3;
+}
+
+function leadingStars(s: string): number {
+    let n = 0;
+    while (n < s.length && n < 3 && s[n] === "*") n++;
+    return n;
+}
+
+async function toggleMarker(m: string) {
+    const buf = editor.getActiveBufferId();
+    if (editor.getBufferInfo(buf)?.language !== "markdown") return;
+    // Descending so earlier edits don't shift later offsets.
+    const sels = editor.getAllCursors()
+        .map((c) => c.selection)
+        .filter((s): s is { start: number; end: number } => !!s && s.end > s.start)
+        .sort((a, b) => b.start - a.start);
+    if (sels.length === 0) {
+        editor.insertText(buf, editor.getCursorPosition(), m + m);
+        for (let k = 0; k < m.length; k++) editor.executeAction("move_left");
+        return;
+    }
+    const len = editor.getBufferLength(buf);
+    for (const { start, end } of sels) {
+        const text = await editor.getBufferText(buf, start, end);
+        const rev = (s: string) => s.split("").reverse().join("");
+        const inner = Math.min(leadingStars(text), leadingStars(rev(text)));
+        const before = await editor.getBufferText(buf, Math.max(0, start - 3), start);
+        const after = await editor.getBufferText(buf, end, Math.min(len, end + 3));
+        const outer = Math.min(leadingStars(rev(before)), leadingStars(after));
+        if (text.length > 2 * m.length && hasMarker(inner, m)) {
+            editor.deleteRange(buf, end - m.length, end);
+            editor.deleteRange(buf, start, start + m.length);
+        } else if (hasMarker(outer, m)) {
+            editor.deleteRange(buf, end, end + m.length);
+            editor.deleteRange(buf, start - m.length, start);
+        } else {
+            editor.insertText(buf, end, m);
+            editor.insertText(buf, start, m);
+        }
+    }
+}
+
+registerHandler("markdown_bold", () => toggleMarker("**"));
+registerHandler("markdown_italic", () => toggleMarker("*"));
+editor.registerCommand("markdown_bold", "Markdown: toggle bold", "markdown_bold");
+editor.registerCommand("markdown_italic", "Markdown: toggle italic", "markdown_italic");
