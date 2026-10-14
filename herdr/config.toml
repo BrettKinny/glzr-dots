@@ -30,17 +30,21 @@ prefix = "f12"
 help = ["ctrl+?", "prefix+?"]
 goto = ["ctrl+g", "prefix+g"]
 workspace_picker = "prefix+w"
+# J for jump: pane behind the latest notification.
+open_notification_target = ["ctrl+shift+j", "prefix+o"]
 # Plain Ctrl+B belongs to Fresh's editing layer; Shift lifts it to Herdr's UI.
 toggle_sidebar = ["ctrl+shift+b", "prefix+b"]
 detach = ["ctrl+shift+q", "prefix+q"]
 
-# Plain Ctrl+T/W belong to Fresh's editing layer; Shift lifts them to Herdr.
-new_tab = ["ctrl+shift+t", "prefix+c"]
+# Plain Ctrl+T belongs to Fresh's editing layer; Shift lifts it to Herdr.
+# Ctrl+N takes Fresh's new-file.
+new_tab = ["ctrl+n", "ctrl+shift+t", "prefix+c"]
 previous_tab = "prefix+p"
 next_tab = "prefix+n"
 switch_tab = ["ctrl+1..9", "prefix+1..9"]
 rename_tab = "prefix+shift+t"
-close_tab = "prefix+shift+x"
+# Takes Ctrl+W from Fresh (close buffer) and shells (delete word).
+close_tab = ["ctrl+w", "prefix+shift+x"]
 
 # Workspaces are the next level above tabs, so Ctrl+Tab cycles them.
 new_workspace = ["ctrl+shift+n", "prefix+shift+n"]
@@ -51,7 +55,7 @@ new_worktree = ["ctrl+shift+g", "prefix+shift+g"]
 open_worktree = ["ctrl+shift+o", "prefix+shift+o"]
 next_workspace = ["ctrl+tab", "prefix+tab"]
 previous_workspace = ["ctrl+shift+tab", "prefix+shift+tab"]
-rename_workspace = "prefix+shift+w"
+rename_workspace = ["ctrl+shift+r", "prefix+shift+w"]
 close_workspace = "prefix+shift+d"
 
 # Ctrl+arrows take pane focus back from Fresh's word-jump. Ctrl+Shift+arrows
