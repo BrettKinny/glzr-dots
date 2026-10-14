@@ -53,9 +53,10 @@ if ($editorTarget -and (-not $env:EDITOR -or $env:EDITOR -eq 'edit' -or $env:EDI
 }
 #endregion
 
-#region PSReadLine  ->  list-view predictions from history, menu-style tab
-# ListView (F2 toggles to InlineView). Its rows are drawn below the input line, so
-# anything that moves the cursor out from under PSReadLine orphans them on screen:
+#region PSReadLine  ->  inline predictions from history, menu-style tab
+# InlineView default (F2 toggles to ListView). ListView rows are drawn below the
+# input line, so anything that moves the cursor out from under PSReadLine orphans
+# them on screen:
 #   - Microsoft Edit (now $EDITOR, see the region above) runs in the alternate
 #     screen buffer and doesn't restore the cursor row on exit, so the next
 #     prompt is drawn near the top of the buffer while the list rows are still
@@ -73,7 +74,7 @@ if (Get-Module PSReadLine) {
     # Prediction needs a VT-capable, non-redirected console; swallow the error
     # when the profile is sourced in a plain/redirected host (e.g. from a script).
     try {
-        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -ErrorAction Stop
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle InlineView -ErrorAction Stop
     } catch { }
 }
 #endregion
