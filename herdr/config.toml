@@ -75,3 +75,19 @@ split_vertical = ["ctrl+backslash", "prefix+v"]
 split_horizontal = ["ctrl+shift+backslash", "prefix+minus"]
 zoom = "prefix+z"
 resize_mode = "prefix+r"
+
+# Foot's URL mode. Herdr owns the screen, so Windows Terminal's mark-mode link
+# hopping can't see pane output; read it via the API instead. U for URL.
+[[keys.command]]
+key = "ctrl+shift+u"
+type = "popup"
+command = "pwsh -NoProfile -File \"%USERPROFILE%\\.glzr\\herdr\\url-picker.ps1\""
+width = "80%"
+height = "50%"
+
+[[keys.command]]
+key = "prefix+u"
+type = "popup"
+command = "pwsh -NoProfile -File \"%USERPROFILE%\\.glzr\\herdr\\url-picker.ps1\""
+width = "80%"
+height = "50%"

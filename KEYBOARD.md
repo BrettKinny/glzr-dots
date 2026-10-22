@@ -61,6 +61,7 @@ only where Fresh has no claim. The rest moved up to `Ctrl+Shift` or down to the
 | Split vertical / horizontal | `Ctrl+\` / `Ctrl+Shift+\` |
 | Zoom pane / new workspace | `F12 Z` / `Ctrl+Shift+N` |
 | New worktree workspace | `Ctrl+Shift+G` |
+| Pick URL / file path (Windows) | `Ctrl+Shift+U` |
 
 `F12` remains the Herdr recovery prefix, and every command still answers to its
 `F12` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;

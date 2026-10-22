@@ -25,9 +25,23 @@ prefix. Fresh's `Ctrl+Alt` split layer never collides.
 | `Ctrl+Shift+N` | New workspace |
 | `Ctrl+Shift+G` | New worktree workspace |
 | `F12 Shift+D` | Close workspace |
+| `Ctrl+Shift+U` | Pick a URL or file path from the pane |
 
 Herdr still needs a prefix for commands without a good native chord. It is `F12`,
 and the original prefix forms remain alongside every remapped command.
+
+## URL and path picker
+
+foot's URL mode, for Herdr. Windows Terminal's mark-mode link hopping
+(`Ctrl+Shift+M`, `Tab`) can't see pane output because Herdr draws the whole screen,
+so [`url-picker.ps1`](url-picker.ps1) reads it through the API instead:
+
+- `Ctrl+Shift+U` / `F12 U` → popup over the focused pane
+- `herdr pane read --source recent-unwrapped` → URLs + file paths, newest first
+- Paths kept only if they exist on disk (relative → pane cwd, `:line:col` stripped)
+- `Enter` opens with the default app, `Ctrl+Y` copies
+- Needs `fzf` on `PATH`. Windows-only (`[[keys.command]]` runs through `cmd.exe`),
+  so it isn't mirrored to Omarchy
 
 ## Wiring
 
