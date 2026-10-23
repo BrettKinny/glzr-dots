@@ -34,6 +34,7 @@ moves, reverses, or raises the scope of an action.
 | Calendar | `Mod+Shift+C` | gcal-tui | Outlook Calendar |
 | Messaging | `Mod+Shift+G` | Signal | Teams |
 | AI | `Mod+Shift+A` | Gemini | Gemini |
+| Jira issue (key, number → MMS, or search) | `Mod+Shift+J` | — | Jira jump popup |
 
 ## Clipboard
 

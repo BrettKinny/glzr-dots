@@ -133,6 +133,10 @@ window_rules:
       - window_process: { regex: '(?i)outlook|olk' }
         window_title: { regex: '(?i).*reminder.*' }
 
+      # Jira jump prompt (jira.py) — don't tile a 1-line popup.
+      - window_process: { equals: 'pythonw' }
+        window_title: { equals: 'Jira jump' }
+
   # Zen browser transparency
   - commands: ['set-transparency --opacity 100%']
     match:
@@ -406,6 +410,10 @@ keybindings:
   # the `fresh` wrapper function in powershell/profile.ps1 never runs here.
   - commands: ['shell-exec wt fresh --config "%USERPROFILE%\.glzr\fresh\config.json"']
     bindings: ['alt+shift+n']
+
+  # Jira jump — prompt for a key (802 → MMS-802), opens in Zen. See jira.py.
+  - commands: ['shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\jira.py"']
+    bindings: ['alt+shift+j']
 
   # ===================================================================
   # WM CONTROLS
