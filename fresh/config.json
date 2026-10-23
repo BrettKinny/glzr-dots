@@ -1,6 +1,6 @@
 {
   "theme": "terminal-ansi.json",
-  "orchestrator_mode": true,
+  "orchestrator_mode": false,
   "version": 2,
   "locale": "en",
   "active_keybinding_map": "default",
