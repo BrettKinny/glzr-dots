@@ -248,6 +248,15 @@ if ($freshExe -and (Test-Path $freshConfig)) {
 . "$PSScriptRoot\fresh-pr.ps1"
 #endregion
 
+#region ttt-pr  ->  review a Bitbucket PR in ttt (shareable; usage in the file)
+. "$PSScriptRoot\ttt-pr.ps1"
+# `ttt pr 123` -> ttt-pr; use `ttt ./pr` to open a file named pr.
+function ttt {
+    if ($args.Count -and $args[0] -eq 'pr') { $rest = @($args | Select-Object -Skip 1); return ttt-pr @rest }
+    ttt.exe @args
+}
+#endregion
+
 #region Aliases
 Set-Alias -Name c -Value claude
 Set-Alias -Name f -Value fresh
