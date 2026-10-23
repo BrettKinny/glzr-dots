@@ -67,3 +67,19 @@ only where Fresh has no claim. The rest moved up to `Ctrl+Shift` or down to the
 `F12` remains the Herdr recovery prefix, and every command still answers to its
 `F12` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;
 Windows uses `Mod+R` for resize mode and `Mod+Shift+R` to reload GlazeWM.
+
+## Zen (Windows)
+
+Splits and sidebar follow Herdr; `Ctrl+T/W/N/Tab` stay browser-standard. GlazeWM
+owns `Mod+Arrow`, so `Alt+←` never reaches Zen. Vimium handles in-page keys.
+
+| Action | Shortcut |
+| --- | --- |
+| Back / forward | `Backspace` · `Ctrl+,` / `Ctrl+.` · Vimium `H` / `L` |
+| Split vertical / horizontal | `Ctrl+\` / `Ctrl+Shift+\` |
+| Unsplit | `Ctrl+Shift+W` |
+| Sidebar (compact mode) | `Ctrl+Shift+B` |
+| Go to open tab | `Ctrl+G` or Vimium `T` |
+| Next / previous tab | Vimium `J` / `K` |
+| Next / previous Zen workspace | `Ctrl+Alt+→` / `Ctrl+Alt+←` |
+| Link hints / copy URL | Vimium `f` / `yy` |
