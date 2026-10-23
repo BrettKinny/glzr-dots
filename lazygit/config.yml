@@ -2,6 +2,17 @@ os:
   edit: 'edit {{filename}}'
   editAtLine: 'edit {{filename}}'
   editAtLineAndWait: 'edit {{filename}}'
-  
+
 gui:
   nerdFontsVersion: "3"
+  showCommandLog: false       # @ toggles it back
+  showRandomTip: false
+  border: rounded
+
+git:
+  log:
+    order: "topo-order"       # Keeps visual branches neatly grouped
+    showGraph: "always"       # Displays the branch lanes on the left
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never --line-numbers --width={{columnWidth}}
