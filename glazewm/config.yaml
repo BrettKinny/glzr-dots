@@ -239,6 +239,10 @@ keybindings:
   - commands: ['toggle-fullscreen']
     bindings: ['alt+f']
 
+  # Toggle full width (keep height) — no Omarchy equivalent. See fullwidth.py.
+  - commands: ['shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\fullwidth.py"']
+    bindings: ['alt+shift+w']
+
   # Minimize — no direct Omarchy equivalent, but useful
   - commands: ['toggle-minimized']
     bindings: ['alt+m']
