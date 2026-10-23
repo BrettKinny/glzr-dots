@@ -88,7 +88,11 @@ function ttt-pr {
     Write-Host "#$Id $($pr.title)" -ForegroundColor Cyan
     Write-Host "$($pr.author.display_name)  $src -> $dst  $($pr.links.html.href)" -ForegroundColor DarkGray
 
+    # Not --exec: that runs ttt headless (renders to a virtual screen, terminal stays blank).
+    $lua = Join-Path ([IO.Path]::GetTempPath()) 'ttt-pr-open-changes.lua'
+    Set-Content $lua 'local ttt = require("ttt"); ttt.set_timeout(0, function() ttt.exec_command("changes.viewAll") end)'
+
     Push-Location $wt
     # ttt.exe, not ttt: the profile's `ttt` wrapper would route back here on `ttt pr`.
-    try { ttt.exe --exec 'exec "Git: Open Current Changes"' } finally { Pop-Location }
+    try { ttt.exe --plugin $lua } finally { Pop-Location }
 }
