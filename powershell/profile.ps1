@@ -16,6 +16,27 @@
 $OutputEncoding = [System.Text.Encoding]::UTF8
 #endregion
 
+#region Init-script cache  ->  skip the per-shell `<tool> init` spawns
+# starship init = two process spawns (~300ms), zoxide ~50ms, every shell. Output
+# only changes with the exe, so cache it keyed on exe size+mtime: an upgrade
+# misses and regenerates. Must sit below the encoding region (same ❯ trap).
+function Get-CachedInit([string]$Name, [string]$Exe, [scriptblock]$Generate) {
+    $i = Get-Item -LiteralPath $Exe
+    $dir = Join-Path $env:LOCALAPPDATA 'glazewm\init-cache'
+    $file = Join-Path $dir "$Name-$($i.Length)-$($i.LastWriteTimeUtc.Ticks).ps1"
+    if (Test-Path $file) { return [IO.File]::ReadAllText($file) }
+    $text = & $Generate | Out-String
+    if (-not $text.Trim()) { return $text }  # don't cache a failed init
+    New-Item -ItemType Directory -Force -Path $dir | Out-Null
+    Remove-Item (Join-Path $dir "$Name-*.ps1") -ErrorAction SilentlyContinue
+    # temp+rename so a shell starting concurrently never reads a half-written file
+    $tmp = "$file.$PID.tmp"
+    [IO.File]::WriteAllText($tmp, $text)
+    Move-Item -Force $tmp $file
+    $text
+}
+#endregion
+
 #region $EDITOR  ->  Microsoft Edit (the `edit` TUI)
 # Covers anything that shells out to an editor: git, lazygit, and elio's fallback
 # when no [[open.rules]] entry matches. A persistent User-scope env var is set too
@@ -83,9 +104,11 @@ if (Get-Module PSReadLine) {
 # Must stay above the "Terminal cwd tracking" region, which wraps whatever
 # prompt function this installs, and below the two regions above — see their
 # notes for why the order is load-bearing.
-if (Get-Command starship -ErrorAction SilentlyContinue) {
+$starshipExe = (Get-Command starship -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source
+if ($starshipExe) {
     $env:STARSHIP_CONFIG = Join-Path $PSScriptRoot 'starship.toml'
-    Invoke-Expression (& starship init powershell)
+    # --print-full-init is what the `starship init powershell` stub spawns anyway
+    Invoke-Expression (Get-CachedInit starship $starshipExe { & $starshipExe init powershell --print-full-init })
     # Transient prompt: once a command is submitted, redraw the prompt that ran
     # it as a bare glyph. Scrollback becomes a clean column of commands instead
     # of a repeated path/git wall. Needs a VT-capable host, so don't let a
@@ -101,8 +124,9 @@ if (Get-Command starship -ErrorAction SilentlyContinue) {
 
 #region zoxide  ->  `z <dir>` to jump, `zi` for interactive picker
 # (Replaces the `cd` muscle memory with frecency-based jumping.)
-if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-    Invoke-Expression (& { (zoxide init powershell | Out-String) })
+$zoxideExe = (Get-Command zoxide -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source
+if ($zoxideExe) {
+    Invoke-Expression (Get-CachedInit zoxide $zoxideExe { & $zoxideExe init powershell })
 }
 #endregion
 
@@ -120,13 +144,24 @@ if (Get-Command fzf -ErrorAction SilentlyContinue) {
         $env:FZF_CTRL_T_OPTS = '--preview "bat --color=always --style=numbers --line-range :300 {}"'
     }
 
-    # Don't guard with `Get-Module -ListAvailable PSFzf` — that walks every
-    # PSModulePath entry (one of which is on OneDrive) to answer a question
-    # Import-Module can answer for free: ~90ms of the profile's load time for
-    # nothing. Just try the import and move on if it isn't installed.
-    Import-Module PSFzf -ErrorAction SilentlyContinue
-    if (Get-Module PSFzf) {
-        Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+    # PSFzf's import costs ~300ms (compiles C#, spawns fzf, probes for scoop), so
+    # bind stub chords that import it on first press; Set-PsFzfOption then swaps
+    # in the real handlers. A failed import is the not-installed guard: no
+    # `Get-Module -ListAvailable` walk (~90ms, one PSModulePath entry is OneDrive).
+    function Initialize-PsFzf {
+        if (-not (Get-Module PSFzf)) {
+            Import-Module PSFzf -Global -ErrorAction SilentlyContinue
+            if (-not (Get-Module PSFzf)) { return $false }
+            Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+        }
+        $true
+    }
+    if (Get-Module PSReadLine) {
+        Set-PSReadLineKeyHandler -Chord Ctrl+t -ScriptBlock { if (Initialize-PsFzf) { Invoke-FzfPsReadlineHandlerProvider } }
+        Set-PSReadLineKeyHandler -Chord Ctrl+r -ScriptBlock {
+            if (Initialize-PsFzf) { Invoke-FzfPsReadlineHandlerHistory }
+            else { [Microsoft.PowerShell.PSConsoleReadLine]::ReverseSearchHistory() }
+        }
     }
 }
 #endregion
@@ -149,7 +184,9 @@ if (Get-Command bat -ErrorAction SilentlyContinue) {
 #endregion
 
 #region gsudo  ->  `sudo` (only if Windows has no native sudo)
-if ((Get-Command gsudo -ErrorAction SilentlyContinue) -and -not (Get-Command sudo -ErrorAction SilentlyContinue)) {
+# Native sudo checked first: a missed Get-Command scans every module for an
+# autoload match (~90ms), and gsudo is the one that's usually absent.
+if (-not (Get-Command sudo -ErrorAction SilentlyContinue) -and (Get-Command gsudo -ErrorAction SilentlyContinue)) {
     Set-Alias sudo gsudo
 }
 #endregion
