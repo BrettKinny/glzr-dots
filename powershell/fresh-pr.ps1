@@ -5,7 +5,7 @@
 #   fresh pr 123 -Remove delete that worktree and branch
 #   (`fresh pr` needs the `fresh` wrapper in profile.ps1; `fresh-pr 123` works standalone)
 #
-# Run from anywhere inside the repo. The review range (origin/<target>...HEAD) is passed to Fresh as
+# Run from anywhere inside the repo. The review range (<merge-base>..HEAD) is passed to Fresh as
 # $env:FRESHPR_RANGE and also put on the clipboard. To have Fresh open the diff by itself, add this
 # to %APPDATA%\fresh\init.ts (without it: Ctrl+P > Review Diff: Range, clear HEAD, paste):
 #
@@ -76,6 +76,8 @@ function fresh-pr {
 
     git -C $main fetch --quiet origin "+refs/heads/${src}:refs/remotes/origin/$src" "+refs/heads/${dst}:refs/remotes/origin/$dst"
     if ($LASTEXITCODE) { return }
+    $base = git -C $main merge-base "origin/$dst" "origin/$src"
+    if (-not $base) { Write-Host "fresh pr: no merge-base for $src and $dst" -ForegroundColor Red; return }
 
     # Own pr/<id> branch, not the source branch: git refuses a branch checked out in two
     # worktrees, and the source branch may already be checked out elsewhere. -B resets it on rerun.
@@ -87,8 +89,8 @@ function fresh-pr {
         if ($LASTEXITCODE) { return }
     }
 
-    # Three-dot = diff from merge-base, i.e. what Bitbucket shows.
-    $range = "origin/$dst...HEAD"
+    # Merge-base, not origin/<dst>...HEAD: Fresh treats A...B as A..B, pulling in everything merged to <dst> since.
+    $range = "$base..HEAD"
     Set-Clipboard $range
     Write-Host "#$Id $($pr.title)" -ForegroundColor Cyan
     Write-Host "$($pr.author.display_name)  $src -> $dst  $($pr.links.html.href)" -ForegroundColor DarkGray
