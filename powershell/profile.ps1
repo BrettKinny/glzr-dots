@@ -353,6 +353,7 @@ if ($env:WT_SESSION) {
 # `ask "how do I ..."`        chat mode: no tools, general knowledge, fastest
 # `ask -f "what does X do"`   file mode: read-only Read/Glob/Grep over the cwd
 # `git diff | ask "explain"`  anything piped in is appended as context
+# `ask` (no question)         prompts for it raw: any punctuation, no quoting
 # `-Raw`                      plain streaming, no glow
 #
 # Wraps the `claude` CLI rather than the raw API so it reuses the existing
@@ -377,6 +378,8 @@ function ask {
     process { if ($PSBoundParameters.ContainsKey('InputObject')) { $piped.Add($InputObject) } }
     end {
         $q = ($Question -join ' ').Trim()
+        # Read-Host bypasses the parser, so ' " $ & | ; ( need no quoting
+        if (-not $q) { $q = (Read-Host 'ask').Trim() }
         if (-not $q) {
             Write-Host 'usage: ask [-f] [-m <model>] "your question"' -ForegroundColor Yellow
             Write-Host '       -f  search the files in the current folder for the answer' -ForegroundColor DarkGray
