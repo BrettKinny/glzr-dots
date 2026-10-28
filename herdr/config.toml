@@ -41,7 +41,8 @@ detach = ["ctrl+shift+q", "prefix+q"]
 new_tab = ["ctrl+n", "ctrl+shift+t", "prefix+c"]
 previous_tab = "prefix+p"
 next_tab = "prefix+n"
-switch_tab = ["ctrl+1..9", "prefix+1..9"]
+# Ctrl+digits go to sidebar agents (focus_agent); tabs are rarely >1.
+switch_tab = "prefix+1..9"
 rename_tab = "prefix+shift+t"
 # Takes Ctrl+W from Fresh (close buffer) and shells (delete word).
 close_tab = ["ctrl+w", "prefix+shift+x"]
@@ -57,6 +58,9 @@ next_workspace = ["ctrl+tab", "prefix+tab"]
 previous_workspace = ["ctrl+shift+tab", "prefix+shift+tab"]
 rename_workspace = ["ctrl+shift+r", "prefix+shift+w"]
 close_workspace = "prefix+shift+d"
+
+# Nth agent in the sidebar list.
+focus_agent = "ctrl+1..9"
 
 # Ctrl+arrows take pane focus back from Fresh's word-jump. Ctrl+Shift+arrows
 # stay with Fresh (add-cursor, word-select), so swaps remain prefix-only.
