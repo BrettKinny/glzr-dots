@@ -7,6 +7,8 @@ from urllib.parse import quote
 # Jira jump (Alt+Shift+J): tiny prompt → opens the issue in Zen.
 #   802 / mms802 / MMS-802  → MMS-802
 #   TAN-12                  → TAN-12
+#   #1397                   → TandemOne PR 1397 on Bitbucket
+#   tandemone-testdata#12   → that repo's PR 12
 #   anything else           → Jira text search
 # Prefills with an issue key from the clipboard (Enter opens it, typing
 # replaces it). Esc / click away closes.
@@ -16,10 +18,16 @@ SITE = "https://multinail.atlassian.net"
 DEFAULT_PROJECT = "MMS"
 TITLE = "Jira jump"  # matched by the ignore rule in config.yaml
 KEY_RE = re.compile(r"([A-Za-z]+)-?(\d+)")
+BB_REPOS = "https://bitbucket.org/spidasoftware"
+DEFAULT_REPO = "tandemone"
+PR_RE = re.compile(r"([\w.-]*)#(\d+)")
 
 
 def url_for(text):
     text = text.strip()
+    m = PR_RE.fullmatch(text)
+    if m:
+        return f"{BB_REPOS}/{m[1].lower() or DEFAULT_REPO}/pull-requests/{m[2]}"
     if text.isdigit():
         return f"{SITE}/browse/{DEFAULT_PROJECT}-{text}"
     m = KEY_RE.fullmatch(text)
@@ -67,7 +75,7 @@ def main():
                      selectbackground=ACCENT, selectforeground=FG)
     entry.pack(side="left", padx=(0, 16), pady=10)
 
-    hint = tk.Label(frame, text="issue key or search", font=FONT, bg=BG, fg=DIM)
+    hint = tk.Label(frame, text="key, #PR or search", font=FONT, bg=BG, fg=DIM)
     text.trace_add("write", lambda *_: hint.place_forget() if text.get() else
                    hint.place(in_=entry, x=0, rely=0.5, anchor="w"))
     hint.bind("<Button-1>", lambda _: entry.focus_set())
