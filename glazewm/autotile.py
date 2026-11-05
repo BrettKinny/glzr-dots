@@ -32,8 +32,6 @@ RETILE_DELAYS = (0.5, 1.5)  # seconds after window_managed to force a redraw
 ENABLE_CENTER_SINGLE = True
 WIDTH_FRACTION = 0.5        # centered window width, as a fraction of monitor width
 ULTRAWIDE_MIN_RATIO = 2.0   # only act on monitors wider than this (21:9 ~= 2.39)
-TOP_GAP = 50                # leave room for the Zebar bar (matches config.yaml)
-BOTTOM_GAP = 10             # matches config.yaml outer_gap.bottom
 
 
 def iter_windows(container):
@@ -70,7 +68,6 @@ async def reconcile(cmd_ws, centered_ids):
         mon_w = monitor.get("width", 0)
         mon_h = monitor.get("height", 0)
         mon_x = monitor.get("x", 0)
-        mon_y = monitor.get("y", 0)
         is_ultrawide = mon_h and (mon_w / mon_h) >= ULTRAWIDE_MIN_RATIO
 
         for workspace in monitor.get("children", []):
@@ -118,9 +115,10 @@ async def reconcile(cmd_ws, centered_ids):
                 # Lone window -> float it centered at WIDTH_FRACTION of the monitor.
                 w = tiling[0]
                 width = round(mon_w * WIDTH_FRACTION)
-                height = mon_h - TOP_GAP - BOTTOM_GAP
+                # Workspace rect already excludes the bar + outer gaps.
+                height = workspace["height"]
                 x = mon_x + (mon_w - width) // 2
-                y = mon_y + TOP_GAP
+                y = workspace["y"]
                 await send_recv(
                     cmd_ws,
                     f"command --id {w['id']} set-floating "

@@ -80,9 +80,13 @@ async def toggle():
                           "width": win["width"], "height": win["height"]}
             # `size`, not `set-floating --width`: set-floating won't resize a
             # window that already has a placement (e.g. one autotile.py centered).
+            # Explicit height + y: set-floating on a tiled window shrinks it to
+            # GlazeWM's default float size.
             await send(ws, f"command --id {wid} set-floating")
-            await send(ws, f"command --id {wid} size --width 100%")
-            await send(ws, f"command --id {wid} position --centered")
+            await send(ws, f"command --id {wid} size "
+                           f"--width {monitor['width']}px --height {win['height']}px")
+            await send(ws, f"command --id {wid} position "
+                           f"--x-pos {monitor['x']} --y-pos {win['y']}")
 
         store_saved(saved)
 
