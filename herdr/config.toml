@@ -28,7 +28,8 @@ prefix = "f12"
 
 # Application navigation and discovery.
 help = ["ctrl+?", "prefix+?"]
-goto = ["ctrl+g", "prefix+g"]
+# P for palette: type to jump.
+goto = ["ctrl+shift+p", "prefix+g"]
 workspace_picker = "prefix+w"
 # J for jump: pane behind the latest notification.
 open_notification_target = ["ctrl+shift+j", "prefix+o"]
@@ -37,15 +38,13 @@ toggle_sidebar = ["ctrl+shift+b", "prefix+b"]
 detach = ["ctrl+shift+q", "prefix+q"]
 
 # Plain Ctrl+T belongs to Fresh's editing layer; Shift lifts it to Herdr.
-# Ctrl+N takes Fresh's new-file.
-new_tab = ["ctrl+n", "ctrl+shift+t", "prefix+c"]
+new_tab = ["ctrl+shift+t", "prefix+c"]
 previous_tab = "prefix+p"
 next_tab = "prefix+n"
 # Ctrl+digits go to sidebar agents (focus_agent); tabs are rarely >1.
 switch_tab = "prefix+1..9"
 rename_tab = "prefix+shift+t"
-# Takes Ctrl+W from Fresh (close buffer) and shells (delete word).
-close_tab = ["ctrl+w", "prefix+shift+x"]
+close_tab = "prefix+shift+x"
 
 # Workspaces are the next level above tabs, so Ctrl+Tab cycles them.
 new_workspace = ["ctrl+shift+n", "prefix+shift+n"]
@@ -75,8 +74,8 @@ swap_pane_right = "prefix+shift+l"
 
 # Pane lifecycle and layout. Zoom is rare enough to live on the prefix alone.
 close_pane = ["ctrl+shift+w", "prefix+x"]
-split_vertical = ["ctrl+backslash", "prefix+v"]
-split_horizontal = ["ctrl+shift+backslash", "prefix+minus"]
+split_vertical = ["ctrl+shift+backslash", "prefix+v"]
+split_horizontal = ["ctrl+shift+minus", "prefix+minus"]
 zoom = "prefix+z"
 resize_mode = "prefix+r"
 

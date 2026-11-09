@@ -59,8 +59,8 @@ only where Fresh has no claim. The rest moved up to `Ctrl+Shift` or down to the
 | Next / previous tab | `F12 N` / `F12 P` |
 | Select tab | `Ctrl+1..9` |
 | Focus / move pane | `F12 H/J/K/L` / `F12 Shift+…` |
-| Sidebar / go to | `Ctrl+Shift+B` / `Ctrl+G` |
-| Split vertical / horizontal | `Ctrl+\` / `Ctrl+Shift+\` |
+| Sidebar / go to | `Ctrl+Shift+B` / `Ctrl+Shift+P` |
+| Split vertical / horizontal | `Ctrl+Shift+\` / `Ctrl+Shift+-` |
 | Zoom pane / new workspace | `F12 Z` / `Ctrl+Shift+N` |
 | New worktree workspace | `Ctrl+Shift+G` |
 | Pick URL / file path (Windows) | `Ctrl+Shift+U` |
