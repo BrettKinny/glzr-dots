@@ -11,6 +11,7 @@ moves, reverses, or raises the scope of an action.
 | Action | Shortcut |
 | --- | --- |
 | Close / fullscreen | `Mod+W` / `Mod+F` |
+| Toggle full width, keep height | Windows only: `Mod+Shift+W` |
 | Toggle split direction / floating | `Mod+J` / `Mod+Shift+V` |
 | Focus window | `Mod+Arrow` |
 | Move window | `Mod+Shift+Arrow` |
