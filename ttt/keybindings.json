@@ -1,0 +1,44 @@
+{
+  "editor.moveLineUp": "ctrl+alt+up",
+  "editor.moveLineDown": "ctrl+alt+down",
+  "multicursor.addCursorAbove": "ctrl+shift+up",
+  "multicursor.addCursorBelow": "ctrl+shift+down",
+  "editor.copy": [
+    "ctrl+c",
+    "ctrl+insert"
+  ],
+  "sidebar.explorer": "ctrl+shift+e",
+  "sidebar.search": "ctrl+shift+f",
+  "sidebar.changes": "ctrl+shift+g",
+  "sidebar.outline": "ctrl+shift+o",
+  "file.quickOpen": "ctrl+e",
+  "panel.toggle": "ctrl+j",
+  "editor.deleteLine": "ctrl+shift+k",
+  "tab.next": [
+    "ctrl+tab",
+    "alt+."
+  ],
+  "tab.prev": [
+    "ctrl+shift+tab",
+    "alt+,"
+  ],
+  "editor.hover": "ctrl+i",
+  "menu.file": "ctrl+f10",
+  "menubar.toggle": "f10",
+  "editor.findReferences": [
+    "shift+f12",
+    "ctrl+l r"
+  ],
+  "editor.goToImplementation": [
+    "ctrl+f12",
+    "ctrl+l i"
+  ],
+  "editor.autocomplete": [
+    "ctrl+space",
+    "ctrl+u"
+  ],
+  "search.replace": [
+    "ctrl+h",
+    "ctrl+r"
+  ]
+}

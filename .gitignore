@@ -10,3 +10,8 @@ herdr/release-notes.json
 
 # Throwaway theme-key probes (garish colours to find which key paints what)
 fresh/themes/probe*.json
+
+# ttt: plugins reinstall from plugins.ttt.json (bitbucket-review + ttt-spell are their own repos)
+ttt/plugins/
+ttt/state.json
+ttt/*.bak*

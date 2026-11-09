@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "theme": "one-dark",
+  "reuseWindow": true,
+  "appearance": {
+    "icons": "nerd-font",
+    "scrollbarGlyphs": "blocks",
+    "pointerShapes": true
+  },
+  "editor": {
+    "autoClosing": {
+      "brackets": false,
+      "quotes": false,
+      "skipClosing": true,
+      "deletePairs": true,
+      "inStrings": false,
+      "plainText": false
+    },
+    "tabSize": 4,
+    "insertSpaces": true,
+    "wordWrap": false,
+    "wordWrapColumn": 0,
+    "wordWrapBreak": "word",
+    "indentGuides": false,
+    "scrollLines": 0,
+    "diffMode": "split",
+    "diffContext": "changes",
+    "diffWordWrap": false,
+    "diffHighContrast": false,
+    "diffEmphasizeCollapsedRows": false,
+    "diffSigns": false,
+    "diffSignsColor": true,
+    "diffGutterHighlight": true,
+    "diffColorGutterNumbers": false,
+    "diffScrollbarGitMarks": false,
+    "lineNumbers": true,
+    "selectionStyle": "background",
+    "formatOnSave": false,
+    "insertFinalNewline": true,
+    "trimTrailingWhitespace": false,
+    "focusOnOpen": false,
+    "syntaxHighlight": true,
+    "gitGutter": true,
+    "scrollbarGitMarks": true,
+    "autoDedent": true,
+    "autoIndent": true,
+    "gutterStyle": "minimal",
+    "borderStyle": "default",
+    "bracketPairColorization": true,
+    "showTrailingNewline": true,
+    "menuBar": false,
+    "transparentBackground": true,
+    "saveAllOnQuit": false,
+    "saveAllOnQuitExceptUnnamed": false
+  },
+  "quickOpen": {
+    "showHidden": false,
+    "showGitIgnored": false
+  },
+  "search": {
+    "debounce": 350
+  },
+  "explorer": {
+    "showHidden": true,
+    "showGitIgnored": false,
+    "gitStatusColors": true,
+    "dimStagedGitColors": false,
+    "autoReveal": true,
+    "compactFolders": true,
+    "useTrash": true
+  },
+  "sidebar": {
+    "tabStyle": "label-icon"
+  },
+  "git": {
+    "fileView": "list"
+  },
+  "terminal": {
+    "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+    "scrollback": 10000,
+    "selectionStyle": "background",
+    "ctrlVPastes": true,
+    "padding_x": 1
+  },
+  "lsp": {
+    "servers": {
+      "csharp": {
+        "command": [
+          "C:\\Users\\brett.kinny\\.dotnet\\tools\\csharp-ls.exe"
+        ],
+        "languages": {
+          ".cs": "csharp"
+        }
+      },
+      "markdown": {
+        "command": [
+          "C:\\Users\\brett.kinny\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Artempyanykh.Marksman_Microsoft.Winget.Source_8wekyb3d8bbwe\\marksman.exe",
+          "server"
+        ]
+      }
+    },
+    "saveOnRename": false,
+    "hoverDelay": 500
+  },
+  "autocomplete": {
+    "enabled": true,
+    "autoSuggest": true,
+    "debounce": 150,
+    "signatureHelp": true
+  },
+  "markdown": {
+    "wrapWidth": 80
+  },
+  "image": {
+    "protocol": "auto"
+  },
+  "plugins": {
+    "enabled": true,
+    "selectionStyle": "invert"
+  },
+  "welcome": {
+    "showOnHome": true,
+    "recentFolders": true
+  }
+}

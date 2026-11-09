@@ -1,0 +1,91 @@
+[
+  {
+    "name": "markdown-preview",
+    "displayName": "Markdown Preview",
+    "repo": "https://github.com/eugenioenko/ttt-plugins",
+    "path": "markdown-preview",
+    "version": "0.1.0",
+    "enabled": true,
+    "permissions": {
+      "panel.editor": true,
+      "commands": true,
+      "editor.read": true,
+      "network.http": false
+    },
+    "grantsVersion": 2
+  },
+  {
+    "name": "lsp-markdown",
+    "displayName": "Markdown Language Server",
+    "repo": "https://github.com/eugenioenko/ttt-plugins",
+    "path": "lsp-markdown",
+    "version": "0.1.0",
+    "enabled": true,
+    "permissions": {
+      "network.http": false,
+      "settings": true,
+      "settings_keys": [
+        "lsp.*"
+      ]
+    },
+    "grantsVersion": 2
+  },
+  {
+    "name": "spell",
+    "displayName": "Spell Check",
+    "repo": "https://github.com/eugenioenko/ttt-spell",
+    "version": "0.1.0",
+    "enabled": true,
+    "permissions": {
+      "commands": true,
+      "keybindings": true,
+      "editor.read": true,
+      "editor.write": true,
+      "editor.diagnostics": true,
+      "system.exec": [
+        "aspell"
+      ],
+      "network.http": false,
+      "events.file": true,
+      "events.editor": true,
+      "settings": true,
+      "settings_keys": [
+        "spell.*"
+      ]
+    },
+    "grantsVersion": 2
+  },
+  {
+    "name": "json-viewer",
+    "displayName": "JSON Viewer",
+    "repo": "https://github.com/eugenioenko/ttt-plugins",
+    "path": "json-viewer",
+    "version": "0.1.0",
+    "enabled": true,
+    "permissions": {
+      "panel.editor": true,
+      "commands": true,
+      "editor.read": true,
+      "network.http": false
+    },
+    "grantsVersion": 2
+  },
+  {
+    "name": "bitbucket-review",
+    "displayName": "Bitbucket Review",
+    "version": "0.1.0",
+    "enabled": true,
+    "permissions": {
+      "panel.sidebar": true,
+      "commands": true,
+      "editor.read": true,
+      "system.exec": [
+        "bkt",
+        "git",
+        "ttt"
+      ],
+      "network.http": false
+    },
+    "grantsVersion": 2
+  }
+]

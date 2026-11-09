@@ -138,6 +138,9 @@ Then launch GlazeWM. It starts the autotile and clipboard scripts automatically 
 ├── lazygit/
 │   ├── config.yml       # open files in Microsoft Edit; Nerd Font glyphs
 │   └── README.md        # LG_CONFIG_FILE setup
+├── ttt/
+│   ├── settings.json    # ttt editor settings + C# LSP; keybindings.json, plugins.ttt.json
+│   └── README.md        # TTT_CONFIG_DIR setup
 ├── windows-terminal/
 │   ├── settings.json    # WT keybindings stripped so editor keys reach fresh
 │   └── README.md        # what's unbound and why (tracked copy, not a link)
