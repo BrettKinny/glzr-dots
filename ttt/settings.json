@@ -121,5 +121,10 @@
   "welcome": {
     "showOnHome": true,
     "recentFolders": true
+  },
+  "spell": {
+    "filetypes": {
+      "Markdown": "markdown"
+    }
   }
 }

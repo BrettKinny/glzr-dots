@@ -18,3 +18,6 @@ Restart GlazeWM + herdr after setting it: their children inherit the old env, an
 
 Untracked: `plugins/` (reinstall from `plugins.ttt.json` via the Plugins panel;
 `bitbucket-review` is its own repo), `state.json`.
+
+`spell.filetypes` maps `Markdown` → `markdown`: ttt reports the language capitalised but
+the spell plugin only matches lowercase, so without it Markdown is never checked.
