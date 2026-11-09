@@ -77,10 +77,11 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 | --- | --- |
 | Command palette / quick open | `Ctrl+P` / `Ctrl+E` |
 | Explorer / search / changes / outline | `Ctrl+Shift+E` / `F` / `G` / `O` |
-| Sidebar / replace | `Ctrl+B` / `Ctrl+R` |
+| Sidebar / replace | `Ctrl+B` / `Ctrl+H` |
 | Next / previous tab | `Ctrl+Tab` / `Ctrl+Shift+Tab` · `Alt+.` / `Alt+,` |
 | Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
-| Go to definition / hover / LSP chords | `F12` / `Ctrl+I` / `Ctrl+L …` |
+| Go to definition / references / implementation | `F12` / `Shift+F12` / `Ctrl+F12` |
+| Hover / autocomplete / LSP chords | `Ctrl+I` / `Ctrl+Space` / `Ctrl+L …` |
 | Terminal / bottom panel / menu bar / File menu | `Ctrl+T` / `Ctrl+J` / `F10` / `Ctrl+F10` |
 | Delete line | `Ctrl+Shift+K` |
 
