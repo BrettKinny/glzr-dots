@@ -410,8 +410,9 @@ keybindings:
 
   # Editor (ttt) — Omarchy: Super + Shift + N
   # --welcome: recent-folders page instead of opening wt's start dir (~) as a workspace.
+  # --title: ttt sets none; herdr's url-picker finds this window by it to focus after opening a file.
   # Fresh fallback: wt fresh --config "%USERPROFILE%\.glzr\fresh\config.json"
-  - commands: ['shell-exec wt "%USERPROFILE%\.local\bin\ttt.exe" --welcome']
+  - commands: ['shell-exec wt --title ttt --suppressApplicationTitle "%USERPROFILE%\.local\bin\ttt.exe" --welcome']
     bindings: ['alt+shift+n']
 
   # Jira jump — prompt for a key (802 → MMS-802), opens in Zen. See jira.py.

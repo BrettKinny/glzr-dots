@@ -1,5 +1,6 @@
 # One ttt split per herdr tab: focus it, open one at the repo root, or open a file in it.
-# -Open takes file[:line[:col]]. Called from a keybind (Ctrl+Shift+E) and url-picker.ps1.
+# -Open takes file[:line[:col]] (url-picker.ps1): this tab's split if it has one, else the
+# standalone ttt window, else a new window. Ctrl+Shift+E calls it bare.
 param([string]$Open)
 
 # Not named Herdr: PowerShell is case-insensitive, so it would shadow herdr.exe and recurse.
@@ -33,31 +34,53 @@ function Focus-Pane($targetId) {
     }
 }
 
-function Quote($s) { "'" + ($s -replace "'", "''") + "'" }
+# Socket name ends in the editor's pid, base 36; pin to that editor, not the newest.
+function Forward($procId) {
+    $b36 = ''; $n = [long]$procId
+    do { $b36 = "$('0123456789abcdefghijklmnopqrstuvwxyz'[[int]($n % 36)])$b36"; $n = [math]::Floor($n / 36) } while ($n -gt 0)
+    $sock = Get-ChildItem "$env:TEMP\ttt--1\*-$b36.sock" -ErrorAction SilentlyContinue | Select-Object -First 1
+    # No socket → skip: a failed forward starts a full editor here, which hangs with no TTY.
+    if (-not $sock) { return $false }
+    $env:TTT_FORWARD_SOCKET = $sock.FullName
+    ttt $Open 2>$null | Out-Null
+    $true
+}
 
-if (-not $side) {
+function Get-Root {
     $cwd = $env:HERDR_ACTIVE_PANE_CWD
     if (-not $cwd) { $cwd = (Hq pane get $active).pane.cwd }
     $root = git -C $cwd rev-parse --show-toplevel 2>$null
-    if (-not $root) { $root = $cwd }
+    if ($root) { $root } else { $cwd }
+}
+
+function Quote($s) { "'" + ($s -replace "'", "''") + "'" }
+
+if ($Open -and -not $side) {
+    # Standalone = not under a herdr pane shell (Alt+Shift+N window, or ttt run in a plain wt tab).
+    $win = $ttts | Where-Object {
+        $p = Get-Process -Id $_.ParentProcessId -ErrorAction SilentlyContinue
+        $p -and $p.ProcessName -ne 'herdr' -and $p.Parent.ProcessName -ne 'herdr'
+    } | Sort-Object CreationDate | Select-Object -Last 1
+    if ($win -and (Forward $win.ProcessId)) {
+        # ttt sets no title; the wt launchers title the window "ttt" so GlazeWM can find it.
+        $w = (glazewm query windows | ConvertFrom-Json).data.windows | Where-Object title -eq 'ttt' | Select-Object -First 1
+        if ($w) { glazewm command focus --container-id $w.id | Out-Null }
+    } else {
+        wt.exe --title ttt --suppressApplicationTitle (Get-Command ttt).Source --new-window (Get-Root) $Open
+    }
+    return
+}
+
+if (-not $side) {
+    $root = Get-Root
     $new = (Hq pane split $active --direction right --ratio 0.65 --cwd $root --right-click pane --focus).pane.pane_id
     # --new-window: with reuseWindow on, a folder arg would otherwise land in another tab's ttt
-    $cmd = "ttt --new-window $(Quote $root)"
-    if ($Open) { $cmd += " $(Quote $Open)" }
-    herdr pane run $new "$cmd; exit" | Out-Null
+    herdr pane run $new "ttt --new-window $(Quote $root); exit" | Out-Null
     return
 }
 
 if ($Open) {
-    # Socket name ends in the editor's pid, base 36; pin to this tab's editor, not the newest.
-    $b36 = ''; $n = [long]$tttPid
-    do { $b36 = "$('0123456789abcdefghijklmnopqrstuvwxyz'[[int]($n % 36)])$b36"; $n = [math]::Floor($n / 36) } while ($n -gt 0)
-    $sock = Get-ChildItem "$env:TEMP\ttt--1\*-$b36.sock" -ErrorAction SilentlyContinue | Select-Object -First 1
-    # No socket → skip: a failed forward starts a full editor here, which hangs with no TTY.
-    if ($sock) {
-        $env:TTT_FORWARD_SOCKET = $sock.FullName
-        ttt $Open 2>$null
-    }
+    Forward $tttPid | Out-Null
     Focus-Pane $side.pane_id
 } elseif ($layout.focused_pane_id -eq $side.pane_id) {
     herdr pane focus --direction left --pane $side.pane_id | Out-Null

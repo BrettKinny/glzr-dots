@@ -65,7 +65,7 @@ down to the `F9` prefix.
 | Split vertical / horizontal | `Ctrl+Shift+\` / `Ctrl+Shift+-` |
 | Zoom pane / new workspace | `F9 Z` / `Ctrl+Shift+N` |
 | New worktree workspace | `Ctrl+Shift+G` |
-| Pick URL / file path (Windows) | `Ctrl+Shift+U` |
+| Pick URL / file path (Windows): files open in side ttt, else the ttt window | `Ctrl+Shift+U` |
 
 `F9` remains the Herdr recovery prefix, and every command still answers to its
 `F9` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;
