@@ -77,13 +77,14 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 
 | Action | Shortcut |
 | --- | --- |
-| Command palette / quick open | `Ctrl+P` / `Ctrl+K P` |
+| Command palette / quick open | `Ctrl+P` / `Ctrl+E` |
 | Explorer / search / changes / outline | `Ctrl+Shift+E` / `F` / `G` / `O` |
 | Sidebar / replace | `Ctrl+B` / `Ctrl+R` |
 | Next / previous tab | `Alt+.` / `Alt+,` |
 | Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
 | Go to definition / LSP chords | `F12` / `Ctrl+L …` |
-| Terminal / menu bar | `Ctrl+T` / `F10` |
+| Terminal / bottom panel / menu bar | `Ctrl+T` / `Ctrl+J` / `F10` |
+| Delete line | `Ctrl+Shift+K` |
 
 ## Zen (Windows)
 
