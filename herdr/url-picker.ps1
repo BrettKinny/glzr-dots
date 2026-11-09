@@ -24,13 +24,15 @@ foreach ($m in [regex]::Matches($text, $urlRx)) {
 # Paths need a separator; anything that doesn't exist on disk is dropped, which filters
 # out false positives like "and/or". Relative ones resolve against the pane's cwd.
 $pathText = [regex]::Replace($text, $urlRx, { ' ' * $args[0].Length })
-$pathRx = '(?<![\w/\\])(?:[A-Za-z]:[\\/]|~[\\/]|\.{1,2}[\\/])?[\w.\-~@+]+(?:[\\/][\w.\-~@+]*)+'
+$pathRx = '(?<![\w/\\])(?:[A-Za-z]:[\\/]|~[\\/]|\.{1,2}[\\/])?[\w.\-~@+]+(?:[\\/][\w.\-~@+]*)+(?::\d+(?::\d+)?)?'
 foreach ($m in [regex]::Matches($pathText, $pathRx)) {
-    # strip file:line:col suffixes
-    $p = (Trim-Trailing $m.Value) -replace '(?<=\.\w+):\d+(?::\d+)?$', ''
+    # :line:col is kept for ttt but excluded from the existence check
+    $p = Trim-Trailing $m.Value
+    $pos = if ($p -match '(?<=\.\w+)(:\d+(?::\d+)?)$') { $Matches[1] } else { '' }
+    $p = $p.Substring(0, $p.Length - $pos.Length)
     if ($p -match '^~[\\/]') { $p = Join-Path $HOME $p.Substring(2) }
     elseif (-not [IO.Path]::IsPathRooted($p)) { $p = Join-Path $pane.cwd $p }
-    try { if (Test-Path -LiteralPath $p) { $hits.Add([pscustomobject]@{ At = $m.Index; Value = [IO.Path]::GetFullPath($p) }) } } catch {}
+    try { if (Test-Path -LiteralPath $p) { $hits.Add([pscustomobject]@{ At = $m.Index; Value = [IO.Path]::GetFullPath($p) + $pos }) } } catch {}
 }
 if (-not $hits.Count) { Write-Host 'No URLs or paths in pane.'; Start-Sleep -Milliseconds 800; return }
 
@@ -40,4 +42,8 @@ $out = $items | fzf --no-sort --expect=ctrl-y --prompt='open> ' --header='enter:
 if (-not $out -or $out.Count -lt 2) { return }
 
 $key, $target = $out[0], $out[1]
-if ($key -eq 'ctrl-y') { Set-Clipboard $target } else { Start-Process $target }
+if ($key -eq 'ctrl-y') { Set-Clipboard $target }
+elseif (Test-Path -LiteralPath ($target -replace '(?<=\.\w+):\d+(?::\d+)?$', '') -PathType Leaf) {
+    & "$PSScriptRoot\ttt-side.ps1" -Open $target
+}
+else { Start-Process $target }

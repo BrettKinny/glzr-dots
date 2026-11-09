@@ -95,3 +95,14 @@ type = "popup"
 command = "pwsh -NoProfile -File \"%USERPROFILE%\\.glzr\\herdr\\url-picker.ps1\""
 width = "80%"
 height = "50%"
+
+# Side ttt (explorer + git Changes) for this tab; again toggles focus back. E for explorer.
+[[keys.command]]
+key = "ctrl+shift+e"
+type = "shell"
+command = "pwsh -NoProfile -NonInteractive -File \"%USERPROFILE%\\.glzr\\herdr\\ttt-side.ps1\""
+
+[[keys.command]]
+key = "prefix+e"
+type = "shell"
+command = "pwsh -NoProfile -NonInteractive -File \"%USERPROFILE%\\.glzr\\herdr\\ttt-side.ps1\""
