@@ -81,7 +81,7 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 | Next / previous tab | `Ctrl+Tab` / `Ctrl+Shift+Tab` · `Alt+.` / `Alt+,` |
 | Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
 | Go to definition / hover / LSP chords | `F12` / `Ctrl+I` / `Ctrl+L …` |
-| Terminal / bottom panel / menu bar + File menu (again hides) | `Ctrl+T` / `Ctrl+J` / `F10` |
+| Terminal / bottom panel / menu bar / File menu | `Ctrl+T` / `Ctrl+J` / `F10` / `Ctrl+F10` |
 | Delete line | `Ctrl+Shift+K` |
 
 ## Zen (Windows)
