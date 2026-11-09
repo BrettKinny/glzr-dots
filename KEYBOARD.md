@@ -10,7 +10,7 @@ moves, reverses, or raises the scope of an action.
 | --- | --- |
 | Close / fullscreen | `Mod+W` / `Mod+F` |
 | Cycle width: 50% → default → full | Windows only: `Mod+Shift+W` |
-| Toggle split direction / floating | `Mod+J` / `Mod+Shift+V` |
+| Toggle split direction / floating | `Mod+J` / Omarchy: `Mod+T` · Windows: `Mod+Shift+V` |
 | Focus window | `Mod+Arrow` |
 | Move window | `Mod+Shift+Arrow` |
 | Workspace 1–10 | `Mod+1..0` |
@@ -26,7 +26,7 @@ moves, reverses, or raises the scope of an action.
 | --- | --- | --- | --- |
 | Terminal | `Mod+Enter` | Default terminal | Windows Terminal |
 | Browser | `Mod+Shift+B` | Default browser | Zen |
-| Editor | `Mod+Shift+N` | Microsoft Edit | ttt |
+| Editor | `Mod+Shift+N` | ttt | ttt |
 | Files | `Mod+Shift+F` | Elio | Elio |
 | Notes | `Mod+Shift+O` | Obsidian | Obsidian |
 | Email | `Mod+Shift+E` | Email web app | Outlook |

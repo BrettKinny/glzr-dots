@@ -145,7 +145,9 @@ Then launch GlazeWM. It starts the autotile and clipboard scripts automatically 
 │   ├── config.toml      # TUI file manager: sidebar places + open rules
 │   └── theme.toml       # elio colour theme
 └── omarchy/
-    └── bindings.conf    # Omarchy-side clipboard override (copy into ~/.config/hypr/bindings.conf)
+    ├── bindings.lua     # Omarchy-side launcher overrides (~/.config/hypr/bindings.lua)
+    ├── input.lua        # altwin:swap_alt_win — physical Alt acts as Super
+    └── README.md        # what each file does + why no clipboard override is needed
 ```
 
 ## Shell (PowerShell)
@@ -374,19 +376,7 @@ Omarchy's trick: `Super + C` doesn't send `Ctrl+C` (which is SIGINT in a termina
 
 > `Win+V` needs Clipboard History enabled once (Settings → Clipboard, or press it and accept the prompt). If the hook ever isn't running, native `Ctrl+C`/`Ctrl+V` still work.
 
-**Omarchy side (for true cross-machine parity):** Omarchy's `clipboard.conf` hardcodes `Super` and is *not* covered by its Super↔Alt mod toggle, so flipping the mod key leaves copy/paste on `Super`. To put it on `Alt` to match this config, add to `~/.config/hypr/bindings.conf` (sourced last, highest priority):
-
-```conf
-unbind = SUPER, C
-unbind = SUPER, V
-unbind = SUPER, X
-unbind = SUPER CTRL, V
-
-bindd = ALT, C, Universal copy, sendshortcut, CTRL, Insert, activewindow
-bindd = ALT, V, Universal paste, sendshortcut, SHIFT, Insert, activewindow
-bindd = ALT, X, Universal cut, sendshortcut, CTRL, X, activewindow
-bindd = ALT CTRL, V, Clipboard manager, exec, omarchy-launch-walker -m clipboard
-```
+**Omarchy side (for true cross-machine parity):** the Omarchy machine swaps Alt and Super (`altwin:swap_alt_win` in [`omarchy/input.lua`](omarchy/input.lua)), so Omarchy's stock `Super+C/V/X` clipboard already sits under the physical Alt key. No clipboard override is needed. See [`omarchy/`](omarchy/README.md).
 
 ### WM control
 
