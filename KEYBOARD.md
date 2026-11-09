@@ -50,40 +50,39 @@ These send universal clipboard chords, so they work in terminals and GUI apps.
 
 ttt runs inside Herdr panes and there is no pass-through, so Herdr keeps `Ctrl`
 only where ttt has no claim. The rest moved up to `Ctrl+Shift`, `Ctrl+Alt`, or
-down to the `F12` prefix.
+down to the `F9` prefix.
 
 | Action | Shortcut |
 | --- | --- |
 | New tab / close pane | `Ctrl+Shift+T` / `Ctrl+Shift+W` |
 | Next / previous workspace | `Ctrl+Tab` / `Ctrl+Shift+Tab` |
-| Next / previous tab | `F12 N` / `F12 P` |
+| Next / previous tab | `F9 N` / `F9 P` |
 | Select tab | `Ctrl+1..9` |
-| Focus pane | `Ctrl+Alt+←/→` · `F12 H/J/K/L` |
-| Move pane | `F12 Shift+H/J/K/L` |
+| Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
+| Move pane | `F9 Shift+H/J/K/L` |
 | Side ttt (explorer + git): open / toggle focus | `Ctrl+Shift+E` |
 | Sidebar / go to | `Ctrl+Shift+B` / `Ctrl+Shift+P` |
 | Split vertical / horizontal | `Ctrl+Shift+\` / `Ctrl+Shift+-` |
-| Zoom pane / new workspace | `F12 Z` / `Ctrl+Shift+N` |
+| Zoom pane / new workspace | `F9 Z` / `Ctrl+Shift+N` |
 | New worktree workspace | `Ctrl+Shift+G` |
 | Pick URL / file path (Windows) | `Ctrl+Shift+U` |
 
-`F12` remains the Herdr recovery prefix, and every command still answers to its
-`F12` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;
+`F9` remains the Herdr recovery prefix, and every command still answers to its
+`F9` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;
 Windows uses `Mod+R` for resize mode and `Mod+Shift+R` to reload GlazeWM.
 
 ## ttt
 
-Defaults, except where Herdr (`F12`, `Ctrl+Shift+P/E/G`, `Ctrl+Tab`) or GlazeWM
-(`Alt`) takes the key.
+Defaults, except where GlazeWM (`Alt`) takes the key.
 
 | Action | Shortcut |
 | --- | --- |
-| Command palette / quick open | `F1` / `Ctrl+P` |
+| Command palette / quick open | `Ctrl+P` / `Ctrl+K P` |
 | Explorer / changes / sidebar | `Ctrl+K E` / `Ctrl+K C` / `Ctrl+B` |
-| Search files / replace | `Ctrl+Shift+F` / `Ctrl+H` |
-| Next / previous tab | `Ctrl+PgDn` / `Ctrl+PgUp` |
+| Search files / replace | `Ctrl+K F` / `Ctrl+R` |
+| Next / previous tab | `Alt+.` / `Alt+,` |
 | Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
-| Go to definition / LSP chords | `Ctrl+L D` / `Ctrl+L …` |
+| Go to definition / LSP chords | `F12` / `Ctrl+L …` |
 | Terminal / menu bar | `Ctrl+T` / `F10` |
 
 ## Zen (Windows)

@@ -28,7 +28,7 @@ Terminal clipboard stays on `Ctrl+Shift+C` / `Ctrl+Shift+V`.
 `Ctrl+1`–`9` are not merely unbound — unbinding is useless for them, since the VT
 input encoding has no representation for Ctrl+digit and WT drops the chord
 entirely (microsoft/terminal#7746). Instead, `sendInput` actions
-(`User.herdrTab1`–`9`) translate each one to `ESC [24~` (F12) plus the digit, so
+(`User.herdrTab1`–`9`) translate each one to `ESC [20~` (F9) plus the digit, so
 Herdr receives its `prefix+1..9` fallback. Cost: in a plain shell tab — or in
 Fresh — the chord types that escape sequence instead of doing nothing.
 
@@ -37,7 +37,7 @@ Fresh — the chord types that escape sequence instead of doing nothing.
 The grammar gives `Ctrl` to "the focused application", but Fresh running inside a
 Herdr pane nests two of them on one modifier. Herdr yields: it keeps `Ctrl` only
 where Fresh has no claim, and moved the rest to `Ctrl+Shift` (`T`, `W`, `B`) or to
-its `F12` prefix (pane focus/move, zoom, tab cycling). So the `Ctrl` chords above
+its `F9` prefix (pane focus/move, zoom, tab cycling). So the `Ctrl` chords above
 stay unbound in WT for Fresh's sake even though Herdr no longer takes them. See
 [`../herdr/README.md`](../herdr/README.md).
 

@@ -22,9 +22,9 @@ default_shell = "pwsh"
 #   Alt   = Windows OS/window-manager actions (Super on Omarchy)
 #   Ctrl  = immediate actions in the focused application
 #   Shift = move, reverse, or the higher-level variant
-# F12 keeps Herdr's prefix commands available as compatibility fallbacks.
+# F9 keeps Herdr's prefix commands available as compatibility fallbacks.
 [keys]
-prefix = "f12"
+prefix = "f9"
 
 # Application navigation and discovery.
 help = ["ctrl+?", "prefix+?"]
