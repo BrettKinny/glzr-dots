@@ -33,11 +33,11 @@ goto = ["ctrl+shift+p", "prefix+g"]
 workspace_picker = "prefix+w"
 # J for jump: pane behind the latest notification.
 open_notification_target = ["ctrl+shift+j", "prefix+o"]
-# Plain Ctrl+B belongs to Fresh's editing layer; Shift lifts it to Herdr's UI.
+# Plain Ctrl+B belongs to ttt's sidebar; Shift lifts it to Herdr's UI.
 toggle_sidebar = ["ctrl+shift+b", "prefix+b"]
 detach = ["ctrl+shift+q", "prefix+q"]
 
-# Plain Ctrl+T belongs to Fresh's editing layer; Shift lifts it to Herdr.
+# Plain Ctrl+T belongs to ttt's terminal; Shift lifts it to Herdr.
 new_tab = ["ctrl+shift+t", "prefix+c"]
 previous_tab = "prefix+p"
 next_tab = "prefix+n"
@@ -61,12 +61,13 @@ close_workspace = "prefix+shift+d"
 # Nth agent in the sidebar list.
 focus_agent = "ctrl+1..9"
 
-# Ctrl+arrows take pane focus back from Fresh's word-jump. Ctrl+Shift+arrows
-# stay with Fresh (add-cursor, word-select), so swaps remain prefix-only.
-focus_pane_left = ["ctrl+left", "prefix+h"]
-focus_pane_down = ["ctrl+down", "prefix+j"]
-focus_pane_up = ["ctrl+up", "prefix+k"]
-focus_pane_right = ["ctrl+right", "prefix+l"]
+# Ctrl+arrows stay with the app (word-jump in ttt and shells); Ctrl+Alt+←/→ matches
+# Zen's workspace hop. Up/down are prefix-only: Ctrl+Alt+↑/↓ is ttt's move-line.
+# Ctrl+Shift+arrows stay with ttt (add-cursor, word-select), so swaps remain prefix-only.
+focus_pane_left = ["ctrl+alt+left", "prefix+h"]
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = ["ctrl+alt+right", "prefix+l"]
 swap_pane_left = "prefix+shift+h"
 swap_pane_down = "prefix+shift+j"
 swap_pane_up = "prefix+shift+k"

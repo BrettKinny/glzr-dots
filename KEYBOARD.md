@@ -11,7 +11,7 @@ moves, reverses, or raises the scope of an action.
 | Action | Shortcut |
 | --- | --- |
 | Close / fullscreen | `Mod+W` / `Mod+F` |
-| Toggle full width, keep height | Windows only: `Mod+Shift+W` |
+| Cycle width: 50% → default → full | Windows only: `Mod+Shift+W` |
 | Toggle split direction / floating | `Mod+J` / `Mod+Shift+V` |
 | Focus window | `Mod+Arrow` |
 | Move window | `Mod+Shift+Arrow` |
@@ -28,7 +28,7 @@ moves, reverses, or raises the scope of an action.
 | --- | --- | --- | --- |
 | Terminal | `Mod+Enter` | Default terminal | Windows Terminal |
 | Browser | `Mod+Shift+B` | Default browser | Zen |
-| Editor | `Mod+Shift+N` | Microsoft Edit | Fresh |
+| Editor | `Mod+Shift+N` | Microsoft Edit | ttt |
 | Files | `Mod+Shift+F` | Elio | Elio |
 | Notes | `Mod+Shift+O` | Obsidian | Obsidian |
 | Email | `Mod+Shift+E` | Email web app | Outlook |
@@ -48,9 +48,9 @@ These send universal clipboard chords, so they work in terminals and GUI apps.
 
 ## Herdr
 
-Fresh runs inside Herdr panes and there is no pass-through, so Herdr keeps `Ctrl`
-only where Fresh has no claim. The rest moved up to `Ctrl+Shift` or down to the
-`F12` prefix.
+ttt runs inside Herdr panes and there is no pass-through, so Herdr keeps `Ctrl`
+only where ttt has no claim. The rest moved up to `Ctrl+Shift`, `Ctrl+Alt`, or
+down to the `F12` prefix.
 
 | Action | Shortcut |
 | --- | --- |
@@ -58,7 +58,9 @@ only where Fresh has no claim. The rest moved up to `Ctrl+Shift` or down to the
 | Next / previous workspace | `Ctrl+Tab` / `Ctrl+Shift+Tab` |
 | Next / previous tab | `F12 N` / `F12 P` |
 | Select tab | `Ctrl+1..9` |
-| Focus / move pane | `F12 H/J/K/L` / `F12 Shift+…` |
+| Focus pane | `Ctrl+Alt+←/→` · `F12 H/J/K/L` |
+| Move pane | `F12 Shift+H/J/K/L` |
+| Side ttt (explorer + git): open / toggle focus | `Ctrl+Shift+E` |
 | Sidebar / go to | `Ctrl+Shift+B` / `Ctrl+Shift+P` |
 | Split vertical / horizontal | `Ctrl+Shift+\` / `Ctrl+Shift+-` |
 | Zoom pane / new workspace | `F12 Z` / `Ctrl+Shift+N` |
@@ -68,6 +70,21 @@ only where Fresh has no claim. The rest moved up to `Ctrl+Shift` or down to the
 `F12` remains the Herdr recovery prefix, and every command still answers to its
 `F12` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;
 Windows uses `Mod+R` for resize mode and `Mod+Shift+R` to reload GlazeWM.
+
+## ttt
+
+Defaults, except where Herdr (`F12`, `Ctrl+Shift+P/E/G`, `Ctrl+Tab`) or GlazeWM
+(`Alt`) takes the key.
+
+| Action | Shortcut |
+| --- | --- |
+| Command palette / quick open | `F1` / `Ctrl+P` |
+| Explorer / changes / sidebar | `Ctrl+K E` / `Ctrl+K C` / `Ctrl+B` |
+| Search files / replace | `Ctrl+Shift+F` / `Ctrl+H` |
+| Next / previous tab | `Ctrl+PgDn` / `Ctrl+PgUp` |
+| Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
+| Go to definition / LSP chords | `Ctrl+L D` / `Ctrl+L …` |
+| Terminal / menu bar | `Ctrl+T` / `F10` |
 
 ## Zen (Windows)
 

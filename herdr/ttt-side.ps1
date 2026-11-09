@@ -40,7 +40,7 @@ if (-not $side) {
     if (-not $cwd) { $cwd = (Hq pane get $active).pane.cwd }
     $root = git -C $cwd rev-parse --show-toplevel 2>$null
     if (-not $root) { $root = $cwd }
-    $new = (Hq pane split $active --direction right --ratio 0.65 --cwd $root --focus).pane.pane_id
+    $new = (Hq pane split $active --direction right --ratio 0.65 --cwd $root --right-click pane --focus).pane.pane_id
     # --new-window: with reuseWindow on, a folder arg would otherwise land in another tab's ttt
     $cmd = "ttt --new-window $(Quote $root)"
     if ($Open) { $cmd += " $(Quote $Open)" }
