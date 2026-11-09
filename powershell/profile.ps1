@@ -260,6 +260,7 @@ function ttt {
 #region Aliases
 Set-Alias -Name c -Value claude
 Set-Alias -Name f -Value fresh
+Set-Alias -Name t -Value ttt
 
 # Shadows PowerShell's built-in h -> Get-History. Not ReadOnly, so no
 # Remove-Item Alias: dance needed (unlike ls/cat above). Ctrl+R covers history.

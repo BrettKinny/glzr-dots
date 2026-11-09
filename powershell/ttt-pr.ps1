@@ -55,9 +55,13 @@ function ttt-pr {
     $api = "https://api.bitbucket.org/2.0/repositories/$($Matches[1])/$($Matches[2])/pullrequests/$Id"
 
     $user = $env:BITBUCKET_USER; $token = $env:BITBUCKET_API_TOKEN
-    if (-not $token -and (Test-Path "$HOME\.claude\settings.local.json")) {
-        $envBlock = (Get-Content "$HOME\.claude\settings.local.json" -Raw | ConvertFrom-Json).env
-        $user = $envBlock.BITBUCKET_USER; $token = $envBlock.BITBUCKET_API_TOKEN
+    foreach ($f in 'settings.local.json', 'settings.json') {
+        if ($token) { break }
+        $p = "$HOME\.claude\$f"
+        if (Test-Path $p) {
+            $envBlock = (Get-Content $p -Raw | ConvertFrom-Json).env
+            $user = $envBlock.BITBUCKET_USER; $token = $envBlock.BITBUCKET_API_TOKEN
+        }
     }
     if (-not $token) { Write-Host 'ttt pr: set BITBUCKET_USER and BITBUCKET_API_TOKEN' -ForegroundColor Red; return }
     $auth = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("${user}:$token"))
