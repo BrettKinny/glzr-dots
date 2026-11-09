@@ -239,7 +239,7 @@ keybindings:
   - commands: ['toggle-fullscreen']
     bindings: ['alt+f']
 
-  # Toggle full width (keep height) — no Omarchy equivalent. See fullwidth.py.
+  # Cycle width: 50% centered → default → full width — no Omarchy equivalent. See fullwidth.py.
   - commands: ['shell-exec pythonw "%USERPROFILE%\.glzr\glazewm\fullwidth.py"']
     bindings: ['alt+shift+w']
 

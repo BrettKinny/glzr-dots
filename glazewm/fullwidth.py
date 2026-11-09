@@ -5,15 +5,17 @@ import os
 import websockets
 
 # ---------------------------------------------------------------------------
-# Toggle the focused window between full monitor width and its previous
-# state/rect (Alt+Shift+W). GlazeWM bindings can't branch on state, hence a
-# script. Pre-toggle state is kept per window id in STATE_FILE.
+# Cycle the focused window's width (Alt+Shift+W): 50% centered → default →
+# full width → 50%. GlazeWM bindings can't branch on state, hence a script.
+# "default" = tiled, or the window's own floating rect if it had one.
+# State file: pre-cycle rects + ids autotile.py must not re-center.
 # ---------------------------------------------------------------------------
 
 # 127.0.0.1, not localhost: localhost tries IPv6 ::1 first and stalls ~2s.
 URI = "ws://127.0.0.1:6123"
 STATE_FILE = os.path.join(os.environ["LOCALAPPDATA"], "glazewm", "fullwidth.json")
 TOLERANCE = 4  # px
+WIDTH_FRACTION = 0.5  # keep = autotile.py, so its centered windows read as the 50% step
 
 
 def iter_windows(container):
@@ -24,18 +26,19 @@ def iter_windows(container):
             yield from iter_windows(child)
 
 
-def load_saved():
+def load_state():
     try:
         with open(STATE_FILE, encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
     except (OSError, ValueError):
         return {}
+    return data if isinstance(data, dict) and "saved" in data else {}
 
 
-def store_saved(saved):
+def store_state(state):
     os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
     with open(STATE_FILE, "w", encoding="utf-8") as f:
-        json.dump(saved, f)
+        json.dump(state, f)
 
 
 async def send(ws, message):
@@ -43,53 +46,63 @@ async def send(ws, message):
     return json.loads(await ws.recv()).get("data") or {}
 
 
-async def toggle():
+async def cycle():
     async with websockets.connect(URI) as ws:
         win = (await send(ws, "query focused")).get("focused") or {}
         if win.get("type") != "window":
             return
 
         monitors = (await send(ws, "query monitors")).get("monitors", [])
-        monitor = next((m for m in monitors
-                        if any(w["id"] == win["id"] for w in iter_windows(m))), None)
-        if not monitor:
+        found = next(((m, space) for m in monitors for space in m.get("children", [])
+                      if any(w["id"] == win["id"] for w in iter_windows(space))), None)
+        if not found:
             return
+        monitor, space = found
 
         live_ids = {w["id"] for m in monitors for w in iter_windows(m)}
-        saved = {k: v for k, v in load_saved().items() if k in live_ids}
+        state = load_state()
+        saved = {k: v for k, v in state.get("saved", {}).items() if k in live_ids}
+        exempt = [i for i in state.get("exempt", []) if i in live_ids]
 
         wid = win["id"]
-        state = win.get("state", {}).get("type")
-        prev = saved.pop(wid, None)
-        # Decide on current width, not on having an entry: after a manual
-        # Alt+T etc. the saved entry is stale.
-        is_full = (state == "floating"
-                   and abs(win.get("width", 0) - monitor["width"]) <= TOLERANCE)
+        floating = win.get("state", {}).get("type") == "floating"
+        width = win.get("width", 0)
+        half = round(monitor["width"] * WIDTH_FRACTION)
+        if wid in exempt:
+            exempt.remove(wid)
 
-        if is_full:
-            # No saved rect (state file lost) → tile; autotile.py re-centers.
-            if not prev or prev["state"] == "tiling":
-                await send(ws, f"command --id {wid} set-tiling")
+        # Step from current width, not stored state: manual resizes make it stale.
+        if floating and abs(width - monitor["width"]) <= TOLERANCE:
+            # full → 50%, centered, workspace height (same rect autotile.py uses)
+            cmds = [f"size --width {half}px --height {space['height']}px",
+                    f"position --x-pos {monitor['x'] + (monitor['width'] - half) // 2}"
+                    f" --y-pos {space['y']}"]
+        elif floating and abs(width - half) <= TOLERANCE:
+            # 50% → default
+            prev = saved.pop(wid, None)
+            if prev and prev["state"] == "floating":
+                cmds = [f"size --width {prev['width']}px --height {prev['height']}px",
+                        f"position --x-pos {prev['x']} --y-pos {prev['y']}"]
             else:
-                await send(ws, f"command --id {wid} size "
-                               f"--width {prev['width']}px --height {prev['height']}px")
-                await send(ws, f"command --id {wid} position "
-                               f"--x-pos {prev['x']} --y-pos {prev['y']}")
+                exempt.append(wid)  # else autotile.py re-centers a lone ultrawide window
+                cmds = ["set-tiling"]
         else:
-            saved[wid] = {"state": state, "x": win["x"], "y": win["y"],
-                          "width": win["width"], "height": win["height"]}
+            # default → full
+            saved[wid] = {"state": "floating" if floating else "tiling",
+                          "x": win["x"], "y": win["y"],
+                          "width": width, "height": win["height"]}
             # `size`, not `set-floating --width`: set-floating won't resize a
-            # window that already has a placement (e.g. one autotile.py centered).
-            # Explicit height + y: set-floating on a tiled window shrinks it to
-            # GlazeWM's default float size.
-            await send(ws, f"command --id {wid} set-floating")
-            await send(ws, f"command --id {wid} size "
-                           f"--width {monitor['width']}px --height {win['height']}px")
-            await send(ws, f"command --id {wid} position "
-                           f"--x-pos {monitor['x']} --y-pos {win['y']}")
+            # window that already has a placement. Explicit height + y:
+            # set-floating on a tiled window shrinks it to the default float size.
+            cmds = ["set-floating",
+                    f"size --width {monitor['width']}px --height {win['height']}px",
+                    f"position --x-pos {monitor['x']} --y-pos {win['y']}"]
 
-        store_saved(saved)
+        # Write before commanding: set-tiling fires events autotile.py reacts to.
+        store_state({"saved": saved, "exempt": exempt})
+        for cmd in cmds:
+            await send(ws, f"command --id {wid} {cmd}")
 
 
 if __name__ == "__main__":
-    asyncio.run(toggle())
+    asyncio.run(cycle())

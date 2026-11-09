@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 import websockets
 
 # ---------------------------------------------------------------------------
@@ -33,6 +34,17 @@ ENABLE_CENTER_SINGLE = True
 WIDTH_FRACTION = 0.5        # centered window width, as a fraction of monitor width
 ULTRAWIDE_MIN_RATIO = 2.0   # only act on monitors wider than this (21:9 ~= 2.39)
 
+# Written by fullwidth.py: windows cycled to "default" stay tiled, not centered.
+CYCLE_STATE_FILE = os.path.join(os.environ["LOCALAPPDATA"], "glazewm", "fullwidth.json")
+
+
+def load_exempt():
+    try:
+        with open(CYCLE_STATE_FILE, encoding="utf-8") as f:
+            return set(json.load(f).get("exempt", []))
+    except (OSError, ValueError, AttributeError):
+        return set()
+
 
 def iter_windows(container):
     """Recursively yield every window node beneath a container."""
@@ -61,6 +73,7 @@ async def reconcile(cmd_ws, centered_ids):
     # Drop ids of windows that no longer exist.
     all_ids = {w["id"] for m in monitors for w in iter_windows(m)}
     centered_ids &= all_ids
+    exempt = load_exempt()
 
     focused = None
 
@@ -111,7 +124,7 @@ async def reconcile(cmd_ws, centered_ids):
                     centered_ids.discard(w["id"])
             elif len(tiling) >= 2:
                 pass  # normal tiling layout, leave it alone
-            elif len(tiling) == 1 and not ours:
+            elif len(tiling) == 1 and not ours and tiling[0]["id"] not in exempt:
                 # Lone window -> float it centered at WIDTH_FRACTION of the monitor.
                 w = tiling[0]
                 width = round(mon_w * WIDTH_FRACTION)
