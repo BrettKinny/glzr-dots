@@ -1,7 +1,5 @@
 # Keyboard cheat sheet — Omarchy + Windows
 
-[Printable one-page PDF](KEYBOARD.pdf) · [Scalable SVG](KEYBOARD.svg)
-
 Use the same pattern on both systems: **`Mod` = `Super` on Omarchy and `Alt` on
 Windows**. `Ctrl` belongs to the focused application; adding `Shift` usually
 moves, reverses, or raises the scope of an action.
