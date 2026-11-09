@@ -1,6 +1,6 @@
 # One ttt split per herdr tab: focus it, open one at the repo root, or open a file in it.
 # -Open takes file[:line[:col]] (url-picker.ps1): this tab's split if it has one, else the
-# standalone ttt window, else a new window. Ctrl+Shift+E calls it bare.
+# standalone ttt window, else a new window. F9 E calls it bare.
 param([string]$Open)
 
 # Not named Herdr: PowerShell is case-insensitive, so it would shadow herdr.exe and recurse.

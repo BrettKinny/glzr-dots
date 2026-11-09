@@ -60,7 +60,7 @@ down to the `F9` prefix.
 | Select tab | `Ctrl+1..9` |
 | Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
 | Move pane | `F9 Shift+H/J/K/L` |
-| Side ttt (explorer + git): open / toggle focus | `Ctrl+Shift+E` |
+| Side ttt (explorer + git): open / toggle focus | `F9 E` |
 | Sidebar / go to | `Ctrl+Shift+B` / `Ctrl+Shift+P` |
 | Split vertical / horizontal | `Ctrl+Shift+\` / `Ctrl+Shift+-` |
 | Zoom pane / new workspace | `F9 Z` / `Ctrl+Shift+N` |
@@ -78,8 +78,8 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 | Action | Shortcut |
 | --- | --- |
 | Command palette / quick open | `Ctrl+P` / `Ctrl+K P` |
-| Explorer / changes / sidebar | `Ctrl+K E` / `Ctrl+K C` / `Ctrl+B` |
-| Search files / replace | `Ctrl+K F` / `Ctrl+R` |
+| Explorer / search / changes / outline | `Ctrl+Shift+E` / `F` / `G` / `O` |
+| Sidebar / replace | `Ctrl+B` / `Ctrl+R` |
 | Next / previous tab | `Alt+.` / `Alt+,` |
 | Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
 | Go to definition / LSP chords | `F12` / `Ctrl+L …` |
