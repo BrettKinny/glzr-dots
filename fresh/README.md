@@ -65,7 +65,7 @@ Bottom block of `keybindings` mirrors `../ttt/keybindings.json` (both editors in
 
 | ttt key | Fresh action | Replaces Fresh default |
 |---|---|---|
-| `Ctrl+E` | quick open files | focus explorer → now `Ctrl+Shift+E` |
+| `Ctrl+Shift+E` | focus explorer (also stock `Ctrl+E`; quick open = stock `Ctrl+'`) | — |
 | `Ctrl+J` / `Ctrl+T` | toggle dock / terminal in dock | — / transpose |
 | `F6` | toggle dock focus | remote menu |
 | `Alt+.` / `Alt+,`, `Ctrl+(Shift+)Tab` | next / prev tab | code actions → `Ctrl+.` |

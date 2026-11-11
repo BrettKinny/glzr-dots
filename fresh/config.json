@@ -37,7 +37,6 @@
 
     { "key": "w", "modifiers": ["ctrl"], "action": "close_tab", "when": "global" },
 
-    { "key": "e", "modifiers": ["ctrl"], "action": "quick_open_files" },
     { "key": "e", "modifiers": ["ctrl", "shift"], "action": "focus_file_explorer" },
     { "key": "j", "modifiers": ["ctrl"], "action": "toggle_utility_dock" },
     { "key": "t", "modifiers": ["ctrl"], "action": "open_terminal_in_dock" },
