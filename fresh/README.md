@@ -59,6 +59,23 @@ They only work because `editor.menu_bar_mnemonics` is `false` here. The menu bar
 already hidden (`show_menu_bar: false`), so the Alt+letter mnemonics were claiming
 keys for a menu that never renders.
 
+## ttt parity
+
+Bottom block of `keybindings` mirrors `../ttt/keybindings.json` (both editors in use):
+
+| ttt key | Fresh action | Replaces Fresh default |
+|---|---|---|
+| `Ctrl+E` | quick open files | focus explorer → now `Ctrl+Shift+E` |
+| `Ctrl+J` / `Ctrl+T` | toggle dock / terminal in dock | — / transpose |
+| `F6` | toggle dock focus | remote menu |
+| `Alt+.` / `Alt+,`, `Ctrl+(Shift+)Tab` | next / prev tab | code actions → `Ctrl+.` |
+| `Ctrl+H` | replace | delete word back |
+| `Ctrl+Shift+K`, `Ctrl+I`, `Ctrl+Insert` | delete line, hover, copy | — |
+
+Dormant until Fresh > 0.5.8 (win32-input-mode fix, sinelaw/fresh#3602): `Ctrl+Shift+E/K`
+(arrive as `Ctrl+E/K`), `Ctrl+I`, `Ctrl+Tab`. No Fresh equivalent: ttt changes/outline
+sidebars, `Ctrl+K` chords.
+
 ## Limits of the mirror
 
 Fresh has no action for these, so the mirror is cycle-based rather than directional.

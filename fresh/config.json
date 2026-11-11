@@ -35,7 +35,22 @@
 
     { "key": "b", "modifiers": ["ctrl", "alt"], "action": "list_bookmarks" },
 
-    { "key": "w", "modifiers": ["ctrl"], "action": "close_tab", "when": "global" }
+    { "key": "w", "modifiers": ["ctrl"], "action": "close_tab", "when": "global" },
+
+    { "key": "e", "modifiers": ["ctrl"], "action": "quick_open_files" },
+    { "key": "e", "modifiers": ["ctrl", "shift"], "action": "focus_file_explorer" },
+    { "key": "j", "modifiers": ["ctrl"], "action": "toggle_utility_dock" },
+    { "key": "t", "modifiers": ["ctrl"], "action": "open_terminal_in_dock" },
+    { "key": "F6", "modifiers": [], "action": "toggle_dock_focus", "when": "global" },
+    { "key": "k", "modifiers": ["ctrl", "shift"], "action": "delete_line" },
+    { "key": "h", "modifiers": ["ctrl"], "action": "replace" },
+    { "key": "i", "modifiers": ["ctrl"], "action": "lsp_hover" },
+    { "key": ".", "modifiers": ["ctrl"], "action": "lsp_code_actions" },
+    { "key": ".", "modifiers": ["alt"], "action": "next_buffer" },
+    { "key": ",", "modifiers": ["alt"], "action": "prev_buffer" },
+    { "key": "Tab", "modifiers": ["ctrl"], "action": "next_buffer" },
+    { "key": "Tab", "modifiers": ["ctrl", "shift"], "action": "prev_buffer" },
+    { "key": "Insert", "modifiers": ["ctrl"], "action": "copy" }
   ],
   "plugins": {
     "csharp_support": {
