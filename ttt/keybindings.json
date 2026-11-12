@@ -11,7 +11,8 @@
   "sidebar.search": "ctrl+shift+f",
   "sidebar.changes": "ctrl+shift+g",
   "sidebar.outline": "ctrl+shift+o",
-  "file.quickOpen": "ctrl+e",
+  "sidebar.focus": "ctrl+e",
+  "bitbucket-review.show": "ctrl+shift+p",
   "panel.toggle": "ctrl+j",
   "editor.deleteLine": "ctrl+shift+k",
   "tab.next": [
@@ -33,10 +34,9 @@
     "ctrl+f12",
     "ctrl+l i"
   ],
-  "editor.autocomplete": [
-    "ctrl+space",
-    "ctrl+u"
-  ],
+  "editor.autocomplete": "ctrl+u",
+  "terminal.toggle": "ctrl+`",
+  "file.quickOpen": "ctrl+t",
   "search.replace": [
     "ctrl+h",
     "ctrl+r"

@@ -75,14 +75,15 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 
 | Action | Shortcut |
 | --- | --- |
-| Command palette / quick open | `Ctrl+P` / `Ctrl+E` |
-| Explorer / search / changes / outline | `Ctrl+Shift+E` / `F` / `G` / `O` |
+| Command palette / quick open | `Ctrl+P` / `Ctrl+T` |
+| Explorer / search / changes / outline / PRs | `Ctrl+Shift+E` / `F` / `G` / `O` / `P` |
+| Focus sidebar | `Ctrl+E` |
 | Sidebar / replace | `Ctrl+B` / `Ctrl+H` |
 | Next / previous tab | `Ctrl+Tab` / `Ctrl+Shift+Tab` · `Alt+.` / `Alt+,` |
 | Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
 | Go to definition / references / implementation | `F12` / `Shift+F12` / `Ctrl+F12` |
-| Hover / autocomplete / LSP chords | `Ctrl+I` / `Ctrl+Space` / `Ctrl+L …` |
-| Terminal / bottom panel / menu bar / File menu | `Ctrl+T` / `Ctrl+J` / `F10` / `Ctrl+F10` |
+| Hover / autocomplete / LSP chords | `Ctrl+I` / `Ctrl+U` / `Ctrl+L …` |
+| Terminal / bottom panel / menu bar / File menu | `` Ctrl+` `` / `Ctrl+J` / `F10` / `Ctrl+F10` |
 | Delete line | `Ctrl+Shift+K` |
 
 ## Zen (Windows)
