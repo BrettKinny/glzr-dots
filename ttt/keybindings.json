@@ -9,10 +9,10 @@
   ],
   "sidebar.explorer": "ctrl+shift+e",
   "sidebar.search": "ctrl+shift+f",
-  "sidebar.changes": "ctrl+shift+g",
-  "sidebar.outline": "ctrl+shift+o",
+  "sidebar.changes": "ctrl+shift+h",
+  "sidebar.outline": "ctrl+shift+s",
   "sidebar.focus": "ctrl+e",
-  "bitbucket-review.show": "ctrl+shift+p",
+  "bitbucket-review.show": "ctrl+shift+i",
   "panel.toggle": "ctrl+j",
   "editor.deleteLine": "ctrl+shift+k",
   "tab.next": [

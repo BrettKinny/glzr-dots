@@ -76,7 +76,7 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 | Action | Shortcut |
 | --- | --- |
 | Command palette / quick open | `Ctrl+P` / `Ctrl+T` |
-| Explorer / search / changes / outline / PRs | `Ctrl+Shift+E` / `F` / `G` / `O` / `P` |
+| Explorer / search / changes / outline / PRs | `Ctrl+Shift+E` / `F` / `H` / `S` / `I` |
 | Focus sidebar | `Ctrl+E` |
 | Sidebar / replace | `Ctrl+B` / `Ctrl+H` |
 | Next / previous tab | `Ctrl+Tab` / `Ctrl+Shift+Tab` · `Alt+.` / `Alt+,` |
