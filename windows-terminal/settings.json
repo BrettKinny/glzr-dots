@@ -2,114 +2,350 @@
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": [
-        { "command": { "action": "sendInput", "input": "\u001b[20~1" }, "id": "User.herdrTab1" },
-        { "command": { "action": "sendInput", "input": "\u001b[20~2" }, "id": "User.herdrTab2" },
-        { "command": { "action": "sendInput", "input": "\u001b[20~3" }, "id": "User.herdrTab3" },
-        { "command": { "action": "sendInput", "input": "\u001b[20~4" }, "id": "User.herdrTab4" },
-        { "command": { "action": "sendInput", "input": "\u001b[20~5" }, "id": "User.herdrTab5" },
-        { "command": { "action": "sendInput", "input": "\u001b[20~6" }, "id": "User.herdrTab6" },
-        { "command": { "action": "sendInput", "input": "\u001b[20~7" }, "id": "User.herdrTab7" },
-        { "command": { "action": "sendInput", "input": "\u001b[20~8" }, "id": "User.herdrTab8" },
-        { "command": { "action": "sendInput", "input": "\u001b[20~9" }, "id": "User.herdrTab9" }
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~1"
+            },
+            "id": "User.herdrTab1"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~2"
+            },
+            "id": "User.herdrTab2"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~3"
+            },
+            "id": "User.herdrTab3"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~4"
+            },
+            "id": "User.herdrTab4"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~5"
+            },
+            "id": "User.herdrTab5"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~6"
+            },
+            "id": "User.herdrTab6"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~7"
+            },
+            "id": "User.herdrTab7"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~8"
+            },
+            "id": "User.herdrTab8"
+        },
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b[20~9"
+            },
+            "id": "User.herdrTab9"
+        }
     ],
     "alwaysShowNotificationIcon": false,
     "alwaysShowTabs": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-    "keybindings":
-    [
-        { "id": "unbound", "keys": "ctrl+c" },
-        { "id": "unbound", "keys": "ctrl+v" },
-
-        { "id": "unbound", "keys": "alt+shift+d" },
-        { "id": "unbound", "keys": "alt+enter" },
-        { "id": "unbound", "keys": "alt+left" },
-        { "id": "unbound", "keys": "alt+right" },
-        { "id": "unbound", "keys": "alt+up" },
-        { "id": "unbound", "keys": "alt+down" },
-        { "id": "unbound", "keys": "alt+shift+left" },
-        { "id": "unbound", "keys": "alt+shift+right" },
-        { "id": "unbound", "keys": "alt+shift+up" },
-        { "id": "unbound", "keys": "alt+shift+down" },
-        { "id": "unbound", "keys": "alt+shift+-" },
-        { "id": "unbound", "keys": "alt+shift+=" },
-        { "id": "unbound", "keys": "alt+shift+plus" },
-
-        { "id": "unbound", "keys": "ctrl+shift+up" },
-        { "id": "unbound", "keys": "ctrl+shift+down" },
-        { "id": "unbound", "keys": "ctrl+shift+left" },
-        { "id": "unbound", "keys": "ctrl+shift+right" },
-        { "id": "unbound", "keys": "ctrl+shift+home" },
-        { "id": "unbound", "keys": "ctrl+shift+end" },
-        { "id": "unbound", "keys": "ctrl+shift+pgup" },
-        { "id": "unbound", "keys": "ctrl+shift+pgdn" },
-
-        { "id": "unbound", "keys": "ctrl+shift+f" },
-        { "id": "unbound", "keys": "ctrl+shift+p" },
-        { "id": "unbound", "keys": "ctrl+shift+t" },
-        { "id": "unbound", "keys": "ctrl+shift+w" },
-        { "id": "unbound", "keys": "ctrl+shift+space" },
-        { "id": "unbound", "keys": "ctrl+tab" },
-        { "id": "unbound", "keys": "ctrl+shift+tab" },
-        { "id": "unbound", "keys": "ctrl+," },
-        { "id": "unbound", "keys": "ctrl+shift+," },
-
-        { "id": "unbound", "keys": "ctrl+t" },
-        { "id": "unbound", "keys": "ctrl+w" },
-        { "id": "unbound", "keys": "ctrl+b" },
-        { "id": "unbound", "keys": "ctrl+g" },
-        { "id": "unbound", "keys": "ctrl+left" },
-        { "id": "unbound", "keys": "ctrl+right" },
-        { "id": "unbound", "keys": "ctrl+up" },
-        { "id": "unbound", "keys": "ctrl+down" },
-        { "id": "unbound", "keys": "ctrl+\\" },
-        { "id": "unbound", "keys": "ctrl+shift+\\" },
-        { "id": "unbound", "keys": "ctrl+shift+z" },
-        { "id": "unbound", "keys": "ctrl+shift+b" },
-        { "id": "unbound", "keys": "ctrl+shift+n" },
-        { "id": "unbound", "keys": "ctrl+shift+g" },
-
-        { "id": "unbound", "keys": "ctrl+shift+1" },
-        { "id": "User.herdrTab1", "keys": "ctrl+alt+1" },
-        { "id": "unbound", "keys": "ctrl+shift+2" },
-        { "id": "User.herdrTab2", "keys": "ctrl+alt+2" },
-        { "id": "unbound", "keys": "ctrl+shift+3" },
-        { "id": "User.herdrTab3", "keys": "ctrl+alt+3" },
-        { "id": "unbound", "keys": "ctrl+shift+4" },
-        { "id": "User.herdrTab4", "keys": "ctrl+alt+4" },
-        { "id": "unbound", "keys": "ctrl+shift+5" },
-        { "id": "User.herdrTab5", "keys": "ctrl+alt+5" },
-        { "id": "unbound", "keys": "ctrl+shift+6" },
-        { "id": "User.herdrTab6", "keys": "ctrl+alt+6" },
-        { "id": "unbound", "keys": "ctrl+shift+7" },
-        { "id": "User.herdrTab7", "keys": "ctrl+alt+7" },
-        { "id": "unbound", "keys": "ctrl+shift+8" },
-        { "id": "User.herdrTab8", "keys": "ctrl+alt+8" },
-        { "id": "unbound", "keys": "ctrl+shift+9" },
-        { "id": "User.herdrTab9", "keys": "ctrl+alt+9" },
-
-        { "id": "Terminal.CopyToClipboard", "keys": "ctrl+shift+c" },
-        { "id": "Terminal.PasteFromClipboard", "keys": "ctrl+shift+v" }
+    "keybindings": [
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+tab"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+up"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+right"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+z"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+comma"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+g"
+        },
+        {
+            "id": "User.herdrTab3",
+            "keys": "ctrl+alt+3"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+3"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+shift+d"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+enter"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+left"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+t"
+        },
+        {
+            "id": "User.herdrTab4",
+            "keys": "ctrl+alt+4"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+4"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+down"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+shift+left"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+up"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+shift+right"
+        },
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+shift+up"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+shift+down"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+tab"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+shift+minus"
+        },
+        {
+            "id": "unbound",
+            "keys": "alt+shift+plus"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+up"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+b"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+down"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+left"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+p"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+right"
+        },
+        {
+            "id": "User.herdrTab7",
+            "keys": "ctrl+alt+7"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+7"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+home"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+end"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+pgup"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+pgdn"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+w"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+\\"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+space"
+        },
+        {
+            "id": "User.herdrTab5",
+            "keys": "ctrl+alt+5"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+5"
+        },
+        {
+            "id": "User.herdrTab2",
+            "keys": "ctrl+alt+2"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+2"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+g"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+comma"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+t"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+w"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+b"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+left"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+right"
+        },
+        {
+            "id": "User.herdrTab8",
+            "keys": "ctrl+alt+8"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+8"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+down"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+\\"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+n"
+        },
+        {
+            "id": "User.herdrTab9",
+            "keys": "ctrl+alt+9"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+9"
+        },
+        {
+            "id": "User.herdrTab6",
+            "keys": "ctrl+alt+6"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+6"
+        },
+        {
+            "id": "User.herdrTab1",
+            "keys": "ctrl+alt+1"
+        },
+        {
+            "id": "unbound",
+            "keys": "ctrl+shift+1"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+shift+v"
+        }
     ],
     "minimizeToNotificationArea": false,
-    "newTabMenu": 
-    [
+    "newTabMenu": [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
-    {
-        "defaults": 
-        {
+    "profiles": {
+        "defaults": {
             "colorScheme": "One Half Dark",
             "experimental.retroTerminalEffect": false,
-            "font": 
-            {
+            "font": {
                 "face": "FiraCode Nerd Font",
-                "features": 
-                {
+                "features": {
                     "cv02": 1,
                     "cv14": 1,
                     "cv25": 1,
@@ -125,11 +361,10 @@
                 "size": 14,
                 "weight": "normal"
             },
-            "opacity": 80,
+            "opacity": 85,
             "useAcrylic": true
         },
-        "list": 
-        [
+        "list": [
             {
                 "commandline": "%SystemRoot%\\System32\\cmd.exe",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",

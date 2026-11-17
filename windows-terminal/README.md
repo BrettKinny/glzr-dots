@@ -3,7 +3,7 @@
 `settings.json` for Windows Terminal, tracked because it is the **middle layer** of
 the keyboard stack and is easy to forget when rebuilding a machine.
 
-Fresh runs inside WT (`wt fresh`), so WT gets first refusal on every keystroke that
+Herdr and ttt run inside WT, so WT gets first refusal on every keystroke that
 GlazeWM hasn't already claimed. Left stock, it silently eats editor keys.
 
 ## What's changed from stock
@@ -14,13 +14,13 @@ applications (such as VIM)". The unbound key falls through to the app.
 
 | Unbound | Why |
 |---|---|
-| `Ctrl+C` / `Ctrl+V` | were custom-bound to WT's own clipboard, so **Fresh never received them at all** |
-| `Ctrl+Shift+↑`/`↓` | WT scroll — needed for Fresh's add-cursor-above/below |
-| `Ctrl+Shift+F` | WT find — needed for Fresh's live grep |
-| `Ctrl+Shift+Home`/`End`, `Ctrl+Shift+PgUp`/`PgDn` | WT scroll — needed for Fresh's document/page selection |
+| `Ctrl+C` / `Ctrl+V` | were custom-bound to WT's own clipboard, so **the editor never received them at all** |
+| `Ctrl+Shift+↑`/`↓` | WT scroll — needed for ttt's add-cursor-above/below |
+| `Ctrl+Shift+F` | WT find — needed for ttt's search view |
+| `Ctrl+Shift+Home`/`End`, `Ctrl+Shift+PgUp`/`PgDn` | WT scroll — needed for ttt's document selection and move-line |
 | `Alt+arrows`, `Alt+Shift+arrows`, `Alt+Shift+-`/`=`, `Alt+Shift+D`, `Alt+Enter` | WT panes/focus/fullscreen — GlazeWM owns the whole `Alt` namespace |
-| `Ctrl+Shift+T`/`W`/`P`/`Space`, `Ctrl+Tab`, `Ctrl+Shift+Tab`, `Ctrl+,`, `Ctrl+Shift+,` | WT tabs, palette, settings — Fresh has its own |
-| `Ctrl+T`/`W`/`B`/`G`, `Ctrl+arrows`, `Ctrl+Shift+Z`, `Ctrl+\`, `Ctrl+Shift+\`, `Ctrl+Shift+B`/`N`/`G` | the nested-app layer: whichever of Herdr or Fresh is focused must receive these directly |
+| `Ctrl+Shift+T`/`W`/`P`/`Space`, `Ctrl+Tab`, `Ctrl+Shift+Tab`, `Ctrl+,`, `Ctrl+Shift+,` | WT tabs, palette, settings — ttt has its own |
+| `Ctrl+T`/`W`/`B`/`G`, `Ctrl+arrows`, `Ctrl+Shift+Z`, `Ctrl+\`, `Ctrl+Shift+\`, `Ctrl+Shift+B`/`N`/`G` | app layer: must reach ttt or the shell directly |
 
 Terminal clipboard stays on `Ctrl+Shift+C` / `Ctrl+Shift+V`.
 
@@ -31,20 +31,16 @@ no representation for them (microsoft/terminal#7746). A `sendInput` action trans
 
 Cost: in a plain shell tab the chord types that sequence. `Ctrl+Shift+1`–`9` stay unbound.
 
-### Herdr and Fresh both want `Ctrl`
+### Layers
 
-The grammar gives `Ctrl` to "the focused application", but Fresh running inside a
-Herdr pane nests two of them on one modifier. Herdr yields: it keeps `Ctrl` only
-where Fresh has no claim, and moved the rest to `Ctrl+Shift` (`T`, `W`, `B`) or to
-its `F9` prefix (pane focus/move, zoom, tab cycling). So the `Ctrl` chords above
-stay unbound in WT for Fresh's sake even though Herdr no longer takes them. See
-[`../herdr/README.md`](../herdr/README.md).
+`Alt` = GlazeWM, `Ctrl+Alt` = Herdr, `Ctrl` / `Ctrl+Shift` = the focused app. WT's
+own shortcuts aren't used, so anything it would eat on those layers is unbound.
+See [`../KEYBOARD.md`](../KEYBOARD.md).
 
-**Rationale:** GlazeWM already manages windows and Fresh already manages splits and
+**Rationale:** GlazeWM already manages windows and Herdr/ttt manage splits and
 tabs, so WT's equivalents were redundant middlemen competing for keys. The tradeoff
 is that WT panes are no longer available in plain shell tabs — use GlazeWM's tiling
-instead. See [`../fresh/README.md`](../fresh/README.md) for the full three-layer
-grammar.
+instead.
 
 ## Wiring
 
@@ -65,8 +61,7 @@ Copy-Item $live "$env:USERPROFILE\.glzr\windows-terminal\settings.json"
 A junction is wrong here because `LocalState\` also holds runtime state, and a
 symlink or hardlink on the single file is unreliable: WT rewrites `settings.json`
 wholesale when you change anything in its settings UI, and a write-temp-then-rename
-replaces the link with a regular file. The same failure mode is why
-[`../fresh/`](../fresh/README.md) is passed with `--config` instead of being linked.
+replaces the link with a regular file.
 
 **The cost of a copy is silent drift.** Check before assuming they match:
 

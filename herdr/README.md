@@ -1,34 +1,37 @@
 # Herdr
 
-Herdr is the application layer of the shared keyboard language: Windows uses
-`Alt` for GlazeWM where Omarchy uses `Super`, while Herdr uses immediate `Ctrl`
-bindings. `Shift` means move, reverse, or a higher-level variant.
+Layers: `Alt` = OS (GlazeWM; `Super` on Omarchy), `Ctrl+Alt` = Herdr,
+`Ctrl` / `Ctrl+Shift` = the focused app.
 
-Fresh runs *inside* Herdr panes, so both want the `Ctrl` layer and Herdr has no
-pass-through mode. Herdr yields wherever Fresh has a claim: `Ctrl+T`/`W`/`B` moved
-up to `Ctrl+Shift`, and pane focus/move, zoom and tab cycling moved to the `F12`
-prefix. Fresh's `Ctrl+Alt` split layer never collides.
+ttt runs *inside* Herdr panes and Herdr has no pass-through mode, so Herdr takes
+no `Ctrl` or `Ctrl+Shift` chord at all. Everything direct is `Ctrl+Alt`; the rest
+is on the `F9` prefix.
 
 ## Bindings
 
 | Binding | Action |
 |---|---|
-| `Ctrl+Shift+T` / `Ctrl+Shift+W` | New tab / close pane |
-| `Ctrl+Tab` / `Ctrl+Shift+Tab` | Next / previous workspace |
-| `F12 N` / `F12 P` | Next / previous tab |
-| `Ctrl+1..9` | Select tab |
-| `F12 H/J/K/L` | Focus pane |
-| `F12 Shift+H/J/K/L` | Move pane |
-| `Ctrl+Shift+B` / `Ctrl+G` | Sidebar / go to |
-| `Ctrl+\` / `Ctrl+Shift+\` | Split vertically / horizontally |
-| `F12 Z` | Zoom pane |
-| `Ctrl+Shift+N` | New workspace |
-| `Ctrl+Shift+G` | New worktree workspace |
-| `F12 Shift+D` | Close workspace |
-| `Ctrl+Shift+U` | Pick a URL or file path from the pane |
+| `Ctrl+Alt+T` / `Ctrl+Alt+W` | New tab / close pane |
+| `Ctrl+Alt+↓` / `Ctrl+Alt+↑` | Next / previous workspace |
+| `Ctrl+Alt+←` / `Ctrl+Alt+→` | Focus pane left / right |
+| `Ctrl+Alt+1..9` | Focus Nth agent |
+| `F9 N` / `F9 P` | Next / previous tab |
+| `F9 Shift+1..9` | Select tab |
+| `F9 H/J/K/L` | Focus pane |
+| `F9 Shift+H/J/K/L` | Move pane |
+| `Ctrl+Alt+B` / `Ctrl+Alt+P` | Sidebar / go to |
+| `Ctrl+Alt+\` / `Ctrl+Alt+-` | Split vertically / horizontally |
+| `F9 Z` | Zoom pane |
+| `Ctrl+Alt+N` / `Ctrl+Alt+R` | New / rename workspace |
+| `Ctrl+Alt+G` / `Ctrl+Alt+O` | New worktree workspace / open on-disk worktree |
+| `F9 Shift+D` | Close workspace |
+| `Ctrl+Alt+J` | Jump to latest notification's pane |
+| `Ctrl+Alt+Q` | Detach |
+| `Ctrl+Alt+U` | Pick a URL or file path from the pane |
+| `Ctrl+Alt+?` | Help |
+| `F9 E` | Side ttt: open / toggle focus |
 
-Herdr still needs a prefix for commands without a good native chord. It is `F12`,
-and the original prefix forms remain alongside every remapped command.
+Every command also answers to its `F9` prefix form.
 
 ## URL and path picker
 
@@ -36,7 +39,7 @@ foot's URL mode, for Herdr. Windows Terminal's mark-mode link hopping
 (`Ctrl+Shift+M`, `Tab`) can't see pane output because Herdr draws the whole screen,
 so [`url-picker.ps1`](url-picker.ps1) reads it through the API instead:
 
-- `Ctrl+Shift+U` / `F12 U` → popup over the focused pane
+- `Ctrl+Alt+U` / `F9 U` → popup over the focused pane
 - `herdr pane read --source recent-unwrapped` → URLs + file paths, newest first
 - Paths kept only if they exist on disk (relative → pane cwd, `:line:col` stripped)
 - `Enter` opens with the default app, `Ctrl+Y` copies
@@ -101,7 +104,7 @@ explicitly platform-specific.
 
 ## Key ownership
 
-The tracked Windows Terminal settings explicitly unbind these chords so they
-reach Herdr. Use the `F12` fallbacks if a particular keyboard or terminal cannot
-send one — and note WT keeps unbinding the plain `Ctrl` chords Herdr gave back,
-because Fresh still needs them to fall through.
+Windows Terminal passes `Ctrl+Alt+letter` and arrows through untouched. It drops
+`Ctrl+Alt+digit`, so the tracked WT settings translate `Ctrl+Alt+1..9` to
+`F9` + digit (see [`../windows-terminal/`](../windows-terminal/README.md)).
+GlazeWM keeps `Ctrl+Alt+Tab` only; nothing else global sits on `Ctrl+Alt`.

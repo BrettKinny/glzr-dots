@@ -1,8 +1,13 @@
 # Keyboard cheat sheet — Omarchy + Windows
 
 Use the same pattern on both systems: **`Mod` = `Super` on Omarchy and `Alt` on
-Windows**. `Ctrl` belongs to the focused application; adding `Shift` usually
-moves, reverses, or raises the scope of an action.
+Windows**.
+
+| Layer | Modifier |
+| --- | --- |
+| OS / window manager | `Mod`, `Mod+Shift` |
+| Herdr | `Ctrl+Alt` |
+| Focused app (ttt, Zen, shells) | `Ctrl`, `Ctrl+Shift` |
 
 ## Windows and workspaces
 
@@ -33,6 +38,7 @@ moves, reverses, or raises the scope of an action.
 | Calendar | `Mod+Shift+C` | gcal-tui | Outlook Calendar |
 | Messaging | `Mod+Shift+G` | Signal | Teams |
 | AI | `Mod+Shift+A` | Gemini | Gemini |
+| Daily brief | `Mod+Shift+D` | — | Start Menu `Daily Brief.lnk` hotkey |
 | Jira issue (key, number → MMS, or search) | `Mod+Shift+J` | — | Jira jump (CmdPal ext, ~/dev/JiraJump) |
 
 ## Clipboard
@@ -55,6 +61,7 @@ ttt runs inside Herdr panes and there is no pass-through, so Herdr takes
 | Next / previous workspace | `Ctrl+Alt+↓` / `Ctrl+Alt+↑` |
 | Next / previous tab | `F9 N` / `F9 P` |
 | Focus agent / select tab | `Ctrl+Alt+1..9` / `F9 Shift+1..9` |
+| Help / detach | `Ctrl+Alt+?` / `Ctrl+Alt+Q` |
 | Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
 | Move pane | `F9 Shift+H/J/K/L` |
 | Side ttt (explorer + git): open / toggle focus | `F9 E` |
@@ -66,11 +73,12 @@ ttt runs inside Herdr panes and there is no pass-through, so Herdr takes
 
 `F9` remains the Herdr recovery prefix, and every command still answers to its
 `F9` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;
-Windows uses `Mod+R` for resize mode and `Mod+Shift+R` to reload GlazeWM.
+Windows uses `Mod+R` for resize mode, `Mod+Shift+R` to reload GlazeWM,
+`Mod+Shift+X` to redraw and `Mod+Shift+Q` to exit it.
 
 ## ttt
 
-Defaults, except where GlazeWM (`Alt`) takes the key.
+VS Code-style `Ctrl+Shift` views; otherwise defaults, except where GlazeWM (`Alt`) takes the key.
 
 | Action | Shortcut |
 | --- | --- |
