@@ -46,24 +46,23 @@ These send universal clipboard chords, so they work in terminals and GUI apps.
 
 ## Herdr
 
-ttt runs inside Herdr panes and there is no pass-through, so Herdr keeps `Ctrl`
-only where ttt has no claim. The rest moved up to `Ctrl+Shift`, `Ctrl+Alt`, or
-down to the `F9` prefix.
+ttt runs inside Herdr panes and there is no pass-through, so Herdr takes
+`Ctrl+Alt` and leaves `Ctrl` and `Ctrl+Shift` to ttt. The rest is on the `F9` prefix.
 
 | Action | Shortcut |
 | --- | --- |
-| New tab / close pane | `Ctrl+Shift+T` / `Ctrl+Shift+W` |
-| Next / previous workspace | `Ctrl+Shift+Tab` / `F9 Shift+Tab` |
+| New tab / close pane | `Ctrl+Alt+T` / `Ctrl+Alt+W` |
+| Next / previous workspace | `Ctrl+Alt+↓` / `Ctrl+Alt+↑` |
 | Next / previous tab | `F9 N` / `F9 P` |
-| Focus agent / select tab | `Ctrl+Shift+1..9` / `F9 Shift+1..9` |
+| Focus agent / select tab | `Ctrl+Alt+1..9` / `F9 Shift+1..9` |
 | Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
 | Move pane | `F9 Shift+H/J/K/L` |
 | Side ttt (explorer + git): open / toggle focus | `F9 E` |
-| Sidebar / go to | `Ctrl+Shift+B` / `Ctrl+Shift+P` |
-| Split vertical / horizontal | `Ctrl+Shift+\` / `Ctrl+Shift+-` |
-| Zoom pane / new workspace | `F9 Z` / `Ctrl+Shift+N` |
-| New worktree workspace | `Ctrl+Shift+G` |
-| Pick URL / file path (Windows): files open in side ttt, else the ttt window | `Ctrl+Shift+U` |
+| Sidebar / go to | `Ctrl+Alt+B` / `Ctrl+Alt+P` |
+| Split vertical / horizontal | `Ctrl+Alt+\` / `Ctrl+Alt+-` |
+| Zoom pane / new workspace | `F9 Z` / `Ctrl+Alt+N` |
+| New worktree workspace | `Ctrl+Alt+G` |
+| Pick URL / file path (Windows): files open in side ttt, else the ttt window | `Ctrl+Alt+U` |
 
 `F9` remains the Herdr recovery prefix, and every command still answers to its
 `F9` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;
@@ -76,15 +75,15 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 | Action | Shortcut |
 | --- | --- |
 | Command palette / quick open | `Ctrl+P` / `Ctrl+T` |
-| Explorer / search / changes / outline / PRs | `Ctrl+1..5` (Windows Terminal sends `Ctrl+K` `E` / `F` / `C` / `O` / `P`) |
+| Explorer / search / changes / outline / PRs | `Ctrl+Shift+E` / `F` / `G` / `O` / `P` |
 | Focus sidebar | `Ctrl+E` |
 | Sidebar / replace | `Ctrl+B` / `Ctrl+H` |
-| Next / previous tab | `Ctrl+Tab` · `Ctrl+PgDn` / `Ctrl+PgUp` |
-| Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
+| Next / previous tab | `Ctrl+Tab` / `Ctrl+Shift+Tab` · `Ctrl+PgDn` / `Ctrl+PgUp` |
+| Move line / add cursor | `Ctrl+Shift+PgUp/PgDn` / `Ctrl+Shift+↑/↓` |
 | Go to definition / references / implementation | `F12` / `Shift+F12` / `Ctrl+F12` |
 | Hover / autocomplete / LSP chords | `Ctrl+I` / `Ctrl+U` / `Ctrl+L …` |
 | Terminal / bottom panel / menu bar / File menu | `` Ctrl+` `` / `Ctrl+J` / `F10` / `Ctrl+F10` |
-| Delete line | `Ctrl+K K` |
+| Delete line | `Ctrl+Shift+K` |
 
 ## Zen (Windows)
 

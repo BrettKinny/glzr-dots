@@ -1,21 +1,24 @@
 {
-  "editor.moveLineUp": "ctrl+alt+up",
-  "editor.moveLineDown": "ctrl+alt+down",
+  "editor.moveLineUp": "ctrl+shift+pageup",
+  "editor.moveLineDown": "ctrl+shift+pagedown",
   "multicursor.addCursorAbove": "ctrl+shift+up",
   "multicursor.addCursorBelow": "ctrl+shift+down",
   "editor.copy": [
     "ctrl+c",
     "ctrl+insert"
   ],
-  "sidebar.outline": "ctrl+k o",
+  "sidebar.outline": "ctrl+shift+o",
   "sidebar.focus": "ctrl+e",
-  "bitbucket-review.show": "ctrl+k p",
+  "bitbucket-review.show": "ctrl+shift+p",
   "panel.toggle": "ctrl+j",
   "tab.next": [
     "ctrl+tab",
     "ctrl+pagedown"
   ],
-  "tab.prev": "ctrl+pageup",
+  "tab.prev": [
+    "ctrl+shift+tab",
+    "ctrl+pageup"
+  ],
   "editor.hover": "ctrl+i",
   "menu.file": "ctrl+f10",
   "menubar.toggle": "f10",
@@ -34,5 +37,8 @@
     "ctrl+h",
     "ctrl+r"
   ],
-  "editor.sortLinesAsc": ""
+  "sidebar.explorer": "ctrl+shift+e",
+  "sidebar.search": "ctrl+shift+f",
+  "sidebar.changes": "ctrl+shift+g",
+  "editor.deleteLine": "ctrl+shift+k"
 }

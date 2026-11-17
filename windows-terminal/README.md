@@ -24,13 +24,12 @@ applications (such as VIM)". The unbound key falls through to the app.
 
 Terminal clipboard stays on `Ctrl+Shift+C` / `Ctrl+Shift+V`.
 
-WT drops `Ctrl+digit` and `Ctrl+Shift+digit` entirely: the VT input encoding has
-no representation for them (microsoft/terminal#7746). `sendInput` actions translate:
+WT drops `Ctrl+digit` and `Ctrl+Alt+digit` chords before the app sees them: the VT input encoding has
+no representation for them (microsoft/terminal#7746). A `sendInput` action translates:
 
-- `Ctrl+Shift+1`–`9` → `ESC [20~` (F9) + digit (`User.herdrTab1`–`9`) → Herdr `prefix+1..9` (focus agent)
-- `Ctrl+1`–`5` → `Ctrl+K` + `e`/`f`/`c`/`o`/`p` (`User.tttSide1`–`5`) → ttt sidebar views
+- `Ctrl+Alt+1`–`9` → `ESC [20~` (F9) + digit (`User.herdrTab1`–`9`) → Herdr `prefix+1..9` (focus agent)
 
-Cost: in a plain shell tab the chords type those sequences instead of doing nothing.
+Cost: in a plain shell tab the chord types that sequence. `Ctrl+Shift+1`–`9` stay unbound.
 
 ### Herdr and Fresh both want `Ctrl`
 
