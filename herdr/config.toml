@@ -28,7 +28,7 @@ default_shell = "pwsh"
 prefix = "f9"
 
 # Application navigation and discovery.
-help = ["ctrl+?", "prefix+?"]
+help = ["ctrl+alt+?", "prefix+?"]
 # P for palette: type to jump.
 goto = ["ctrl+alt+p", "prefix+g"]
 workspace_picker = "prefix+w"
