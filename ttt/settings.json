@@ -2,6 +2,10 @@
   "version": 1,
   "theme": "one-dark",
   "reuseWindow": true,
+  "language": {
+    "locale": "en",
+    "autoUpdate": true
+  },
   "appearance": {
     "icons": "nerd-font",
     "scrollbarGlyphs": "blocks",
@@ -38,14 +42,14 @@
     "formatOnSave": false,
     "insertFinalNewline": true,
     "trimTrailingWhitespace": false,
-    "focusOnOpen": false,
+    "focusOnOpen": true,
     "syntaxHighlight": true,
     "gitGutter": true,
     "scrollbarGitMarks": true,
     "autoDedent": true,
     "autoIndent": true,
     "gutterStyle": "minimal",
-    "borderStyle": "default",
+    "borderStyle": "rounded",
     "bracketPairColorization": true,
     "showTrailingNewline": true,
     "menuBar": false,
