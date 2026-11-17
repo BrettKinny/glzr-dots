@@ -95,6 +95,12 @@ command = "pwsh -NoProfile -File \"%USERPROFILE%\\.glzr\\herdr\\url-picker.ps1\"
 width = "80%"
 height = "50%"
 
+# herdr-sidebar plugin (explorer + git); again focuses, then closes. S for sidebar.
+[[keys.command]]
+key = "ctrl+alt+s"
+type = "shell"
+command = "herdr plugin action invoke open-sidebar-windows --plugin herdr-sidebar"
+
 # Side ttt (explorer + git Changes) for this tab; again toggles focus back. E for explorer.
 [[keys.command]]
 key = "prefix+e"
