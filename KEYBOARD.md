@@ -53,7 +53,7 @@ down to the `F9` prefix.
 | Action | Shortcut |
 | --- | --- |
 | New tab / close pane | `Ctrl+Shift+T` / `Ctrl+Shift+W` |
-| Next / previous workspace | `Ctrl+Tab` / `Ctrl+Shift+Tab` |
+| Next / previous workspace | `Ctrl+Shift+Tab` / `F9 Shift+Tab` |
 | Next / previous tab | `F9 N` / `F9 P` |
 | Select tab | `Ctrl+1..9` |
 | Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
@@ -76,15 +76,15 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 | Action | Shortcut |
 | --- | --- |
 | Command palette / quick open | `Ctrl+P` / `Ctrl+T` |
-| Explorer / search / changes / outline / PRs | `Ctrl+Shift+E` / `F` / `H` / `S` / `I` |
+| Explorer / search / changes / outline / PRs | `Ctrl+K` then `E` / `F` / `C` / `O` / `P` |
 | Focus sidebar | `Ctrl+E` |
 | Sidebar / replace | `Ctrl+B` / `Ctrl+H` |
-| Next / previous tab | `Ctrl+Tab` / `Ctrl+Shift+Tab` · `Alt+.` / `Alt+,` |
+| Next / previous tab | `Ctrl+Tab` · `Ctrl+PgDn` / `Ctrl+PgUp` |
 | Move line / add cursor | `Ctrl+Alt+↑/↓` / `Ctrl+Shift+↑/↓` |
 | Go to definition / references / implementation | `F12` / `Shift+F12` / `Ctrl+F12` |
 | Hover / autocomplete / LSP chords | `Ctrl+I` / `Ctrl+U` / `Ctrl+L …` |
 | Terminal / bottom panel / menu bar / File menu | `` Ctrl+` `` / `Ctrl+J` / `F10` / `Ctrl+F10` |
-| Delete line | `Ctrl+Shift+K` |
+| Delete line | `Ctrl+K K` |
 
 ## Zen (Windows)
 

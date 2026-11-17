@@ -46,15 +46,15 @@ switch_tab = "prefix+1..9"
 rename_tab = "prefix+shift+t"
 close_tab = "prefix+shift+x"
 
-# Workspaces are the next level above tabs, so Ctrl+Tab cycles them.
+# Ctrl+Tab belongs to ttt's tabs; Shift lifts it to workspaces. Backward is prefix-only.
 new_workspace = ["ctrl+shift+n", "prefix+shift+n"]
 # Worktree = workspace + branch checkout; Shift lifts Ctrl+G (go to) to create.
 new_worktree = ["ctrl+shift+g", "prefix+shift+g"]
 # No herdr default. Attaches an on-disk worktree that isn't a live workspace yet
 # (goto only reaches existing ones). prefix+shift+o avoids default prefix+o.
 open_worktree = ["ctrl+shift+o", "prefix+shift+o"]
-next_workspace = ["ctrl+tab", "prefix+tab"]
-previous_workspace = ["ctrl+shift+tab", "prefix+shift+tab"]
+next_workspace = ["ctrl+shift+tab", "prefix+tab"]
+previous_workspace = "prefix+shift+tab"
 rename_workspace = ["ctrl+shift+r", "prefix+shift+w"]
 close_workspace = "prefix+shift+d"
 

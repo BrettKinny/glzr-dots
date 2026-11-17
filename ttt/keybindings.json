@@ -7,22 +7,15 @@
     "ctrl+c",
     "ctrl+insert"
   ],
-  "sidebar.explorer": "ctrl+shift+e",
-  "sidebar.search": "ctrl+shift+f",
-  "sidebar.changes": "ctrl+shift+h",
-  "sidebar.outline": "ctrl+shift+s",
+  "sidebar.outline": "ctrl+k o",
   "sidebar.focus": "ctrl+e",
-  "bitbucket-review.show": "ctrl+shift+i",
+  "bitbucket-review.show": "ctrl+k p",
   "panel.toggle": "ctrl+j",
-  "editor.deleteLine": "ctrl+shift+k",
   "tab.next": [
     "ctrl+tab",
-    "alt+."
+    "ctrl+pagedown"
   ],
-  "tab.prev": [
-    "ctrl+shift+tab",
-    "alt+,"
-  ],
+  "tab.prev": "ctrl+pageup",
   "editor.hover": "ctrl+i",
   "menu.file": "ctrl+f10",
   "menubar.toggle": "f10",
@@ -40,5 +33,6 @@
   "search.replace": [
     "ctrl+h",
     "ctrl+r"
-  ]
+  ],
+  "editor.sortLinesAsc": ""
 }
