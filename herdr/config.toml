@@ -41,8 +41,8 @@ detach = ["ctrl+shift+q", "prefix+q"]
 new_tab = ["ctrl+shift+t", "prefix+c"]
 previous_tab = "prefix+p"
 next_tab = "prefix+n"
-# Ctrl+digits go to sidebar agents (focus_agent); tabs are rarely >1.
-switch_tab = "prefix+1..9"
+# Plain prefix+digits go to sidebar agents (focus_agent); tabs are rarely >1.
+switch_tab = "prefix+shift+1..9"
 rename_tab = "prefix+shift+t"
 close_tab = "prefix+shift+x"
 
@@ -59,7 +59,8 @@ rename_workspace = ["ctrl+shift+r", "prefix+shift+w"]
 close_workspace = "prefix+shift+d"
 
 # Nth agent in the sidebar list.
-focus_agent = "ctrl+1..9"
+# WT cannot encode Ctrl+Shift+digit, so it sends prefix+digit instead.
+focus_agent = ["ctrl+shift+1..9", "prefix+1..9"]
 
 # Ctrl+arrows stay with the app (word-jump in ttt and shells); Ctrl+Alt+←/→ matches
 # Zen's workspace hop. Up/down are prefix-only: Ctrl+Alt+↑/↓ is ttt's move-line.

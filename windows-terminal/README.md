@@ -19,18 +19,18 @@ applications (such as VIM)". The unbound key falls through to the app.
 | `Ctrl+Shift+F` | WT find — needed for Fresh's live grep |
 | `Ctrl+Shift+Home`/`End`, `Ctrl+Shift+PgUp`/`PgDn` | WT scroll — needed for Fresh's document/page selection |
 | `Alt+arrows`, `Alt+Shift+arrows`, `Alt+Shift+-`/`=`, `Alt+Shift+D`, `Alt+Enter` | WT panes/focus/fullscreen — GlazeWM owns the whole `Alt` namespace |
-| `Ctrl+Shift+1`–`9` | WT "new tab with profile N" |
 | `Ctrl+Shift+T`/`W`/`P`/`Space`, `Ctrl+Tab`, `Ctrl+Shift+Tab`, `Ctrl+,`, `Ctrl+Shift+,` | WT tabs, palette, settings — Fresh has its own |
 | `Ctrl+T`/`W`/`B`/`G`, `Ctrl+arrows`, `Ctrl+Shift+Z`, `Ctrl+\`, `Ctrl+Shift+\`, `Ctrl+Shift+B`/`N`/`G` | the nested-app layer: whichever of Herdr or Fresh is focused must receive these directly |
 
 Terminal clipboard stays on `Ctrl+Shift+C` / `Ctrl+Shift+V`.
 
-`Ctrl+1`–`9` are not merely unbound — unbinding is useless for them, since the VT
-input encoding has no representation for Ctrl+digit and WT drops the chord
-entirely (microsoft/terminal#7746). Instead, `sendInput` actions
-(`User.herdrTab1`–`9`) translate each one to `ESC [20~` (F9) plus the digit, so
-Herdr receives its `prefix+1..9` fallback. Cost: in a plain shell tab — or in
-Fresh — the chord types that escape sequence instead of doing nothing.
+WT drops `Ctrl+digit` and `Ctrl+Shift+digit` entirely: the VT input encoding has
+no representation for them (microsoft/terminal#7746). `sendInput` actions translate:
+
+- `Ctrl+Shift+1`–`9` → `ESC [20~` (F9) + digit (`User.herdrTab1`–`9`) → Herdr `prefix+1..9` (focus agent)
+- `Ctrl+1`–`5` → `Ctrl+K` + `e`/`f`/`c`/`o`/`p` (`User.tttSide1`–`5`) → ttt sidebar views
+
+Cost: in a plain shell tab the chords type those sequences instead of doing nothing.
 
 ### Herdr and Fresh both want `Ctrl`
 

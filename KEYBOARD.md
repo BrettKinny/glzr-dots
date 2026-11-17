@@ -55,7 +55,7 @@ down to the `F9` prefix.
 | New tab / close pane | `Ctrl+Shift+T` / `Ctrl+Shift+W` |
 | Next / previous workspace | `Ctrl+Shift+Tab` / `F9 Shift+Tab` |
 | Next / previous tab | `F9 N` / `F9 P` |
-| Select tab | `Ctrl+1..9` |
+| Focus agent / select tab | `Ctrl+Shift+1..9` / `F9 Shift+1..9` |
 | Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
 | Move pane | `F9 Shift+H/J/K/L` |
 | Side ttt (explorer + git): open / toggle focus | `F9 E` |
@@ -76,7 +76,7 @@ Defaults, except where GlazeWM (`Alt`) takes the key.
 | Action | Shortcut |
 | --- | --- |
 | Command palette / quick open | `Ctrl+P` / `Ctrl+T` |
-| Explorer / search / changes / outline / PRs | `Ctrl+K` then `E` / `F` / `C` / `O` / `P` |
+| Explorer / search / changes / outline / PRs | `Ctrl+1..5` (Windows Terminal sends `Ctrl+K` `E` / `F` / `C` / `O` / `P`) |
 | Focus sidebar | `Ctrl+E` |
 | Sidebar / replace | `Ctrl+B` / `Ctrl+H` |
 | Next / previous tab | `Ctrl+Tab` · `Ctrl+PgDn` / `Ctrl+PgUp` |
