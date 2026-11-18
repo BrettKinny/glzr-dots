@@ -246,6 +246,10 @@
         },
         {
             "id": "unbound",
+            "keys": "ctrl+shift+period"
+        },
+        {
+            "id": "unbound",
             "keys": "ctrl+t"
         },
         {

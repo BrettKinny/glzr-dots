@@ -20,6 +20,7 @@ applications (such as VIM)". The unbound key falls through to the app.
 | `Ctrl+Shift+Home`/`End`, `Ctrl+Shift+PgUp`/`PgDn` | WT scroll — needed for ttt's document selection and move-line |
 | `Alt+arrows`, `Alt+Shift+arrows`, `Alt+Shift+-`/`=`, `Alt+Shift+D`, `Alt+Enter` | WT panes/focus/fullscreen — GlazeWM owns the whole `Alt` namespace |
 | `Ctrl+Shift+T`/`W`/`P`/`Space`, `Ctrl+Tab`, `Ctrl+Shift+Tab`, `Ctrl+,`, `Ctrl+Shift+,` | WT tabs, palette, settings — ttt has its own |
+| `Ctrl+Shift+.` | WT suggestions menu — Herdr's next tab (`Ctrl+Shift+,` is previous) |
 | `Ctrl+T`/`W`/`B`/`G`, `Ctrl+arrows`, `Ctrl+Shift+Z`, `Ctrl+\`, `Ctrl+Shift+\`, `Ctrl+Shift+B`/`N`/`G` | app layer: must reach ttt or the shell directly |
 
 Terminal clipboard stays on `Ctrl+Shift+C` / `Ctrl+Shift+V`.
