@@ -298,7 +298,9 @@ cmd /c mklink /J "$env:APPDATA\yazi\config" "$env:USERPROFILE\.glzr\yazi"
 Previews use ffmpeg, 7zip, jq, poppler, fd, ripgrep, fzf, zoxide, ImageMagick (all winget).
 
 - `keymap.toml`: <kbd>Ctrl</kbd>+<kbd>W</kbd> close tab, <kbd>Ctrl</kbd>+<kbd>G</kbd> lazygit, `!` pwsh, <kbd>Ctrl</kbd>+<kbd>Insert</kbd> (= <kbd>Alt</kbd>+<kbd>C</kbd>) copy selection as a file-drop list.
-- `git.yazi` (status markers): `ya pkg install` after cloning restores it from `package.toml`.
+  `T` maximises the preview (`toggle-pane.yazi`).
+- `git.yazi` (status markers) + `toggle-pane.yazi`: `ya pkg install` after cloning restores them from `package.toml`.
+- `plugins/folder-rules.yazi` (local): Downloads sorts newest first with dates; previous sort and linemode come back on leaving.
 - `plugins/glow.yazi` (local): markdown preview via glow. Not `piper.yazi`, which needs `sh` on PATH.
 
 ### elio (TUI file manager)

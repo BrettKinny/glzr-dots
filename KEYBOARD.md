@@ -103,6 +103,7 @@ Defaults, plus:
 | --- | --- |
 | Close tab (quits on the last) | `Ctrl+W` |
 | lazygit / pwsh in this folder | `Ctrl+G` / `!` |
+| Maximise / restore the preview | `T` |
 | Copy selection as files (paste into Outlook, Teams, Explorer) | `Mod+C` (`Ctrl+Insert`) |
 
 ## Zen (Windows)
