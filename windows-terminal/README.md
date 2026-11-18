@@ -27,7 +27,7 @@ Terminal clipboard stays on `Ctrl+Shift+C` / `Ctrl+Shift+V`.
 WT drops `Ctrl+digit` and `Ctrl+Shift+digit` chords before the app sees them: the VT input encoding has
 no representation for them (microsoft/terminal#7746). A `sendInput` action translates:
 
-- `Ctrl+Shift+1`–`9` → `ESC [20~` (F9) + digit (`User.herdrTab1`–`9`) → Herdr `prefix+1..9` (focus agent)
+- `Ctrl+Shift+1`–`9` → `ESC [20~` (F9) + digit (`User.herdrTab1`–`9`) → Herdr `prefix+1..9` (select tab)
 
 Cost: in a plain shell tab the chord types that sequence.
 
