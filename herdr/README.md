@@ -4,8 +4,8 @@ Layers: `Alt` = OS (GlazeWM; `Super` on Omarchy), `Ctrl+Shift` = Herdr,
 `Ctrl` = the focused app. `Ctrl+Alt` is out: Omarchy's physical Alt is `Super`.
 
 ttt runs *inside* Herdr panes and Herdr has no pass-through mode, so Herdr takes
-no plain `Ctrl` chord except `Ctrl+Tab`. Everything else direct is `Ctrl+Shift`, so ttt
-loses `Ctrl+Tab` and `Ctrl+Shift+G` / `O` / `P` / `Tab` inside a pane; the rest
+no plain `Ctrl` chord except `Ctrl+Tab`. Everything else direct is a `Ctrl+Shift` chord
+ttt doesn't bind, so ttt only loses `Ctrl+Tab` / `Ctrl+Shift+Tab` inside a pane; the rest
 is on the `F9` prefix.
 
 ## Bindings
@@ -20,11 +20,11 @@ is on the `F9` prefix.
 | `F9 Shift+1..9` | Select tab |
 | `F9 H/J/K/L` | Focus pane |
 | `F9 Shift+H/J/K/L` | Move pane |
-| `Ctrl+Shift+B` / `Ctrl+Shift+P` | Sidebar / go to |
+| `Ctrl+Shift+B` / `F9 G` | Sidebar / go to |
 | `Ctrl+Shift+\` / `Ctrl+Shift+-` | Split vertically / horizontally |
 | `F9 Z` | Zoom pane |
 | `Ctrl+Shift+N` / `Ctrl+Shift+R` | New / rename workspace |
-| `Ctrl+Shift+G` / `Ctrl+Shift+O` | New worktree workspace / open on-disk worktree |
+| `Ctrl+Shift+Y` / `F9 Shift+O` | New worktree workspace / open on-disk worktree |
 | `F9 Shift+D` | Close workspace |
 | `Ctrl+Shift+J` | Jump to latest notification's pane |
 | `Ctrl+Shift+Q` | Detach |

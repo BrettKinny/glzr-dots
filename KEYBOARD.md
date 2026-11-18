@@ -53,7 +53,7 @@ These send universal clipboard chords, so they work in terminals and GUI apps.
 ## Herdr
 
 ttt runs inside Herdr panes and there is no pass-through, so Herdr takes
-`Ctrl+Shift` and leaves `Ctrl` to ttt. `Ctrl+Alt` is out: Omarchy's physical Alt is
+only `Ctrl+Shift` chords ttt doesn't bind and leaves `Ctrl` to ttt. `Ctrl+Alt` is out: Omarchy's physical Alt is
 `Super`, so the chord never reaches Herdr there. The rest is on the `F9` prefix.
 
 | Action | Shortcut |
@@ -66,10 +66,10 @@ ttt runs inside Herdr panes and there is no pass-through, so Herdr takes
 | Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
 | Move pane | `F9 Shift+H/J/K/L` |
 | Side ttt (explorer + git): open / toggle focus | `F9 E` |
-| Sidebar / go to | `Ctrl+Shift+B` / `Ctrl+Shift+P` |
+| Sidebar / go to | `Ctrl+Shift+B` / `F9 G` |
 | Split vertical / horizontal | `Ctrl+Shift+\` / `Ctrl+Shift+-` |
 | Zoom pane / new workspace | `F9 Z` / `Ctrl+Shift+N` |
-| New worktree workspace | `Ctrl+Shift+G` |
+| New worktree workspace / open on-disk worktree | `Ctrl+Shift+Y` / `F9 Shift+O` |
 | Pick URL / file path (Windows): files open in side ttt, else the ttt window | `Ctrl+Shift+U` |
 
 `F9` remains the Herdr recovery prefix, and every command still answers to its
@@ -80,7 +80,7 @@ Windows uses `Mod+R` for resize mode, `Mod+Shift+R` to reload GlazeWM,
 ## ttt
 
 VS Code-style `Ctrl+Shift` views; otherwise defaults, except where GlazeWM (`Alt`) takes the key.
-Inside a Herdr pane, `Ctrl+Shift+G` / `O` / `P` and `Ctrl+Tab` / `Ctrl+Shift+Tab` go to Herdr instead.
+Inside a Herdr pane, `Ctrl+Tab` / `Ctrl+Shift+Tab` go to Herdr; cycle ttt tabs with `Ctrl+PgDn` / `Ctrl+PgUp`.
 
 | Action | Shortcut |
 | --- | --- |

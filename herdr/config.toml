@@ -51,8 +51,8 @@ prefix = "f9"
 
 # Application navigation and discovery.
 help = ["ctrl+?", "prefix+?"]
-# P for palette: type to jump.
-goto = ["ctrl+shift+p", "prefix+g"]
+# Prefix-only: Ctrl+Shift+P is ttt's PRs view.
+goto = "prefix+g"
 workspace_picker = "prefix+w"
 # J for jump: pane behind the latest notification.
 open_notification_target = ["ctrl+shift+j", "prefix+o"]
@@ -71,11 +71,12 @@ close_tab = "prefix+shift+x"
 
 # Ctrl+Tab cycles workspaces, same chord as Zen's vertical tabs.
 new_workspace = ["ctrl+shift+n", "prefix+shift+n"]
-# Worktree = workspace + branch checkout; Shift lifts Ctrl+G (go to) to create.
-new_worktree = ["ctrl+shift+g", "prefix+shift+g"]
+# Worktree = workspace + branch checkout. Y = branch fork; Ctrl+Shift+G is ttt's changes view.
+new_worktree = ["ctrl+shift+y", "prefix+shift+g"]
 # No herdr default. Attaches an on-disk worktree that isn't a live workspace yet
 # (goto only reaches existing ones). prefix+shift+o avoids default prefix+o.
-open_worktree = ["ctrl+shift+o", "prefix+shift+o"]
+# Prefix-only: Ctrl+Shift+O is ttt's outline.
+open_worktree = "prefix+shift+o"
 next_workspace = ["ctrl+tab", "prefix+tab"]
 previous_workspace = ["ctrl+shift+tab", "prefix+shift+tab"]
 rename_workspace = ["ctrl+shift+r", "prefix+shift+w"]
