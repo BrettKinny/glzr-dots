@@ -6,8 +6,8 @@ Windows**.
 | Layer | Modifier |
 | --- | --- |
 | OS / window manager | `Mod`, `Mod+Shift` |
-| Herdr | `Ctrl+Alt` |
-| Focused app (ttt, Zen, shells) | `Ctrl`, `Ctrl+Shift` |
+| Herdr | `Ctrl+Shift` |
+| Focused app (ttt, Zen, shells) | `Ctrl`, plus `Ctrl+Shift` where Herdr has no claim |
 
 ## Windows and workspaces
 
@@ -53,23 +53,24 @@ These send universal clipboard chords, so they work in terminals and GUI apps.
 ## Herdr
 
 ttt runs inside Herdr panes and there is no pass-through, so Herdr takes
-`Ctrl+Alt` and leaves `Ctrl` and `Ctrl+Shift` to ttt. The rest is on the `F9` prefix.
+`Ctrl+Shift` and leaves `Ctrl` to ttt. `Ctrl+Alt` is out: Omarchy's physical Alt is
+`Super`, so the chord never reaches Herdr there. The rest is on the `F9` prefix.
 
 | Action | Shortcut |
 | --- | --- |
-| New tab / close pane | `Ctrl+Alt+T` / `Ctrl+Alt+W` |
-| Next / previous workspace | `Ctrl+Alt+↓` / `Ctrl+Alt+↑` |
+| New tab / close pane | `Ctrl+Shift+T` / `Ctrl+Shift+W` |
+| Next / previous workspace | `Ctrl+Shift+Tab` / `F9 Shift+Tab` |
 | Next / previous tab | `F9 N` / `F9 P` |
-| Focus agent / select tab | `Ctrl+Alt+1..9` / `F9 Shift+1..9` |
-| Help / detach | `Ctrl+Alt+?` / `Ctrl+Alt+Q` |
+| Focus agent / select tab | `Ctrl+Shift+1..9` / `F9 Shift+1..9` |
+| Help / detach | `Ctrl+?` / `Ctrl+Shift+Q` |
 | Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
 | Move pane | `F9 Shift+H/J/K/L` |
 | Side ttt (explorer + git): open / toggle focus | `F9 E` |
-| Sidebar / go to | `Ctrl+Alt+B` / `Ctrl+Alt+P` |
-| Split vertical / horizontal | `Ctrl+Alt+\` / `Ctrl+Alt+-` |
-| Zoom pane / new workspace | `F9 Z` / `Ctrl+Alt+N` |
-| New worktree workspace | `Ctrl+Alt+G` |
-| Pick URL / file path (Windows): files open in side ttt, else the ttt window | `Ctrl+Alt+U` |
+| Sidebar / go to | `Ctrl+Shift+B` / `Ctrl+Shift+P` |
+| Split vertical / horizontal | `Ctrl+Shift+\` / `Ctrl+Shift+-` |
+| Zoom pane / new workspace | `F9 Z` / `Ctrl+Shift+N` |
+| New worktree workspace | `Ctrl+Shift+G` |
+| Pick URL / file path (Windows): files open in side ttt, else the ttt window | `Ctrl+Shift+U` |
 
 `F9` remains the Herdr recovery prefix, and every command still answers to its
 `F9` form. System-only extras: Omarchy uses `Alt+Space` for hold-to-dictate;
@@ -79,6 +80,7 @@ Windows uses `Mod+R` for resize mode, `Mod+Shift+R` to reload GlazeWM,
 ## ttt
 
 VS Code-style `Ctrl+Shift` views; otherwise defaults, except where GlazeWM (`Alt`) takes the key.
+Inside a Herdr pane, `Ctrl+Shift+G` / `O` / `P` and `Ctrl+Shift+Tab` go to Herdr instead.
 
 | Action | Shortcut |
 | --- | --- |

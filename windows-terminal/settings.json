@@ -110,10 +110,6 @@
         },
         {
             "id": "User.herdrTab3",
-            "keys": "ctrl+alt+3"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+3"
         },
         {
@@ -134,10 +130,6 @@
         },
         {
             "id": "User.herdrTab4",
-            "keys": "ctrl+alt+4"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+4"
         },
         {
@@ -206,10 +198,6 @@
         },
         {
             "id": "User.herdrTab7",
-            "keys": "ctrl+alt+7"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+7"
         },
         {
@@ -242,18 +230,10 @@
         },
         {
             "id": "User.herdrTab5",
-            "keys": "ctrl+alt+5"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+5"
         },
         {
             "id": "User.herdrTab2",
-            "keys": "ctrl+alt+2"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+2"
         },
         {
@@ -286,10 +266,6 @@
         },
         {
             "id": "User.herdrTab8",
-            "keys": "ctrl+alt+8"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+8"
         },
         {
@@ -306,26 +282,14 @@
         },
         {
             "id": "User.herdrTab9",
-            "keys": "ctrl+alt+9"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+9"
         },
         {
             "id": "User.herdrTab6",
-            "keys": "ctrl+alt+6"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+6"
         },
         {
             "id": "User.herdrTab1",
-            "keys": "ctrl+alt+1"
-        },
-        {
-            "id": "unbound",
             "keys": "ctrl+shift+1"
         },
         {

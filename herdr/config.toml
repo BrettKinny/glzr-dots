@@ -20,24 +20,25 @@ default_shell = "pwsh"
 
 # Shared keyboard language:
 #   Alt   = Windows OS/window-manager actions (Super on Omarchy)
-#   Ctrl, Ctrl+Shift = the focused application (ttt)
-#   Ctrl+Alt = Herdr
+#   Ctrl  = immediate actions in the focused application
 #   Shift = move, reverse, or the higher-level variant
 # F9 keeps Herdr's prefix commands available as compatibility fallbacks.
 [keys]
 prefix = "f9"
 
 # Application navigation and discovery.
-help = ["ctrl+alt+?", "prefix+?"]
+help = ["ctrl+?", "prefix+?"]
 # P for palette: type to jump.
-goto = ["ctrl+alt+p", "prefix+g"]
+goto = ["ctrl+shift+p", "prefix+g"]
 workspace_picker = "prefix+w"
 # J for jump: pane behind the latest notification.
-open_notification_target = ["ctrl+alt+j", "prefix+o"]
-toggle_sidebar = ["ctrl+alt+b", "prefix+b"]
-detach = ["ctrl+alt+q", "prefix+q"]
+open_notification_target = ["ctrl+shift+j", "prefix+o"]
+# Plain Ctrl+B belongs to ttt's sidebar; Shift lifts it to Herdr's UI.
+toggle_sidebar = ["ctrl+shift+b", "prefix+b"]
+detach = ["ctrl+shift+q", "prefix+q"]
 
-new_tab = ["ctrl+alt+t", "prefix+c"]
+# Plain Ctrl+T belongs to ttt's terminal; Shift lifts it to Herdr.
+new_tab = ["ctrl+shift+t", "prefix+c"]
 previous_tab = "prefix+p"
 next_tab = "prefix+n"
 # Plain prefix+digits go to sidebar agents (focus_agent); tabs are rarely >1.
@@ -45,24 +46,25 @@ switch_tab = "prefix+shift+1..9"
 rename_tab = "prefix+shift+t"
 close_tab = "prefix+shift+x"
 
-# Workspaces stack vertically in the sidebar, so Ctrl+Alt+up/down walks them.
-new_workspace = ["ctrl+alt+n", "prefix+shift+n"]
-# Worktree = workspace + branch checkout; G as in ttt's git view.
-new_worktree = ["ctrl+alt+g", "prefix+shift+g"]
+# Ctrl+Tab belongs to ttt's tabs; Shift lifts it to workspaces. Backward is prefix-only.
+new_workspace = ["ctrl+shift+n", "prefix+shift+n"]
+# Worktree = workspace + branch checkout; Shift lifts Ctrl+G (go to) to create.
+new_worktree = ["ctrl+shift+g", "prefix+shift+g"]
 # No herdr default. Attaches an on-disk worktree that isn't a live workspace yet
 # (goto only reaches existing ones). prefix+shift+o avoids default prefix+o.
-open_worktree = ["ctrl+alt+o", "prefix+shift+o"]
-next_workspace = ["ctrl+alt+down", "prefix+tab"]
-previous_workspace = ["ctrl+alt+up", "prefix+shift+tab"]
-rename_workspace = ["ctrl+alt+r", "prefix+shift+w"]
+open_worktree = ["ctrl+shift+o", "prefix+shift+o"]
+next_workspace = ["ctrl+shift+tab", "prefix+tab"]
+previous_workspace = "prefix+shift+tab"
+rename_workspace = ["ctrl+shift+r", "prefix+shift+w"]
 close_workspace = "prefix+shift+d"
 
 # Nth agent in the sidebar list.
-# WT cannot encode Ctrl+Alt+digit, so it sends prefix+digit instead.
-focus_agent = ["ctrl+alt+1..9", "prefix+1..9"]
+# WT cannot encode Ctrl+Shift+digit, so it sends prefix+digit instead.
+focus_agent = ["ctrl+shift+1..9", "prefix+1..9"]
 
 # Ctrl+arrows stay with the app (word-jump in ttt and shells); Ctrl+Alt+←/→ matches
-# Zen's workspace hop. Ctrl+Alt+↑/↓ walk workspaces, so pane up/down and swaps are prefix-only.
+# Zen's workspace hop. Up/down are prefix-only.
+# Ctrl+Shift+arrows stay with ttt (add-cursor, word-select), so swaps remain prefix-only.
 focus_pane_left = ["ctrl+alt+left", "prefix+h"]
 focus_pane_down = "prefix+j"
 focus_pane_up = "prefix+k"
@@ -73,16 +75,16 @@ swap_pane_up = "prefix+shift+k"
 swap_pane_right = "prefix+shift+l"
 
 # Pane lifecycle and layout. Zoom is rare enough to live on the prefix alone.
-close_pane = ["ctrl+alt+w", "prefix+x"]
-split_vertical = ["ctrl+alt+backslash", "prefix+v"]
-split_horizontal = ["ctrl+alt+minus", "prefix+minus"]
+close_pane = ["ctrl+shift+w", "prefix+x"]
+split_vertical = ["ctrl+shift+backslash", "prefix+v"]
+split_horizontal = ["ctrl+shift+minus", "prefix+minus"]
 zoom = "prefix+z"
 resize_mode = "prefix+r"
 
 # Foot's URL mode. Herdr owns the screen, so Windows Terminal's mark-mode link
 # hopping can't see pane output; read it via the API instead. U for URL.
 [[keys.command]]
-key = "ctrl+alt+u"
+key = "ctrl+shift+u"
 type = "popup"
 command = "pwsh -NoProfile -File \"%USERPROFILE%\\.glzr\\herdr\\url-picker.ps1\""
 width = "80%"
@@ -96,6 +98,7 @@ width = "80%"
 height = "50%"
 
 # Side ttt (explorer + git Changes) for this tab; again toggles focus back. E for explorer.
+# Ctrl+Shift+E left to ttt (sidebar explorer).
 [[keys.command]]
 key = "prefix+e"
 type = "shell"
