@@ -423,7 +423,7 @@ keybindings:
   - commands: ['wm-reload-config']
     bindings: ['alt+shift+r']
 
-  # Exit WM. Ctrl+Alt belongs to Herdr; alt+shift+e is Outlook.
+  # Exit WM. alt+shift+e is Outlook.
   - commands: ['wm-exit']
     bindings: ['alt+shift+q']
 
