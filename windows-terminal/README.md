@@ -24,16 +24,16 @@ applications (such as VIM)". The unbound key falls through to the app.
 
 Terminal clipboard stays on `Ctrl+Shift+C` / `Ctrl+Shift+V`.
 
-WT drops `Ctrl+digit` and `Ctrl+Shift+digit` chords before the app sees them: the VT input encoding has
+WT drops `Ctrl+digit` and `Ctrl+Alt+digit` chords before the app sees them: the VT input encoding has
 no representation for them (microsoft/terminal#7746). A `sendInput` action translates:
 
-- `Ctrl+Shift+1`–`9` → `ESC [20~` (F9) + digit (`User.herdrTab1`–`9`) → Herdr `prefix+1..9` (focus agent)
+- `Ctrl+Alt+1`–`9` → `ESC [20~` (F9) + digit (`User.herdrTab1`–`9`) → Herdr `prefix+1..9` (focus agent)
 
-Cost: in a plain shell tab the chord types that sequence.
+Cost: in a plain shell tab the chord types that sequence. `Ctrl+Shift+1`–`9` stay unbound.
 
 ### Layers
 
-`Alt` = GlazeWM, `Ctrl+Shift` = Herdr, `Ctrl` = the focused app. WT's
+`Alt` = GlazeWM, `Ctrl+Alt` = Herdr, `Ctrl` / `Ctrl+Shift` = the focused app. WT's
 own shortcuts aren't used, so anything it would eat on those layers is unbound.
 See [`../KEYBOARD.md`](../KEYBOARD.md).
 

@@ -1,35 +1,34 @@
 # Herdr
 
-Layers: `Alt` = OS (GlazeWM; `Super` on Omarchy), `Ctrl+Shift` = Herdr,
-`Ctrl` = the focused app. `Ctrl+Alt` is out: Omarchy's physical Alt is `Super`.
+Layers: `Alt` = OS (GlazeWM; `Super` on Omarchy), `Ctrl+Alt` = Herdr,
+`Ctrl` / `Ctrl+Shift` = the focused app.
 
 ttt runs *inside* Herdr panes and Herdr has no pass-through mode, so Herdr takes
-no plain `Ctrl` chord. Everything direct is `Ctrl+Shift`, so ttt loses
-`Ctrl+Shift+G` / `O` / `P` / `Tab` inside a pane; the rest
+no `Ctrl` or `Ctrl+Shift` chord at all. Everything direct is `Ctrl+Alt`; the rest
 is on the `F9` prefix.
 
 ## Bindings
 
 | Binding | Action |
 |---|---|
-| `Ctrl+Shift+T` / `Ctrl+Shift+W` | New tab / close pane |
-| `Ctrl+Shift+Tab` / `F9 Shift+Tab` | Next / previous workspace |
+| `Ctrl+Alt+T` / `Ctrl+Alt+W` | New tab / close pane |
+| `Ctrl+Alt+↓` / `Ctrl+Alt+↑` | Next / previous workspace |
 | `Ctrl+Alt+←` / `Ctrl+Alt+→` | Focus pane left / right |
-| `Ctrl+Shift+1..9` | Focus Nth agent |
+| `Ctrl+Alt+1..9` | Focus Nth agent |
 | `F9 N` / `F9 P` | Next / previous tab |
 | `F9 Shift+1..9` | Select tab |
 | `F9 H/J/K/L` | Focus pane |
 | `F9 Shift+H/J/K/L` | Move pane |
-| `Ctrl+Shift+B` / `Ctrl+Shift+P` | Sidebar / go to |
-| `Ctrl+Shift+\` / `Ctrl+Shift+-` | Split vertically / horizontally |
+| `Ctrl+Alt+B` / `Ctrl+Alt+P` | Sidebar / go to |
+| `Ctrl+Alt+\` / `Ctrl+Alt+-` | Split vertically / horizontally |
 | `F9 Z` | Zoom pane |
-| `Ctrl+Shift+N` / `Ctrl+Shift+R` | New / rename workspace |
-| `Ctrl+Shift+G` / `Ctrl+Shift+O` | New worktree workspace / open on-disk worktree |
+| `Ctrl+Alt+N` / `Ctrl+Alt+R` | New / rename workspace |
+| `Ctrl+Alt+G` / `Ctrl+Alt+O` | New worktree workspace / open on-disk worktree |
 | `F9 Shift+D` | Close workspace |
-| `Ctrl+Shift+J` | Jump to latest notification's pane |
-| `Ctrl+Shift+Q` | Detach |
-| `Ctrl+Shift+U` | Pick a URL or file path from the pane |
-| `Ctrl+?` | Help |
+| `Ctrl+Alt+J` | Jump to latest notification's pane |
+| `Ctrl+Alt+Q` | Detach |
+| `Ctrl+Alt+U` | Pick a URL or file path from the pane |
+| `Ctrl+Alt+?` | Help |
 | `F9 E` | Side ttt: open / toggle focus |
 
 Every command also answers to its `F9` prefix form.
@@ -40,7 +39,7 @@ foot's URL mode, for Herdr. Windows Terminal's mark-mode link hopping
 (`Ctrl+Shift+M`, `Tab`) can't see pane output because Herdr draws the whole screen,
 so [`url-picker.ps1`](url-picker.ps1) reads it through the API instead:
 
-- `Ctrl+Shift+U` / `F9 U` → popup over the focused pane
+- `Ctrl+Alt+U` / `F9 U` → popup over the focused pane
 - `herdr pane read --source recent-unwrapped` → URLs + file paths, newest first
 - Paths kept only if they exist on disk (relative → pane cwd, `:line:col` stripped)
 - `Enter` opens with the default app, `Ctrl+Y` copies
@@ -105,6 +104,7 @@ explicitly platform-specific.
 
 ## Key ownership
 
-The tracked Windows Terminal settings unbind WT's own `Ctrl+Shift` chords so they
-reach Herdr. WT drops `Ctrl+Shift+digit`, so they translate `Ctrl+Shift+1..9` to
+Windows Terminal passes `Ctrl+Alt+letter` and arrows through untouched. It drops
+`Ctrl+Alt+digit`, so the tracked WT settings translate `Ctrl+Alt+1..9` to
 `F9` + digit (see [`../windows-terminal/`](../windows-terminal/README.md)).
+GlazeWM keeps `Ctrl+Alt+Tab` only; nothing else global sits on `Ctrl+Alt`.
