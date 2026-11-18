@@ -4,8 +4,8 @@ Layers: `Alt` = OS (GlazeWM; `Super` on Omarchy), `Ctrl+Shift` = Herdr,
 `Ctrl` = the focused app. `Ctrl+Alt` is out: Omarchy's physical Alt is `Super`.
 
 ttt runs *inside* Herdr panes and Herdr has no pass-through mode, so Herdr takes
-no plain `Ctrl` chord. Everything direct is `Ctrl+Shift`, so ttt loses
-`Ctrl+Shift+G` / `O` / `P` / `Tab` inside a pane; the rest
+no plain `Ctrl` chord except `Ctrl+Tab`. Everything else direct is `Ctrl+Shift`, so ttt
+loses `Ctrl+Tab` and `Ctrl+Shift+G` / `O` / `P` / `Tab` inside a pane; the rest
 is on the `F9` prefix.
 
 ## Bindings
@@ -13,7 +13,7 @@ is on the `F9` prefix.
 | Binding | Action |
 |---|---|
 | `Ctrl+Shift+T` / `Ctrl+Shift+W` | New tab / close pane |
-| `Ctrl+Shift+Tab` / `F9 Shift+Tab` | Next / previous workspace |
+| `Ctrl+Tab` / `Ctrl+Shift+Tab` | Next / previous workspace |
 | `Ctrl+Alt+←` / `Ctrl+Alt+→` | Focus pane left / right |
 | `Ctrl+Shift+1..9` | Focus Nth agent |
 | `F9 N` / `F9 P` | Next / previous tab |

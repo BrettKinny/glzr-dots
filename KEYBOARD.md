@@ -59,7 +59,7 @@ ttt runs inside Herdr panes and there is no pass-through, so Herdr takes
 | Action | Shortcut |
 | --- | --- |
 | New tab / close pane | `Ctrl+Shift+T` / `Ctrl+Shift+W` |
-| Next / previous workspace | `Ctrl+Shift+Tab` / `F9 Shift+Tab` |
+| Next / previous workspace (same chord as Zen's tabs) | `Ctrl+Tab` / `Ctrl+Shift+Tab` |
 | Next / previous tab | `F9 N` / `F9 P` |
 | Focus agent / select tab | `Ctrl+Shift+1..9` / `F9 Shift+1..9` |
 | Help / detach | `Ctrl+?` / `Ctrl+Shift+Q` |
@@ -80,7 +80,7 @@ Windows uses `Mod+R` for resize mode, `Mod+Shift+R` to reload GlazeWM,
 ## ttt
 
 VS Code-style `Ctrl+Shift` views; otherwise defaults, except where GlazeWM (`Alt`) takes the key.
-Inside a Herdr pane, `Ctrl+Shift+G` / `O` / `P` and `Ctrl+Shift+Tab` go to Herdr instead.
+Inside a Herdr pane, `Ctrl+Shift+G` / `O` / `P` and `Ctrl+Tab` / `Ctrl+Shift+Tab` go to Herdr instead.
 
 | Action | Shortcut |
 | --- | --- |
