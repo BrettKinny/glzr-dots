@@ -8,6 +8,20 @@ agent_panel_sort = "spaces"
 # from the keybinding, and the row returns as soon as there are two.
 hide_tab_bar_when_single_tab = true
 
+# $cpu / $mem come from the resmon plugin (~/dev/herdr-resmon). Idle 0% hidden.
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "machine", "workspace", "tab"],
+  ["agent", { token = "$cpu", dim = true, rules = [{ equals = "0%", hide = true }] }, { token = "$mem", dim = true }],
+]
+
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", "workspace"],
+  ["branch", "git_status"],
+  [{ token = "$cpu", dim = true, rules = [{ equals = "0%", hide = true }] }, { token = "$mem", dim = true }],
+]
+
 [ui.toast]
 delivery = "herdr"
 
