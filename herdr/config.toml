@@ -8,18 +8,27 @@ agent_panel_sort = "spaces"
 # from the keybinding, and the row returns as soon as there are two.
 hide_tab_bar_when_single_tab = true
 
-# $cpu / $mem come from the resmon plugin (~/dev/herdr-resmon). Idle 0% hidden.
+# $cpu / $mem come from the resmon plugin (~/dev/herdr-resmon). It reports each value under
+# one of $x / $x_warn / $x_crit (numeric rules can't match "12%"), so only one shows at a time.
+# Colours = One Half Dark yellow/red (fg must be hex).
 [ui.sidebar.agents]
 rows = [
   ["state_icon", "machine", "workspace", "tab"],
-  ["agent", { token = "$cpu", dim = true, rules = [{ equals = "0%", hide = true }] }, { token = "$mem", dim = true }],
+  [
+    "agent",
+    { token = "$cpu", dim = true }, { token = "$cpu_warn", fg = "#E5C07B" }, { token = "$cpu_crit", fg = "#E06C75", bold = true },
+    { token = "$mem", dim = true }, { token = "$mem_warn", fg = "#E5C07B" }, { token = "$mem_crit", fg = "#E06C75", bold = true },
+  ],
 ]
 
 [ui.sidebar.spaces]
 rows = [
   ["state_icon", "workspace"],
   ["branch", "git_status"],
-  [{ token = "$cpu", dim = true, rules = [{ equals = "0%", hide = true }] }, { token = "$mem", dim = true }],
+  [
+    { token = "$cpu", dim = true }, { token = "$cpu_warn", fg = "#E5C07B" }, { token = "$cpu_crit", fg = "#E06C75", bold = true },
+    { token = "$mem", dim = true }, { token = "$mem_warn", fg = "#E5C07B" }, { token = "$mem_crit", fg = "#E06C75", bold = true },
+  ],
 ]
 
 [ui.toast]
