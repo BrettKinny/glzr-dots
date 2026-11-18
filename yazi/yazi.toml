@@ -4,3 +4,13 @@
 edit = [
 	{ run = "ttt %s", block = true, desc = "ttt" },
 ]
+
+# Bulk rename reads the list back when the editor exits; a forwarding ttt exits at
+# once, so nothing would be renamed. Force a private instance.
+[[opener.bulk-rename]]
+run   = "ttt --new-window %s"
+block = true
+
+[[open.prepend_rules]]
+url = "bulk-rename.txt"
+use = "bulk-rename"
