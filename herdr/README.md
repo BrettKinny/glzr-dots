@@ -16,7 +16,7 @@ is on the `F9` prefix.
 | `Ctrl+Tab` / `Ctrl+Shift+Tab` | Next / previous workspace |
 | `Ctrl+Alt+←` / `Ctrl+Alt+→` | Focus pane left / right |
 | `Ctrl+Shift+1..9` | Select tab |
-| `F9 N` / `F9 P` | Next / previous tab |
+| `Ctrl+Shift+.` / `Ctrl+Shift+,` | Next / previous tab (also `F9 N` / `F9 P`) |
 | `F9 Shift+1..9` | Focus Nth agent |
 | `F9 H/J/K/L` | Focus pane |
 | `F9 Shift+H/J/K/L` | Move pane |

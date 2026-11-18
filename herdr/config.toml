@@ -62,8 +62,10 @@ detach = ["ctrl+shift+q", "prefix+q"]
 
 # Plain Ctrl+T belongs to ttt's terminal; Shift lifts it to Herdr.
 new_tab = ["ctrl+shift+t", "prefix+c"]
-previous_tab = "prefix+p"
-next_tab = "prefix+n"
+# < and > step through tabs. Two spellings each: terminals report either the
+# base key with Shift or the shifted symbol.
+previous_tab = ["ctrl+shift+comma", "ctrl+<", "prefix+p"]
+next_tab = ["ctrl+shift+period", "ctrl+>", "prefix+n"]
 # WT cannot encode Ctrl+Shift+digit, so it sends prefix+digit instead.
 switch_tab = ["ctrl+shift+1..9", "prefix+1..9"]
 rename_tab = "prefix+shift+t"

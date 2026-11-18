@@ -60,7 +60,7 @@ only `Ctrl+Shift` chords ttt doesn't bind and leaves `Ctrl` to ttt. `Ctrl+Alt` i
 | --- | --- |
 | New tab / close pane | `Ctrl+Shift+T` / `Ctrl+Shift+W` |
 | Next / previous workspace (same chord as Zen's tabs) | `Ctrl+Tab` / `Ctrl+Shift+Tab` |
-| Next / previous tab | `F9 N` / `F9 P` |
+| Next / previous tab | `Ctrl+Shift+.` / `Ctrl+Shift+,` · `F9 N` / `F9 P` |
 | Select tab / focus agent | `Ctrl+Shift+1..9` / `F9 Shift+1..9` |
 | Help / detach | `Ctrl+?` / `Ctrl+Shift+Q` |
 | Focus pane | `Ctrl+Alt+←/→` · `F9 H/J/K/L` |
