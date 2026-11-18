@@ -14,3 +14,19 @@ block = true
 [[open.prepend_rules]]
 url = "bulk-rename.txt"
 use = "bulk-rename"
+
+# git.yazi: status markers in the file list
+[[plugin.prepend_fetchers]]
+url   = "*"
+run   = "git"
+group = "git"
+
+[[plugin.prepend_fetchers]]
+url   = "*/"
+run   = "git"
+group = "git"
+
+# plugins/glow.yazi (local)
+[[plugin.prepend_previewers]]
+url = "*.md"
+run = "glow"

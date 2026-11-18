@@ -1,0 +1,3 @@
+# `ya pkg` installs; package.toml is the lockfile (`ya pkg install` restores them).
+plugins/*
+!plugins/glow.yazi/

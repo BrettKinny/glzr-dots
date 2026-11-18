@@ -95,6 +95,16 @@ Inside a Herdr pane, `Ctrl+Tab` / `Ctrl+Shift+Tab` go to Herdr; cycle ttt tabs w
 | Terminal / bottom panel / menu bar / File menu | `` Ctrl+` `` / `Ctrl+J` / `F10` / `Ctrl+F10` |
 | Delete line | `Ctrl+Shift+K` |
 
+## yazi (Windows)
+
+Defaults, plus:
+
+| Action | Shortcut |
+| --- | --- |
+| Close tab (quits on the last) | `Ctrl+W` |
+| lazygit / pwsh in this folder | `Ctrl+G` / `!` |
+| Copy selection as files (paste into Outlook, Teams, Explorer) | `Mod+C` (`Ctrl+Insert`) |
+
 ## Zen (Windows)
 
 Splits and sidebar follow Herdr; `Ctrl+T/W/N/Tab` stay browser-standard. GlazeWM

@@ -145,7 +145,9 @@ Then launch GlazeWM. It starts the autotile and clipboard scripts automatically 
 │   ├── settings.json    # WT keybindings stripped so editor keys reach fresh
 │   └── README.md        # what's unbound and why (tracked copy, not a link)
 ├── yazi/
-│   └── yazi.toml        # TUI file manager (Windows launcher): text files → ttt
+│   ├── yazi.toml        # TUI file manager (Windows launcher): text files → ttt
+│   ├── keymap.toml      # the few non-default keys
+│   └── plugins/glow.yazi  # markdown preview
 ├── elio/
 │   ├── config.toml      # TUI file manager (Omarchy launcher): sidebar places + open rules
 │   └── theme.toml       # elio colour theme
@@ -294,6 +296,10 @@ cmd /c mklink /J "$env:APPDATA\yazi\config" "$env:USERPROFILE\.glzr\yazi"
 ```
 
 Previews use ffmpeg, 7zip, jq, poppler, fd, ripgrep, fzf, zoxide, ImageMagick (all winget).
+
+- `keymap.toml`: <kbd>Ctrl</kbd>+<kbd>W</kbd> close tab, <kbd>Ctrl</kbd>+<kbd>G</kbd> lazygit, `!` pwsh, <kbd>Ctrl</kbd>+<kbd>Insert</kbd> (= <kbd>Alt</kbd>+<kbd>C</kbd>) copy selection as a file-drop list.
+- `git.yazi` (status markers): `ya pkg install` after cloning restores it from `package.toml`.
+- `plugins/glow.yazi` (local): markdown preview via glow. Not `piper.yazi`, which needs `sh` on PATH.
 
 ### elio (TUI file manager)
 

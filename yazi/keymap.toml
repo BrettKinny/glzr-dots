@@ -1,0 +1,10 @@
+[mgr]
+prepend_keymap = [
+	# Same key as Zen/ttt. Quits on the last tab, like the default <C-c>.
+	{ on = "<C-w>", run = "close", desc = "Close tab" },
+	{ on = "<C-g>", run = 'shell "lazygit" --block', desc = "lazygit here" },
+	{ on = "!", run = 'shell "pwsh -NoLogo" --block', desc = "pwsh here" },
+	# Ctrl+Insert is what Alt+C sends (glazewm/clipboard.py). Sets a file-drop list, so
+	# it pastes as files into Explorer/Outlook/Teams. %s = hovered when nothing's selected.
+	{ on = "<C-Insert>", run = '''shell -- pwsh -NoProfile -cwa "Add-Type -A System.Windows.Forms; $c = [Collections.Specialized.StringCollection]::new(); $c.AddRange([string[]]$args); [Windows.Forms.Clipboard]::SetFileDropList($c)" %s''', desc = "Copy as files to Windows clipboard" },
+]
