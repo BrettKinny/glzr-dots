@@ -35,7 +35,7 @@ deviations remain intentionally different.
 | `Super + Shift + N` to send window to workspace *and follow* | `Alt + Shift + N` | Same "follow" behavior (not vanilla GlazeWM default). |
 | `Super + Arrows` focus, `Super + Shift + Arrows` move | `Alt + Arrows` / `Alt + Shift + Arrows` | Identical. |
 | `Super + =/-` resize | `Alt + =/-` | Plus a vim-style `Alt + R` resize mode (`hjkl`). |
-| `Super + Shift + B/E/F/...` app launchers | `Alt + Shift + B/E/F/...` | Same letters (Zen, Outlook, Obsidian, Teams, Gemini). The file manager and editor are TUIs in a Terminal window — elio and `fresh` — rather than Explorer and VS Code, which keeps them inside the tiling layout. |
+| `Super + Shift + B/E/F/...` app launchers | `Alt + Shift + B/E/F/...` | Same letters (Zen, Outlook, Obsidian, Teams, Gemini). The file manager and editor are TUIs in a Terminal window (yazi and `fresh`) rather than Explorer and VS Code, which keeps them inside the tiling layout. |
 | Hyprland dwindle layout | `autotile.py` | WebSocket client that flips split direction based on the focused window's longest axis. |
 | Lone window centered on ultrawides | `autotile.py` | On a monitor wider than ~2:1, a single window in a workspace floats centered at half the monitor width instead of stretching edge-to-edge; opening a second window drops it back to tiling. No-op on 16:9 displays. |
 | Waybar top bar | Command Palette Dock *(default)* or Zebar with [`overline-zebar`](https://github.com/mushfikurr/overline-zebar) | Two options — see [Choose your bar](#choose-your-bar). The Dock reserves its own space (AppBar); Zebar needs a `50px` top gap. |
@@ -73,7 +73,7 @@ The top bar (workspace switcher + status) can be one of two things. **This repo 
 
 **PowerToys / [Command Palette](https://learn.microsoft.com/en-us/windows/powertoys/command-palette/overview)** does double duty here: it's your app/file launcher (the Omarchy `walker`/`wofi` equivalent) *and*, via the [GlazeWMDock](cmdpal/) extension, the default top bar. `winget install Microsoft.PowerToys`
 
-Optional (only needed if you use the matching launcher binding): Zen Browser, Obsidian, Microsoft Teams, New Outlook, plus [elio](#elio-tui-file-manager) (`cargo install elio`) and [fresh](https://github.com/sinelaw/fresh-editor) (`winget install sinelaw.fresh-editor`) for the file-manager and editor bindings.
+Optional (only needed if you use the matching launcher binding): Zen Browser, Obsidian, Microsoft Teams, New Outlook, plus [yazi](#yazi-tui-file-manager) (`winget install sxyazi.yazi`) and [fresh](https://github.com/sinelaw/fresh-editor) (`winget install sinelaw.fresh-editor`) for the file-manager and editor bindings.
 
 ### Shared keyboard language
 
@@ -144,8 +144,10 @@ Then launch GlazeWM. It starts the autotile and clipboard scripts automatically 
 ├── windows-terminal/
 │   ├── settings.json    # WT keybindings stripped so editor keys reach fresh
 │   └── README.md        # what's unbound and why (tracked copy, not a link)
+├── yazi/
+│   └── yazi.toml        # TUI file manager (Windows launcher): text files → ttt
 ├── elio/
-│   ├── config.toml      # TUI file manager: sidebar places + open rules
+│   ├── config.toml      # TUI file manager (Omarchy launcher): sidebar places + open rules
 │   └── theme.toml       # elio colour theme
 └── omarchy/
     ├── bindings.lua     # Omarchy-side launcher overrides (~/.config/hypr/bindings.lua)
@@ -167,7 +169,8 @@ Brings the modern-Linux terminal niceties to PowerShell 7+. `powershell/profile.
 | [delta](https://github.com/dandavison/delta) | syntax-highlighted git diffs (configured in `~/.gitconfig`) | `winget install dandavison.delta` |
 | [gsudo](https://github.com/gerardog/gsudo) | `sudo` for Windows (aliased only if no native `sudo`) | `winget install gerardog.gsudo` |
 | [starship](https://starship.rs/) | prompt; config in `powershell/starship.toml`, styled with ANSI colour names so it follows the terminal theme | `winget install Starship.Starship` |
-| [elio](https://crates.io/crates/elio) | TUI file manager; config in `elio/` — see [elio](#elio-tui-file-manager) | `cargo install elio` |
+| [yazi](https://yazi-rs.github.io) | TUI file manager, `y`/`ex` = cd on quit; see [yazi](#yazi-tui-file-manager) | `winget install sxyazi.yazi` |
+| [elio](https://crates.io/crates/elio) | TUI file manager (Omarchy side); see [elio](#elio-tui-file-manager) | `cargo install elio` |
 | [Microsoft Edit](https://github.com/microsoft/edit) | `edit` TUI editor — the `$EDITOR` and file-association target | `winget install Microsoft.Edit` |
 | [Claude Code](https://claude.com/claude-code) | `ask` one-shot question answerer — see [ask](#ask--one-shot-claude-in-the-terminal) | `winget install Anthropic.ClaudeCode` |
 | [glow](https://github.com/charmbracelet/glow) | renders `ask`'s markdown in the terminal (optional) | `winget install charmbracelet.glow` |
@@ -278,6 +281,20 @@ The script also seeds `edit.exe` into each extension's `OpenWithList` MRU, since
 
 `profile.ps1` also exports `EDITOR=edit`, which covers anything that shells out to an editor (git, lazygit) rather than going through a file association. It's set as a persistent User-scope env var too, so GUI-launched apps see it; the profile line is what makes a fresh clone work before that's been done.
 
+### yazi (TUI file manager)
+
+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> and `y`/`ex`. `yazi/yazi.toml` only overrides the `edit` opener → `ttt %s` (`block = true`, so it runs inline). With ttt's `reuseWindow`, an already-open ttt takes the file and yazi returns immediately.
+
+**Wiring** (run once; same junction approach as elio below):
+
+```powershell
+cmd /c mklink /J "$env:APPDATA\yazi\config" "$env:USERPROFILE\.glzr\yazi"
+# mime detection needs Git's file.exe (scoop/choco builds mangle Unicode names)
+[Environment]::SetEnvironmentVariable('YAZI_FILE_ONE', 'C:\Program Files\Git\usr\bin\file.exe', 'User')
+```
+
+Previews use ffmpeg, 7zip, jq, poppler, fd, ripgrep, fzf, zoxide, ImageMagick (all winget).
+
 ### elio (TUI file manager)
 
 [elio](https://crates.io/crates/elio) (`cargo install elio`) does **not** consult Windows file associations — it has its own opener rules — so `elio/config.toml` carries a matching rule:
@@ -359,7 +376,7 @@ Same letters as Omarchy, mapped to Windows-native apps.
 | <kbd>Alt</kbd>+<kbd>Enter</kbd> | Windows Terminal | `Super + Return` (terminal) |
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> | Zen browser | `Super + Shift + B` (browser) |
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> | [fresh](https://github.com/sinelaw/fresh-editor) in a Terminal window | `Super + Shift + N` (editor) |
-| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> | [elio](#elio-tui-file-manager) in a Terminal window | `Super + Shift + F` (file manager) |
+| <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> | [yazi](#yazi-tui-file-manager) in a Terminal window | `Super + Shift + F` (file manager) |
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> | Obsidian | `Super + Shift + O` (Obsidian) |
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> | Outlook (mail) | `Super + Shift + E` (email) |
 | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> | Outlook calendar (Edge PWA) | `Super + Shift + C` (calendar) |

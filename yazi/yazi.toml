@@ -1,0 +1,6 @@
+# Text/config files → ttt inline. With reuseWindow on, ttt forwards to an already-open
+# ttt (standalone window or herdr pane) and exits at once, so yazi comes straight back.
+[opener]
+edit = [
+	{ run = "ttt %s", block = true, desc = "ttt" },
+]

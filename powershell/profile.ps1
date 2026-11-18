@@ -216,6 +216,26 @@ function touch {
 }
 #endregion
 
+#region yazi  ->  `y` = yazi + cd to its last dir on quit (config: ~/.glzr/yazi, junctioned)
+if (Get-Command yazi -CommandType Application -ErrorAction SilentlyContinue) {
+    # Mime detection needs file(1); Git's build is the one that handles Unicode names.
+    # User-scope var is the real setting; this covers a fresh clone.
+    $gitFile = 'C:\Program Files\Git\usr\bin\file.exe'
+    if (-not $env:YAZI_FILE_ONE -and (Test-Path $gitFile)) { $env:YAZI_FILE_ONE = $gitFile }
+
+    function y {
+        $tmp = (New-TemporaryFile).FullName
+        try {
+            yazi.exe @args --cwd-file="$tmp"
+            $cwd = Get-Content -LiteralPath $tmp -Encoding UTF8 -ErrorAction SilentlyContinue
+            if ($cwd -and $cwd -ne $PWD.Path -and (Test-Path -LiteralPath $cwd -PathType Container)) {
+                Set-Location -LiteralPath (Resolve-Path -LiteralPath $cwd).Path
+            }
+        } finally { Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue }
+    }
+}
+#endregion
+
 #region fresh  ->  keymap lives in this repo, not %APPDATA%
 # The keymap is versioned at ~/.glzr/fresh/config.json and paired with the GlazeWM
 # bindings — see that dir's README for the Alt / Ctrl+Alt layering.
@@ -258,8 +278,7 @@ Set-Alias -Name t -Value ttt
 Set-Alias -Name h -Value herdr
 
 Set-Alias -Name lg -Value lazygit
-# elio is the cd-on-exit function in $PROFILE (defined after this file loads); aliases resolve at call time.
-Set-Alias -Name ex -Value elio
+Set-Alias -Name ex -Value y
 Set-Alias -Name lj -Value lazyjira
 Set-Alias -Name e -Value edit
 Set-Alias -Name g -Value git

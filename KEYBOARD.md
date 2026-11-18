@@ -32,7 +32,7 @@ Windows**.
 | Terminal | `Mod+Enter` | Default terminal | Windows Terminal |
 | Browser | `Mod+Shift+B` | Default browser | Zen |
 | Editor | `Mod+Shift+N` | ttt | ttt |
-| Files | `Mod+Shift+F` | Elio | Elio |
+| Files | `Mod+Shift+F` | Elio | yazi |
 | Notes | `Mod+Shift+O` | Obsidian | Obsidian |
 | Email | `Mod+Shift+E` | Email web app | Outlook |
 | Calendar | `Mod+Shift+C` | gcal-tui | Outlook Calendar |
