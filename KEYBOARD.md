@@ -104,6 +104,7 @@ Defaults, plus:
 | Close tab (quits on the last) | `Ctrl+W` |
 | lazygit / pwsh in this folder | `Ctrl+G` / `!` |
 | Maximise / restore the preview | `T` |
+| Go to Work Notes / dev / OneDrive | `g w` / `g v` / `g o` |
 | Copy selection as files (paste into Outlook, Teams, Explorer) | `Mod+C` (`Ctrl+Insert`) |
 
 ## Zen (Windows)
