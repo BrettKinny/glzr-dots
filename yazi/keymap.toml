@@ -1,6 +1,7 @@
 [mgr]
 prepend_keymap = [
 	# Same key as Zen/ttt. Quits on the last tab, like the default <C-c>.
+	{ on = "<C-t>", run = "tab_create --current", desc = "New tab here" },
 	{ on = "<C-w>", run = "close", desc = "Close tab" },
 	{ on = "<C-g>", run = 'shell "lazygit" --block', desc = "lazygit here" },
 	{ on = "!", run = 'shell "pwsh -NoLogo" --block', desc = "pwsh here" },

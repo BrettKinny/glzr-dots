@@ -101,7 +101,7 @@ Defaults, plus:
 
 | Action | Shortcut |
 | --- | --- |
-| Close tab (quits on the last) | `Ctrl+W` |
+| New tab / close tab (quits on the last) | `Ctrl+T` / `Ctrl+W` |
 | lazygit / pwsh in this folder | `Ctrl+G` / `!` |
 | Maximise / restore the preview | `T` |
 | Go to Work Notes / dev / OneDrive | `g w` / `g v` / `g o` |
