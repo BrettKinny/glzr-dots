@@ -37,3 +37,8 @@ group = "git"
 [[plugin.prepend_previewers]]
 url = "*.md"
 run = "glow"
+
+# ouch.yazi: archive contents in the preview pane (ouch.exe in ~/.local/bin)
+[[plugin.prepend_previewers]]
+mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}"
+run  = "ouch"

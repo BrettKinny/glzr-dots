@@ -8,5 +8,25 @@ use = "yazi-rs/plugins:toggle-pane"
 rev = "1ef5fe0"
 hash = "5b2fbef7d1513ce38ff72623a071a5e"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "1ef5fe0"
+hash = "17ebde15c4349f90aedbc45984b98db2"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mime-ext"
+rev = "1ef5fe0"
+hash = "b9b3ba0d1e0067fa0b729db184b85fdd"
+
+[[plugin.deps]]
+use = "Rolv-Apneseth/starship"
+rev = "ea92cf4"
+hash = "9776f378459072b6c2875eae5addc49d"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "596b666"
+hash = "c2f4f4aca257dcceafa9e3b828dbf1c9"
+
 [flavor]
 deps = []
