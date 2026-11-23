@@ -6,6 +6,8 @@ prepend_keymap = [
 	{ on = "<C-g>", run = 'shell "lazygit" --block', desc = "lazygit here" },
 	{ on = "!", run = 'shell "pwsh -NoLogo" --block', desc = "pwsh here" },
 	{ on = "T", run = "plugin toggle-pane max-preview", desc = "Maximise or restore the preview" },
+	{ on = "<S-Up>", run = "seek -5", desc = "Scroll preview up" },
+	{ on = "<S-Down>", run = "seek 5", desc = "Scroll preview down" },
 	{ on = [ "g", "w" ], run = 'cd "~/Work Notes"', desc = "Go to Work Notes" },
 	{ on = [ "g", "v" ], run = 'cd ~/dev', desc = "Go to dev" },
 	{ on = [ "g", "o" ], run = 'cd "~/OneDrive - MULTINAIL AUSTRALIA PTY LTD"', desc = "Go to OneDrive" },
