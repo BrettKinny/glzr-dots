@@ -27,11 +27,9 @@
 hl.unbind("SUPER + SHIFT + N")
 o.bind("SUPER + SHIFT + N", "ttt editor", { tui = "ttt" })
 
--- Replace Omarchy's default file manager shortcut with Elio.
+-- Replace Omarchy's default file manager shortcut with yazi (matches glzr-dots on Windows).
 hl.unbind("SUPER + SHIFT + F")
--- TERM=foot: foot reports xterm-256color, which hides it from elio's Sixel
--- image-preview detection (same fix as the elio alias in ~/.bashrc).
-o.bind("SUPER + SHIFT + F", "Elio file manager", "omarchy-launch-tui --app-id=org.omarchy.elio env TERM=foot elio")
+o.bind("SUPER + SHIFT + F", "yazi file manager", { tui = "yazi" })
 
 -- Replace Omarchy's default ChatGPT shortcut with Gemini.
 -- Zen uses Firefox's --new-window syntax; Chromium's --app= flag opens a

@@ -32,7 +32,7 @@ Windows**.
 | Terminal | `Mod+Enter` | Default terminal | Windows Terminal |
 | Browser | `Mod+Shift+B` | Default browser | Zen |
 | Editor | `Mod+Shift+N` | ttt | ttt |
-| Files | `Mod+Shift+F` | Elio | yazi |
+| Files | `Mod+Shift+F` | yazi | yazi |
 | Notes | `Mod+Shift+O` | Obsidian | Obsidian |
 | Email | `Mod+Shift+E` | Email web app | Outlook |
 | Calendar | `Mod+Shift+C` | gcal-tui | Outlook Calendar |
@@ -95,18 +95,19 @@ Inside a Herdr pane, `Ctrl+Tab` / `Ctrl+Shift+Tab` go to Herdr; cycle ttt tabs w
 | Terminal / bottom panel / menu bar / File menu | `` Ctrl+` `` / `Ctrl+J` / `F10` / `Ctrl+F10` |
 | Delete line | `Ctrl+Shift+K` |
 
-## yazi (Windows)
+## yazi
 
 Defaults, plus:
 
 | Action | Shortcut |
 | --- | --- |
 | New tab / close tab (quits on the last) | `Ctrl+T` / `Ctrl+W` |
-| lazygit / pwsh in this folder | `Ctrl+G` / `!` |
+| lazygit / shell in this folder (pwsh on Windows, bash on Omarchy) | `Ctrl+G` / `!` |
 | Maximise / restore the preview | `T` |
+| Hide / show the parent pane | `Ctrl+B` |
 | Scroll the preview | `Shift+↑/↓` (or `K`/`J`) |
-| Go to Work Notes / dev / OneDrive | `g w` / `g v` / `g o` |
-| Copy selection as files (paste into Outlook, Teams, Explorer) | `Mod+C` (`Ctrl+Insert`) |
+| Go to Work Notes / dev / OneDrive (Windows) | `g w` / `g v` / `g o` |
+| Copy selection as files (paste into Outlook, Teams, Explorer) — Windows | `Mod+C` (`Ctrl+Insert`) |
 
 ## Zen (Windows)
 

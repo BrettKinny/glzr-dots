@@ -396,7 +396,7 @@ keybindings:
   - commands: ['shell-exec msedge --app=https://gemini.google.com/app']
     bindings: ['alt+shift+a']
 
-  # File Manager (yazi) — Omarchy: Super + Shift + F (elio there)
+  # File Manager (yazi) — Omarchy: Super + Shift + F (yazi there too)
   - commands: ['shell-exec wt --focus yazi']
     bindings: ['alt+shift+f']
 
