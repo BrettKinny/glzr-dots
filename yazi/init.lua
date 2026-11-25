@@ -6,3 +6,5 @@ require("full-border"):setup { set = "rounded" }
 require("starship"):setup()
 -- extension lookup instead of spawning file.exe per file; falls back to file.exe when unknown
 require("mime-ext"):setup()
+-- start with parent pane hidden; via toggle-pane so Ctrl+B can bring it back
+ya.emit("plugin", { "toggle-pane", "min-parent" })
